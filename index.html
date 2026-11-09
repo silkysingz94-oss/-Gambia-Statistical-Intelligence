@@ -3,1021 +3,1164 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE-MAPPING AND CENSUS FIGURES</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SILKYSINGZ GEOAI | Gambia Statistical Intelligence</title>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
 <style>
 :root{
- --bg:#071321;--panel:#0d1d30;--panel2:#11283e;--border:#254158;
- --cyan:#19c5df;--blue:#3987ff;--green:#35d49a;--orange:#f6a94b;
- --red:#ff6978;--text:#e9f3fb;--muted:#91a8bd;
+ --red:#d62828;--white:#fff;--blue:#123b70;
+ --green:#0c6b3d;--green-dark:#06472b;--green-light:#16834e;
+ --ink:#10233c;--muted:#617184;--line:#dbe4dc;
+ --paper:#f4faf5;--gold:#f4c542;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{height:66px;background:#091a2b;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 18px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:39px;height:39px;border-radius:9px;background:linear-gradient(135deg,#087fa8,#20d6c1);display:grid;place-items:center;font-weight:bold}
-.brand h1{font-size:15px;margin:0 0 4px}
-.brand small{font-size:9px;color:var(--muted);letter-spacing:1px}
-.header-right{text-align:right;color:var(--muted);font-size:10px}
-main{height:calc(100vh - 66px);display:grid;grid-template-columns:260px minmax(300px,1fr) 355px;gap:9px;padding:9px}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:#31516d transparent}
-.section{padding:12px;border-bottom:1px solid var(--border)}
-.heading{font-size:10px;color:var(--cyan);font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:11px}
-label{display:block;color:var(--muted);font-size:10px;margin:10px 0 5px}
-input,select,button{width:100%;background:#091a2a;border:1px solid var(--border);border-radius:5px;padding:9px;color:var(--text);font-size:11px}
-button{cursor:pointer;font-weight:bold}
-button:hover{filter:brightness(1.2)}
-.primary{background:#087f9b;border-color:#087f9b}
-.secondary{background:#172e45}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
-.status{font-size:10px;padding:9px;background:#102a3b;border-radius:5px;color:var(--green);margin-top:8px;line-height:1.5;overflow-wrap:anywhere}
-.note{font-size:10px;color:var(--muted);line-height:1.5}
-.map-panel{position:relative;min-height:0;overflow:hidden;border:1px solid var(--border);border-radius:8px}
-#map{width:100%;height:100%;background:#0b1724}
-.map-top{position:absolute;z-index:500;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
-.chip{background:#081a2bed;border:1px solid #31516d;border-radius:5px;padding:8px 10px;font-size:10px;pointer-events:auto}
-.chip b{color:var(--cyan)}
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.kpi{background:var(--panel2);border:1px solid var(--border);padding:10px;border-radius:6px;min-width:0}
-.kpi small{font-size:9px;color:var(--muted)}
-.kpi strong{display:block;font-size:18px;color:var(--cyan);margin-top:5px;overflow-wrap:anywhere}
-.profile{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.profile-item{background:#10263a;border:1px solid #203c55;border-radius:5px;padding:8px;min-width:0}
-.profile-item.wide{grid-column:1/-1}
-.profile-item.highlight{border-color:#087f9b}
-.profile-item small{display:block;color:var(--muted);font-size:9px;margin-bottom:5px}
-.profile-item strong{font-size:12px;overflow-wrap:anywhere}
-.profile-item.highlight strong{color:var(--cyan)}
-.chart-box{height:245px;background:#091a2a;border:1px solid var(--border);border-radius:6px;margin-top:9px;position:relative}
-canvas{width:100%;height:100%;display:block}
-.chart-legend{font-size:9px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:7px}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
-.stat{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #1d354b;padding:7px 0;font-size:10px}
-.stat span{color:var(--muted)}
-.stat strong{text-align:right;overflow-wrap:anywhere}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.table-wrap{overflow:auto;max-height:250px}
-table{border-collapse:collapse;width:100%;font-size:9px}
-th,td{padding:7px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
-th{background:#10263a;color:var(--cyan);position:sticky;top:0}
-th:first-child,td:first-child{text-align:left}
-.attribute-list{max-height:260px;overflow:auto}
-.attr{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #1b344a;font-size:9px}
-.attr span{color:var(--muted);overflow-wrap:anywhere}
-.attr strong{text-align:right;overflow-wrap:anywhere}
-footer{text-align:center;color:#7892a9;font-size:9px;line-height:1.6;padding:12px}
+html,body{height:100%;margin:0;font-family:Segoe UI,Arial,sans-serif;color:var(--ink)}
+body{background:linear-gradient(135deg,#075b35,#16834e 52%,#0a623b)}
+header{
+ min-height:76px;padding:4px 16px 0;
+ background:linear-gradient(90deg,var(--red) 0 25%,var(--white) 25% 50%,var(--blue) 50% 75%,var(--green) 75%);
+}
+.head-inner{
+ height:72px;background:#092f26ed;color:white;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:10px 18px;gap:14px
+}
+.brand h1{font-size:18px;margin:0 0 5px;letter-spacing:.5px}
+.brand p{margin:0;color:#d7f3e3;font-size:11px}
+.status{font-size:11px;padding:8px 11px;border-radius:20px;background:#ffffff1c;border:1px solid #ffffff44;white-space:nowrap}
+main{
+ height:calc(100% - 76px);padding:12px;
+ display:grid;grid-template-columns:minmax(250px,.92fr) minmax(360px,1.55fr) minmax(300px,1fr);
+ gap:12px;min-height:0
+}
+.panel{background:var(--paper);border:1px solid #ffffffa8;border-radius:13px;min-height:0;overflow:auto;box-shadow:0 8px 25px #00351d44}
+.panel h2{
+ font-size:13px;letter-spacing:.8px;text-transform:uppercase;margin:0;
+ padding:13px 14px;color:white;background:var(--blue);
+ position:sticky;top:0;z-index:5
+}
+.panel-body{padding:13px}
+.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--green);font-weight:800;margin:15px 0 8px}
+label{display:block;font-size:11px;font-weight:700;color:#42566a;margin:8px 0 5px}
+select,input,button{
+ width:100%;border:1px solid #cbd8ce;border-radius:8px;
+ padding:9px 10px;background:white;color:var(--ink);font-size:12px
+}
+button{cursor:pointer;font-weight:800;border:0;background:var(--blue);color:white}
+button:hover{filter:brightness(1.12)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.red{background:var(--red)}
+button.green{background:var(--green)}
+button.light{background:#e8f2eb;color:var(--green);border:1px solid #c5ddce}
+button.gps{background:#075eab}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.actions.three{grid-template-columns:repeat(3,1fr)}
+.note{font-size:10px;line-height:1.5;color:var(--muted);background:#edf5ef;border-left:3px solid var(--green);padding:8px;margin-top:9px;border-radius:5px}
+.error{color:#a10f19;background:#fff0f0;border:1px solid #f2bfc3;padding:8px;border-radius:7px;font-size:11px;white-space:pre-wrap;margin-top:8px}
+#map{height:100%;min-height:400px;width:100%;border-radius:10px}
+.map-panel{display:flex;flex-direction:column;padding:10px;overflow:hidden;gap:8px}
+.map-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.map-toolbar select{width:auto;min-width:140px;flex:1}
+.map-caption{font-size:10px;color:#52675a;display:flex;justify-content:space-between;gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.kpi{background:white;border:1px solid var(--line);border-top:4px solid var(--green);border-radius:9px;padding:10px;min-width:0}
+.kpi:nth-child(4n+2){border-top-color:var(--red)}
+.kpi:nth-child(4n+3){border-top-color:var(--blue)}
+.kpi .v{font-size:20px;font-weight:850;color:var(--blue);overflow-wrap:anywhere}
+.kpi .k{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#68796e;margin-top:4px}
+.widget{background:white;border:1px solid var(--line);border-radius:10px;padding:10px;margin:9px 0}
+.widget-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.widget-head strong{font-size:11px;color:var(--blue)}
+.tag{font-size:9px;color:white;background:var(--green);padding:4px 7px;border-radius:20px;white-space:nowrap}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.profile-item{background:#f0f7f1;border-radius:7px;padding:8px;min-width:0}
+.profile-item span{display:block;font-size:9px;color:#63766a;text-transform:uppercase;margin-bottom:4px}
+.profile-item b{font-size:13px;overflow-wrap:anywhere;color:#173e2d}
+.chart-controls{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.chart-wrap{height:235px;position:relative}
+.chart-wrap.tall{height:270px}
+.legend-box{background:white;border:1px solid var(--line);border-radius:9px;padding:9px}
+.legend-title{font-weight:800;font-size:11px;color:var(--blue);margin-bottom:7px}
+.legend-row{display:flex;align-items:center;gap:8px;font-size:10px;margin:6px 0}
+.swatch{width:17px;height:13px;border:1px solid #999;border-radius:3px;flex:none}
+.legend-range{margin-left:auto;color:#51675b;font-variant-numeric:tabular-nums}
+.gps-info{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+table{border-collapse:collapse;width:100%;font-size:10px}
+th,td{padding:7px 6px;border-bottom:1px solid #e2ebe3;text-align:left;white-space:nowrap}
+th{background:#eef5ef;color:#31533d;position:sticky;top:0}
+.table-wrap{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:7px}
+footer{font-size:9px;text-align:center;color:#dff4e6;padding:8px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
 @media(max-width:1050px){
- main{height:auto;min-height:calc(100vh - 66px);grid-template-columns:1fr}
- .map-panel{height:60vh;min-height:400px;grid-row:1}
+ main{grid-template-columns:260px 1fr;height:auto;min-height:calc(100% - 76px)}
+ .analytics{grid-column:1/-1;max-height:900px}
+ .map-panel{min-height:550px}
+}
+@media(max-width:700px){
+ main{display:flex;flex-direction:column}
  .panel{max-height:none}
+ .map-panel{height:560px;min-height:560px;order:-1}
+ .map-panel #map{min-height:0}
+ .analytics{max-height:none}
 }
 </style>
 </head>
 
 <body>
 <header>
- <div class="brand">
-  <div class="logo">G</div>
-  <div>
-   <h1>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE-MAPPING AND CENSUS FIGURES</h1>
-   <small>ENUMERATION AREA • DATA QUALITY • COMPARATIVE ANALYSIS</small>
+ <div class="head-inner">
+  <div class="brand">
+   <h1>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE</h1>
+   <p>Enumeration Area Mapping • Census Indicators • Statistical Exploration • GPS Intelligence</p>
   </div>
+  <div class="status" id="loadStatus">Connecting to GitHub dataset…</div>
  </div>
- <div class="header-right">THE GAMBIA<br><span id="headerStatus">Awaiting dataset</span></div>
 </header>
 
 <main>
 
-<!-- LEFT CONTROLS -->
-<aside class="panel">
+<!-- LEFT: CONTROLS -->
+<section class="panel">
+ <h2>Controls & EA Explorer</h2>
+ <div class="panel-body">
 
- <div class="section">
-  <div class="heading">01 / Data source</div>
-  <label>Upload GeoJSON or JSON</label>
-  <input type="file" id="file" accept=".json,.geojson,application/json,application/geo+json">
-  <label>Or public raw GeoJSON URL</label>
-  <input id="url" placeholder="Paste GitHub raw URL">
-  <button class="primary" id="loadUrl" style="margin-top:8px">Load URL</button>
-  <div class="status" id="status">No dataset loaded.</div>
- </div>
+  <div class="section-title">Data source</div>
+  <label>GitHub GeoJSON URL</label>
+  <input id="sourceUrl" value="https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json">
 
- <div class="section">
-  <div class="heading">02 / Administrative filters</div>
-  <label>Local Government Area</label>
-  <select id="lga"><option value="">All LGAs</option></select>
+  <div class="actions">
+   <button id="loadUrl" class="green">Fetch GitHub</button>
+   <button id="reset" class="red">Reset filters</button>
+  </div>
+
+  <label>Upload GeoJSON / JSON</label>
+  <input type="file" id="fileInput" accept=".json,.geojson,application/json">
+
+  <div class="section-title">Administrative filters</div>
+  <label>Region / LGA</label>
+  <select id="lga"><option value="">All regions / LGAs</option></select>
+
   <label>District</label>
   <select id="district"><option value="">All districts</option></select>
+
   <label>Ward</label>
   <select id="ward"><option value="">All wards</option></select>
+
   <label>Enumeration Area</label>
   <select id="ea"><option value="">All EAs</option></select>
-  <div class="row">
-   <button class="primary" id="apply">Apply filters</button>
-   <button class="secondary" id="reset">Reset filters</button>
-  </div>
- </div>
 
- <div class="section">
-  <div class="heading">03 / Map configuration</div>
+  <div class="section-title">Map display</div>
   <label>Basemap</label>
   <select id="basemap">
    <option value="hybrid">Esri Hybrid</option>
+   <option value="satellite">Esri Satellite</option>
    <option value="osm">OpenStreetMap</option>
-   <option value="satellite">Satellite imagery</option>
-   <option value="topo">Topographic</option>
-   <option value="terrain">Shaded terrain</option>
+   <option value="topo">Esri Topographic</option>
+   <option value="terrain">Esri Terrain</option>
    <option value="light">Carto Light</option>
    <option value="dark">Carto Dark</option>
   </select>
-  <label>Boundary visibility</label>
-  <select id="boundary">
-   <option value="all">All filtered EAs</option>
+
+  <label>Boundary display</label>
+  <select id="boundaryMode">
+   <option value="filtered">All filtered EAs</option>
    <option value="selected">Selected EA only</option>
   </select>
-  <div class="row">
-   <button class="secondary" id="fit">Zoom to EAs</button>
-   <button class="secondary" id="clear">Clear selected EA</button>
+
+  <label>Map thematic indicator</label>
+  <select id="mapMetric">
+   <option value="none">Uniform EA boundaries</option>
+   <option value="map_pop">Mapped population</option>
+   <option value="map_hhs">Mapped households</option>
+   <option value="ls_pop">Listing population</option>
+   <option value="ls_hhs">Listing households</option>
+   <option value="enum_pop">Enumerated population</option>
+   <option value="enum_hhs">Enumerated households</option>
+   <option value="comp_map">Mapped compounds</option>
+   <option value="build_map">Mapped buildings</option>
+   <option value="comp_ls">Listing compounds</option>
+   <option value="build_ls">Listing buildings</option>
+  </select>
+
+  <label>Legend classification</label>
+  <select id="legendMethod">
+   <option value="quantile">Quantile (3 classes)</option>
+   <option value="equal">Equal interval (3 classes)</option>
+   <option value="natural">Natural breaks approximation</option>
+  </select>
+
+  <div class="actions">
+   <button id="apply" class="green">Apply filters</button>
+   <button id="fit" class="light">Zoom to results</button>
   </div>
- </div>
 
- <div class="section">
-  <div class="heading">04 / Statistical exports</div>
-  <button class="secondary" id="csv">Export EA data CSV</button>
-  <button class="secondary" id="geojson" style="margin-top:6px">Export filtered GeoJSON</button>
-  <button class="secondary" id="statsCsv" style="margin-top:6px">Export statistics CSV</button>
-  <button class="secondary" id="compareCsv" style="margin-top:6px">Export comparison CSV</button>
- </div>
+  <div class="section-title">GPS location capture</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>Capture current GPS position</strong>
+    <span class="tag">GPS</span>
+   </div>
+   <button id="gpsButton" class="gps">◎ Capture my GPS location</button>
+   <div id="gpsInfo" class="gps-info note">
+    GPS is not yet captured. Allow location access when your browser requests permission.
+   </div>
+   <div class="actions">
+    <button id="downloadGPS" class="light" disabled>Download GPS CSV</button>
+    <button id="clearGPS" class="red" disabled>Clear GPS</button>
+   </div>
+   <div class="note">
+    GPS requires browser location permission and a secure HTTPS website or localhost.
+    Accuracy depends on the device and its location services.
+   </div>
+  </div>
 
- <div class="section">
-  <div class="heading">05 / Analysis guide</div>
+  <div class="section-title">EA selection widget</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>Selected EA quick profile</strong>
+    <span class="tag">EA WIDGET</span>
+   </div>
+   <div id="eaQuick" class="note">Select an Enumeration Area to view its indicators.</div>
+  </div>
+
+  <div class="section-title">Data downloads</div>
+  <div class="actions">
+   <button id="csv" class="light">Filtered EA CSV</button>
+   <button id="geojson" class="light">Filtered EA GeoJSON</button>
+  </div>
+  <button id="selectedCSV" class="light" style="margin-top:7px">Download selected EA CSV</button>
+
+  <div id="errorBox"></div>
+
   <div class="note">
-   • Descriptive statistics<br>
-   • Field-to-field comparison<br>
-   • Numeric distributions<br>
-   • Categorical frequencies<br>
-   • Correlation analysis<br>
-   • Data completeness<br>
-   • Household and population indicators
+   The dashboard displays only the 13 approved EA fields. Other GeoJSON properties are not included in the EA profile, charts or exported attribute tables.
   </div>
- </div>
-
-</aside>
-
-<!-- MAP -->
-<section class="map-panel">
- <div id="map"></div>
- <div class="map-top">
-  <div class="chip"><b>GAMBIA</b> | EA Spatial Distribution</div>
-  <div class="chip" id="mapCount">0 EAs</div>
  </div>
 </section>
 
-<!-- RIGHT ANALYTICS -->
-<aside class="panel">
+<!-- CENTRE: MAP -->
+<section class="panel map-panel">
+ <div class="map-toolbar">
+  <select id="mapMetricTop" aria-label="Map indicator">
+   <option value="none">Uniform EA boundaries</option>
+   <option value="map_pop">Mapped population</option>
+   <option value="map_hhs">Mapped households</option>
+   <option value="ls_pop">Listing population</option>
+   <option value="ls_hhs">Listing households</option>
+   <option value="enum_pop">Enumerated population</option>
+   <option value="enum_hhs">Enumerated households</option>
+   <option value="comp_map">Mapped compounds</option>
+   <option value="build_map">Mapped buildings</option>
+   <option value="comp_ls">Listing compounds</option>
+   <option value="build_ls">Listing buildings</option>
+  </select>
+  <button id="mapRefresh" class="green" style="width:auto">Update map</button>
+ </div>
 
- <div class="section">
-  <div class="heading">06 / Key performance indicators</div>
+ <div class="map-caption">
+  <span id="mapCount">Waiting for EA boundaries…</span>
+  <span id="mapProjection">WGS84 GeoJSON</span>
+ </div>
+
+ <div id="map"></div>
+
+ <div class="legend-box">
+  <div class="legend-title" id="legendTitle">Dynamic map legend • Uniform boundaries</div>
+  <div id="dynamicLegend">
+   <div class="legend-row"><span class="swatch" style="background:#16834e"></span>Enumeration Area boundaries</div>
+  </div>
+ </div>
+</section>
+
+<!-- RIGHT: ANALYTICS -->
+<section class="panel analytics">
+ <h2>Analytics & Chart Intelligence</h2>
+ <div class="panel-body">
+
+  <div class="section-title">Filtered area indicators</div>
   <div class="kpis">
-   <div class="kpi"><small>Loaded EAs</small><strong id="kTotal">0</strong></div>
-   <div class="kpi"><small>Filtered EAs</small><strong id="kFiltered">0</strong></div>
-   <div class="kpi"><small>Mapped households</small><strong id="kHhs">—</strong></div>
-   <div class="kpi"><small>Mapped population</small><strong id="kPop">—</strong></div>
-   <div class="kpi"><small>Listing households</small><strong id="kLsHhs">—</strong></div>
-   <div class="kpi"><small>Enumerated households</small><strong id="kEnumHhs">—</strong></div>
-  </div>
- </div>
-
- <div class="section">
-  <div class="heading">07 / Selected EA profile</div>
-  <div id="profile" class="note">Click an EA on the map or select one from the EA selector.</div>
- </div>
-
- <div class="section">
-  <div class="heading">08 / Statistical analysis</div>
-
-  <label>Primary variable</label>
-  <select id="field1"></select>
-
-  <label>Chart type</label>
-  <select id="chartType">
-   <option value="histogram">Histogram / distribution</option>
-   <option value="bar">Ranked bar chart</option>
-   <option value="line">Line chart</option>
-   <option value="pie">Pie chart</option>
-   <option value="doughnut">Doughnut chart</option>
-   <option value="scatter">Scatter plot</option>
-   <option value="box">Box plot</option>
-   <option value="frequency">Category frequency</option>
-  </select>
-
-  <label>Secondary variable (for scatter/comparison)</label>
-  <select id="field2"></select>
-
-  <div class="row">
-   <button class="primary" id="draw">Update chart</button>
-   <button class="secondary" id="chartReset">Reset chart</button>
+   <div class="kpi"><div class="v" id="kpiEAs">—</div><div class="k">Filtered EAs</div></div>
+   <div class="kpi"><div class="v" id="kpiPop">—</div><div class="k">Mapped population</div></div>
+   <div class="kpi"><div class="v" id="kpiHhs">—</div><div class="k">Mapped households</div></div>
+   <div class="kpi"><div class="v" id="kpiListing">—</div><div class="k">Listing households</div></div>
+   <div class="kpi"><div class="v" id="kpiEnum">—</div><div class="k">Enumerated households</div></div>
+   <div class="kpi"><div class="v" id="kpiCoverage">—</div><div class="k">Field completeness</div></div>
   </div>
 
-  <div class="chart-box"><canvas id="mainChart"></canvas></div>
-  <div class="chart-legend" id="chartLegend"></div>
-  <div id="descriptiveStats"></div>
- </div>
-
- <div class="section">
-  <div class="heading">09 / Field comparison analysis</div>
-
-  <label>Comparison indicator</label>
-  <select id="compareMode">
-   <option value="paired">Compare two fields per EA</option>
-   <option value="difference">Difference: field 1 − field 2</option>
-   <option value="ratio">Ratio: field 1 / field 2</option>
-   <option value="percent">Percentage difference</option>
-   <option value="correlation">Correlation coefficient</option>
-  </select>
-
-  <label>Comparison chart</label>
-  <select id="compareChart">
-   <option value="grouped">Grouped bar chart</option>
-   <option value="line">Line comparison</option>
-   <option value="scatter">Scatter comparison</option>
-   <option value="difference">Difference by EA</option>
-  </select>
-
-  <button class="primary" id="runCompare" style="margin-top:9px">Run field comparison</button>
-  <div class="chart-box"><canvas id="compareCanvas"></canvas></div>
-  <div id="compareResults"></div>
- </div>
-
- <div class="section">
-  <div class="heading">10 / Correlation analysis</div>
-  <label>First variable</label>
-  <select id="corr1"></select>
-  <label>Second variable</label>
-  <select id="corr2"></select>
-  <button class="secondary" id="correlate" style="margin-top:8px">Calculate correlation</button>
-  <div id="correlationResult"></div>
- </div>
-
- <div class="section">
-  <div class="heading">11 / Data quality and completeness</div>
-  <div id="quality"></div>
-  <div class="chart-box" style="height:170px"><canvas id="qualityCanvas"></canvas></div>
- </div>
-
- <div class="section">
-  <div class="heading">12 / Household and population indicators</div>
-  <div id="indicators"></div>
-  <div class="chart-box" style="height:190px"><canvas id="indicatorCanvas"></canvas></div>
- </div>
-
- <div class="section">
-  <div class="heading">13 / All properties for selected EA</div>
-  <div class="attribute-list" id="allAttributes">
-   <div class="note">Select an EA to display its complete attribute record.</div>
+  <div class="section-title">Selected EA indicator cards</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>EA statistical profile</strong>
+    <span class="tag">EA DETAIL</span>
+   </div>
+   <div id="eaProfile" class="profile-grid">
+    <div class="note">Select an EA from the map or left panel.</div>
+   </div>
   </div>
- </div>
 
- <div class="section">
-  <div class="heading">14 / Field inventory</div>
-  <div id="fieldInventory" class="note">Load a dataset to view its properties.</div>
- </div>
+  <div class="section-title">Individual chart builder</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>EA indicator visualization</strong>
+    <span class="tag">CHART 01</span>
+   </div>
 
- <footer>
-  <b>GBoS GEOAI</b><br>
-  Produced by Ansu Singhateh<br>
-  GIS Analyst | GIS / Cartography Unit | Gambia Bureau of Statistics<br>
-  GBoS GEOAI • Research and educational use
- </footer>
-</aside>
+   <div class="chart-controls">
+    <div>
+     <label>Chart type</label>
+     <select id="chartType">
+      <option value="bar">Bar chart</option>
+      <option value="line">Line chart</option>
+      <option value="pie">Pie chart</option>
+      <option value="doughnut">Doughnut chart</option>
+      <option value="radar">Radar chart</option>
+      <option value="polarArea">Polar area</option>
+     </select>
+    </div>
+    <div>
+     <label>Indicator</label>
+     <select id="chartMetric">
+      <option value="map_pop">Mapped population</option>
+      <option value="map_hhs">Mapped households</option>
+      <option value="ls_pop">Listing population</option>
+      <option value="ls_hhs">Listing households</option>
+      <option value="enum_pop">Enumerated population</option>
+      <option value="enum_hhs">Enumerated households</option>
+      <option value="comp_map">Mapped compounds</option>
+      <option value="build_map">Mapped buildings</option>
+      <option value="comp_ls">Listing compounds</option>
+      <option value="build_ls">Listing buildings</option>
+     </select>
+    </div>
+   </div>
+
+   <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+   <div class="note" id="chartNote">Chart values are calculated from the currently filtered EA features.</div>
+   <div class="actions">
+    <button id="downloadMainPNG" class="light">Download chart PNG</button>
+    <button id="downloadMainCSV" class="light">Download chart data CSV</button>
+   </div>
+  </div>
+
+  <div class="section-title">Multi-indicator comparison</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>Mapped, listing and enumerated</strong>
+    <span class="tag">CHART 02</span>
+   </div>
+   <div class="chart-controls">
+    <div>
+     <label>Comparison measure</label>
+     <select id="comparisonMeasure">
+      <option value="population">Population</option>
+      <option value="households">Households</option>
+      <option value="compounds">Compounds</option>
+      <option value="buildings">Buildings</option>
+     </select>
+    </div>
+    <div>
+     <label>Comparison chart</label>
+     <select id="comparisonType">
+      <option value="bar">Grouped bar</option>
+      <option value="line">Line</option>
+      <option value="radar">Radar</option>
+     </select>
+    </div>
+   </div>
+   <div class="chart-wrap"><canvas id="compareChart"></canvas></div>
+   <div class="note" id="comparisonNote">Comparison uses the filtered EA records. Up to 30 EAs are displayed in the chart.</div>
+   <div class="actions">
+    <button id="downloadComparePNG" class="light">Download comparison PNG</button>
+    <button id="downloadCompareCSV" class="light">Download comparison CSV</button>
+   </div>
+  </div>
+
+  <div class="section-title">Indicator A versus indicator B</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>Direct chart-to-chart comparison</strong>
+    <span class="tag">CHART 03</span>
+   </div>
+   <div class="chart-controls">
+    <div>
+     <label>Indicator A</label>
+     <select id="indicatorA">
+      <option value="map_pop">Mapped population</option>
+      <option value="map_hhs">Mapped households</option>
+      <option value="ls_pop">Listing population</option>
+      <option value="ls_hhs">Listing households</option>
+      <option value="enum_pop">Enumerated population</option>
+      <option value="enum_hhs">Enumerated households</option>
+      <option value="comp_map">Mapped compounds</option>
+      <option value="build_map">Mapped buildings</option>
+      <option value="comp_ls">Listing compounds</option>
+      <option value="build_ls">Listing buildings</option>
+     </select>
+    </div>
+    <div>
+     <label>Indicator B</label>
+     <select id="indicatorB">
+      <option value="ls_pop">Listing population</option>
+      <option value="map_pop">Mapped population</option>
+      <option value="enum_pop">Enumerated population</option>
+      <option value="map_hhs">Mapped households</option>
+      <option value="ls_hhs">Listing households</option>
+      <option value="enum_hhs">Enumerated households</option>
+      <option value="comp_map">Mapped compounds</option>
+      <option value="build_map">Mapped buildings</option>
+      <option value="comp_ls">Listing compounds</option>
+      <option value="build_ls">Listing buildings</option>
+     </select>
+    </div>
+    <div>
+     <label>Comparison visualization</label>
+     <select id="directChartType">
+      <option value="bar">Grouped bar</option>
+      <option value="line">Line</option>
+      <option value="radar">Radar</option>
+     </select>
+    </div>
+    <div>
+     <label>Comparison calculation</label>
+     <select id="comparisonCalculation">
+      <option value="values">Compare actual values</option>
+      <option value="difference">A minus B</option>
+      <option value="percentage">Percentage difference</option>
+      <option value="ratio">A / B ratio</option>
+     </select>
+    </div>
+   </div>
+   <div class="chart-wrap"><canvas id="directChart"></canvas></div>
+   <div id="directSummary" class="note">Select two indicators to compare their filtered EA values.</div>
+   <div class="actions">
+    <button id="downloadDirectPNG" class="light">Download comparison PNG</button>
+    <button id="downloadDirectCSV" class="light">Download comparison CSV</button>
+   </div>
+  </div>
+
+  <div class="section-title">EA attribute table</div>
+  <div class="widget">
+   <div class="widget-head">
+    <strong>Approved EA fields only</strong>
+    <span class="tag">DATA TABLE</span>
+   </div>
+   <div class="table-wrap">
+    <table>
+     <thead id="tableHead"></thead>
+     <tbody id="tableBody"></tbody>
+    </table>
+   </div>
+   <div class="note">The table displays the first 300 filtered EA records. Use CSV export to download the complete filtered dataset.</div>
+  </div>
+
+  <footer>
+   Produced by Ansu Singhateh | GIS Analyst • GIS / Cartography Unit • GBoS<br>
+   GBoS GEOAI • Research and educational use
+  </footer>
+ </div>
+</section>
 
 </main>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-"use strict";
+(function(){
+'use strict';
 
-/* ============================================================
- GBoS GEOAI | GAMBIA EA STATISTICAL INTELLIGENCE
- Full-property analysis, field comparison, charts and mapping.
- All calculations use the currently filtered EA records.
-============================================================ */
+const DEFAULT_URL='https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json';
+
+const FIELDS=[
+ 'lganame','distname','wardname','map_hhs','map_pop','ls_hhs','ls_pop',
+ 'enum_hhs','enum_pop','comp_map','build_map','comp_ls','build_ls'
+];
+
+const LABELS={
+ lganame:'Region / LGA',distname:'District',wardname:'Ward',
+ map_hhs:'Mapped households',map_pop:'Mapped population',
+ ls_hhs:'Listing households',ls_pop:'Listing population',
+ enum_hhs:'Enumerated households',enum_pop:'Enumerated population',
+ comp_map:'Mapped compounds',build_map:'Mapped buildings',
+ comp_ls:'Listing compounds',build_ls:'Listing buildings'
+};
 
 const $=id=>document.getElementById(id);
-let allFeatures=[],filtered=[],fields=[],selected=null;
-let layer=null,baseLayer=null;
 
-const map=L.map("map",{center:[13.45,-15.55],zoom:8});
+let allFeatures=[];
+let filtered=[];
+let selectedId=null;
+let layer=null;
+let mainChart=null;
+let compareChart=null;
+let directChart=null;
+let baseLayer=null;
+let gpsRecord=null;
+let gpsMarker=null;
+let gpsAccuracy=null;
+let currentMainRows=[];
+let currentCompareRows=[];
+let currentDirectRows=[];
 
-const base={
- osm:L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}),
- satellite:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"© Esri"}),
+const map=L.map('map',{zoomControl:true,preferCanvas:true}).setView([13.45,-15.5],8);
+
+const basemaps={
+ osm:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}),
+ satellite:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'}),
  hybrid:L.layerGroup([
-  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19}),
-  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19}),
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19})
  ]),
- topo:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:19}),
- terrain:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}",{maxZoom:13}),
- light:L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{maxZoom:19}),
- dark:L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:19})
-};
-baseLayer=base.hybrid.addTo(map);
-
-$("basemap").onchange=()=>{
- map.removeLayer(baseLayer);
- baseLayer=base[$("basemap").value].addTo(map);
+ topo:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:19}),
+ terrain:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:13}),
+ light:L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19}),
+ dark:L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19})
 };
 
-/* ---------- UTILITIES ---------- */
+function setBase(key){
+ if(baseLayer)map.removeLayer(baseLayer);
+ baseLayer=basemaps[key]||basemaps.hybrid;
+ baseLayer.addTo(map);
+}
+setBase('hybrid');
+$('basemap').addEventListener('change',e=>setBase(e.target.value));
 
-function esc(v){
- return String(v??"—").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- })[c]);
+function norm(s){
+ return String(s??'').trim().toLowerCase().replace(/[\s_-]+/g,'');
 }
-function val(v){
- if(v===null||v===undefined||v==="")return null;
- if(typeof v==="boolean")return null;
- if(typeof v==="number")return Number.isFinite(v)?v:null;
- if(typeof v==="string"){
-  const s=v.replace(/,/g,"").trim();
-  if(!s)return null;
-  const n=Number(s);
-  return Number.isFinite(n)?n:null;
+function prop(p,key){
+ if(!p)return null;
+ const target=norm(key);
+ const k=Object.keys(p).find(x=>norm(x)===target);
+ return k===undefined?null:p[k];
+}
+function clean(v){
+ if(v===null||v===undefined||v==='')return null;
+ if(typeof v==='string')v=v.replace(/,/g,'').trim();
+ const n=Number(v);
+ return Number.isFinite(n)?n:null;
+}
+function fmt(v){
+ const n=clean(v);
+ return n===null?'—':new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(n);
+}
+function text(v){return v===null||v===undefined||v===''?'—':String(v)}
+function get(f,k){return prop(f.properties||{},k)}
+function idOf(f){return f.__dashId}
+function featureName(f,i){return text(get(f,'feacode')??get(f,'eaname')??('EA '+(i+1)))}
+function escapeHTML(s){
+ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function status(s,bad=false){
+ $('loadStatus').textContent=s;
+ $('loadStatus').style.background=bad?'#8f1520':'#ffffff1c';
+}
+function error(s){
+ $('errorBox').innerHTML=s?'<div class="error">'+escapeHTML(s)+'</div>':'';
+}
+function normalizeUrl(url){
+ url=(url||'').trim()||DEFAULT_URL;
+ return url.replace('https://github.com/','https://raw.githubusercontent.com/').replace('/blob/','/');
+}
+function parseGeojson(data){
+ if(Array.isArray(data))return {type:'FeatureCollection',features:data};
+ if(data&&data.type==='FeatureCollection'&&Array.isArray(data.features))return data;
+ if(data&&data.type==='Feature')return {type:'FeatureCollection',features:[data]};
+ if(data&&Array.isArray(data.features))return {type:'FeatureCollection',features:data.features};
+ throw new Error('The file does not contain a valid GeoJSON FeatureCollection or Feature array.');
+}
+async function fetchJson(url){
+ const first=normalizeUrl(url);
+ const attempts=[first];
+ if(first.includes('/main/'))attempts.push(first.replace('/main/','/master/'));
+ let lastError;
+ for(const u of attempts){
+  try{
+   const response=await fetch(u,{mode:'cors',cache:'no-store'});
+   if(!response.ok)throw new Error('HTTP '+response.status+' '+response.statusText);
+   return {data:await response.json(),url:u};
+  }catch(e){lastError=new Error(u+' → '+e.message);}
  }
- return null;
+ throw lastError||new Error('Unable to fetch the GeoJSON.');
 }
-function fmt(n){
- return n===null||n===undefined||!Number.isFinite(Number(n))?"—":
- Number(n).toLocaleString("en-US",{maximumFractionDigits:2});
+function loadData(raw,source){
+ const gj=parseGeojson(raw);
+ allFeatures=gj.features.filter(f=>f&&f.type==='Feature'&&f.geometry&&f.properties)
+  .map((f,i)=>({...f,__dashId:i}));
+ if(!allFeatures.length)throw new Error('No valid features with geometry and properties were found.');
+ selectedId=null;
+ populateSelectors();
+ applyFilters();
+ error('');
+ status('Loaded '+allFeatures.length.toLocaleString()+' EAs • '+source);
 }
-function uniq(arr){
- return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!=="").map(String))]
- .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
-}
-function getField(candidates){
- const lower=fields.map(f=>[f,f.toLowerCase()]);
- for(const c of candidates){
-  const found=lower.find(x=>x[1]===c.toLowerCase());
-  if(found)return found[0];
- }
- return null;
-}
-function numValues(field,records=filtered){
- return records.map(f=>val(f.properties?.[field])).filter(v=>v!==null);
-}
-function sumField(field,records=filtered){
- const a=numValues(field,records);
- return a.length?a.reduce((x,y)=>x+y,0):null;
-}
-function median(a){
- if(!a.length)return null;
- const s=[...a].sort((x,y)=>x-y),m=Math.floor(s.length/2);
- return s.length%2?s[m]:(s[m-1]+s[m])/2;
-}
-function quantile(a,q){
- if(!a.length)return null;
- const s=[...a].sort((x,y)=>x-y);
- const pos=(s.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos);
- return s[lo]+(s[hi]-s[lo])*(pos-lo);
-}
-function stats(a){
- if(!a.length)return null;
- const sorted=[...a].sort((x,y)=>x-y);
- const mean=a.reduce((x,y)=>x+y,0)/a.length;
- const variance=a.reduce((s,x)=>s+(x-mean)**2,0)/a.length;
- return {
-  n:a.length,sum:a.reduce((x,y)=>x+y,0),mean,median:median(a),
-  min:sorted[0],max:sorted[sorted.length-1],
-  sd:Math.sqrt(variance),q1:quantile(a,.25),q3:quantile(a,.75)
- };
-}
-function pearson(x,y){
- const pairs=[];
- for(let i=0;i<Math.min(x.length,y.length);i++){
-  if(x[i]!==null&&y[i]!==null&&Number.isFinite(x[i])&&Number.isFinite(y[i]))
-   pairs.push([x[i],y[i]]);
- }
- if(pairs.length<2)return {r:null,n:pairs.length};
- const mx=pairs.reduce((s,p)=>s+p[0],0)/pairs.length;
- const my=pairs.reduce((s,p)=>s+p[1],0)/pairs.length;
- let numerator=0,dx=0,dy=0;
- pairs.forEach(p=>{
-  numerator+=(p[0]-mx)*(p[1]-my);
-  dx+=(p[0]-mx)**2;dy+=(p[1]-my)**2;
- });
- const den=Math.sqrt(dx*dy);
- return {r:den?numerator/den:null,n:pairs.length};
-}
-function download(content,name,type){
- const blob=new Blob([content],{type});
- const u=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);
-}
-function csvCell(v){
- const s=v===null||v===undefined?"":typeof v==="object"?JSON.stringify(v):String(v);
- return '"'+s.replace(/"/g,'""')+'"';
-}
-function setStatus(s,error=false){
- $("status").textContent=s;
- $("status").style.color=error?"#ff8792":"#35d49a";
-}
-
-/* ---------- LOAD DATA ---------- */
-
-$("file").addEventListener("change",async e=>{
- const f=e.target.files?.[0];if(!f)return;
- try{loadData(JSON.parse(await f.text()),f.name);}
- catch(err){setStatus("File error: "+err.message,true);}
-});
-$("loadUrl").onclick=async()=>{
- const u=$("url").value.trim();
- if(!u)return setStatus("https://github.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json",true);
- setStatus("Loading GeoJSON...");
+async function loadFromUrl(){
+ const url=normalizeUrl($('sourceUrl').value);
+ $('sourceUrl').value=url;
+ status('Fetching GitHub GeoJSON…');
+ error('');
  try{
-  const r=await fetch(u);
-
-  if(!r.ok)throw Error("HTTP "+r.status);
-  loadData(await r.json(),u);
- }catch(err){setStatus("URL error: "+err.message+". Check URL and CORS access.",true);}
-};
-
-function loadData(data,source){
- if(!data||!Array.isArray(data.features))
-  return setStatus("Invalid GeoJSON: expected a FeatureCollection.",true);
- allFeatures=data.features.filter(f=>f?.type==="Feature"&&f.geometry?.coordinates);
- if(!allFeatures.length)return setStatus("No valid spatial features found.",true);
- fields=[...new Set(allFeatures.flatMap(f=>Object.keys(f.properties||{})))].sort();
- filtered=[...allFeatures];selected=null;
- buildSelectors();buildFields();renderAll();
- setStatus("Loaded "+fmt(allFeatures.length)+" features from "+source);
- $("headerStatus").textContent=fmt(allFeatures.length)+" EA records loaded";
+  const result=await fetchJson(url);
+  loadData(result.data,result.url);
+ }catch(e){
+  status('Dataset fetch failed',true);
+  error('Unable to load the GitHub GeoJSON. Check the public repository, branch and filename.\n'+e.message+'\nYou can upload Census_EAs_Geo.json as a fallback.');
+ }
 }
 
-/* ---------- ADMINISTRATIVE FILTERS ---------- */
-
-function admin(){
- return {
-  lga:getField(["lganame","lga_name","lga","region"]),
-  dist:getField(["distname","district_name","district"]),
-  ward:getField(["wardname","ward_name","ward"]),
-  ea:getField(["feacode","ea_code","eaname","enum_area","ea"])
- };
+function uniqueValues(features,key){
+ return [...new Set(features.map(f=>get(f,key))
+  .filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='').map(String))]
+  .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
 }
-function populate(id,values,label,counts,total){
- const el=$(id);el.innerHTML="";
- const o=document.createElement("option");o.value="";
- o.textContent=label+" ("+fmt(total)+" EAs)";el.appendChild(o);
- values.forEach(v=>{
-  const x=document.createElement("option");x.value=v;
-  x.textContent=v+" ("+fmt(counts[v]||0)+" EAs)";
-  el.appendChild(x);
+function fillSelect(id,values,first){
+ const el=$(id),old=el.value;
+ el.innerHTML='';
+ const op=document.createElement('option');op.value='';op.textContent=first;el.appendChild(op);
+ values.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o);});
+ if(values.includes(old))el.value=old;
+}
+function subsetByParents(){
+ const l=$('lga').value,d=$('district').value,w=$('ward').value;
+ return allFeatures.filter(f=>
+  (!l||String(get(f,'lganame'))===l)&&
+  (!d||String(get(f,'distname'))===d)&&
+  (!w||String(get(f,'wardname'))===w));
+}
+function updateDistricts(){fillSelect('district',uniqueValues(subsetByParents(),'distname'),'All districts');}
+function updateWards(){fillSelect('ward',uniqueValues(subsetByParents(),'wardname'),'All wards');}
+function updateEAs(){
+ const a=subsetByParents(),el=$('ea'),old=el.value;
+ el.innerHTML='<option value="">All EAs ('+a.length+')</option>';
+ a.forEach((f,i)=>{
+  const o=document.createElement('option');
+  o.value=String(idOf(f));o.textContent=featureName(f,i);el.appendChild(o);
  });
+ if([...el.options].some(o=>o.value===old))el.value=old;
 }
-function subsetBy(field,value,records){
- return value&&field?records.filter(f=>String(f.properties?.[field]??"")===value):records;
+function populateSelectors(){
+ fillSelect('lga',uniqueValues(allFeatures,'lganame'),'All regions / LGAs');
+ updateDistricts();updateWards();updateEAs();
 }
-function buildSelectors(){
- const a=admin();
- let s=allFeatures;
- let values=a.lga?uniq(s.map(f=>f.properties?.[a.lga])):[];
- let counts={};values.forEach(v=>counts[v]=s.filter(f=>String(f.properties?.[a.lga])===v).length);
- populate("lga",values,"All LGAs",counts,s.length);
- updateDistrict();updateWard();updateEA();
-}
-function updateDistrict(){
- const a=admin(),s=subsetBy(a.lga,$("lga").value,allFeatures);
- const vs=a.dist?uniq(s.map(f=>f.properties?.[a.dist])):[];
- const c={};vs.forEach(v=>c[v]=s.filter(f=>String(f.properties?.[a.dist])===v).length);
- populate("district",vs,"All districts",c,s.length);
-}
-function updateWard(){
- const a=admin();
- let s=subsetBy(a.lga,$("lga").value,allFeatures);
- s=subsetBy(a.dist,$("district").value,s);
- const vs=a.ward?uniq(s.map(f=>f.properties?.[a.ward])):[];
- const c={};vs.forEach(v=>c[v]=s.filter(f=>String(f.properties?.[a.ward])===v).length);
- populate("ward",vs,"All wards",c,s.length);
-}
-function updateEA(){
- const a=admin();
- let s=subsetBy(a.lga,$("lga").value,allFeatures);
- s=subsetBy(a.dist,$("district").value,s);
- s=subsetBy(a.ward,$("ward").value,s);
- const vs=a.ea?uniq(s.map(f=>f.properties?.[a.ea])):[];
- const c={};vs.forEach(v=>c[v]=s.filter(f=>String(f.properties?.[a.ea])===v).length);
- populate("ea",vs,"All EAs",c,s.length);
-}
-$("lga").onchange=()=>{updateDistrict();updateWard();updateEA();};
-$("district").onchange=()=>{updateWard();updateEA();};
-$("ward").onchange=updateEA;
-$("apply").onclick=()=>{
- const a=admin();
- let s=allFeatures;
- s=subsetBy(a.lga,$("lga").value,s);
- s=subsetBy(a.dist,$("district").value,s);
- s=subsetBy(a.ward,$("ward").value,s);
- s=subsetBy(a.ea,$("ea").value,s);
- filtered=s;selected=null;renderAll();
-};
-$("reset").onclick=()=>{
- ["lga","district","ward","ea"].forEach(id=>$(id).value="");
- filtered=[...allFeatures];selected=null;renderAll();
-};
-$("clear").onclick=()=>{selected=null;$("ea").value="";renderAll();};
+$('lga').addEventListener('change',()=>{
+ $('district').value='';$('ward').value='';$('ea').value='';
+ updateDistricts();updateWards();updateEAs();
+});
+$('district').addEventListener('change',()=>{
+ $('ward').value='';$('ea').value='';
+ updateWards();updateEAs();
+});
+$('ward').addEventListener('change',()=>{$('ea').value='';updateEAs();});
 
-/* ---------- FIELD SELECTORS ---------- */
-
-function buildFields(){
- const ids=["field1","field2","corr1","corr2"];
- ids.forEach(id=>{
-  const el=$(id);el.innerHTML="";
-  fields.forEach(f=>{
-   const o=document.createElement("option");o.value=f;o.textContent=f;el.appendChild(o);
-  });
- });
- const choices=[
-  ["field1",["map_pop","sum_pop","enum_pop","ls_pop"]],
-  ["field2",["map_hhs","sum_hhs","enum_hhs","ls_hhs"]],
-  ["corr1",["map_pop","sum_pop","enum_pop"]],
-  ["corr2",["map_hhs","sum_hhs","enum_hhs"]]
- ];
- choices.forEach(([id,candidates])=>{
-  const f=getField(candidates);if(f)$(id).value=f;
- });
- $("field1").onchange=()=>{drawMain();};
- $("field2").onchange=()=>{drawMain();};
+function applyFilters(){
+ const l=$('lga').value,d=$('district').value,w=$('ward').value,e=$('ea').value;
+ filtered=allFeatures.filter(f=>
+  (!l||String(get(f,'lganame'))===l)&&
+  (!d||String(get(f,'distname'))===d)&&
+  (!w||String(get(f,'wardname'))===w)&&
+  (!e||String(idOf(f))===e));
+ if(e)selectedId=e;
+ else if(selectedId&&!filtered.some(f=>String(idOf(f))===String(selectedId)))selectedId=null;
+ renderAll();
+}
+function numericSum(key){
+ return filtered.reduce((s,f)=>s+(clean(get(f,key))??0),0);
+}
+function completeness(){
+ let total=0,count=0;
+ filtered.forEach(f=>FIELDS.forEach(k=>{
+  total++;
+  const v=get(f,k);
+  if(v!==null&&v!==undefined&&v!=='')count++;
+ }));
+ return total?100*count/total:0;
+}
+function updateKpis(){
+ $('kpiEAs').textContent=fmt(filtered.length);
+ $('kpiPop').textContent=fmt(numericSum('map_pop'));
+ $('kpiHhs').textContent=fmt(numericSum('map_hhs'));
+ $('kpiListing').textContent=fmt(numericSum('ls_hhs'));
+ $('kpiEnum').textContent=fmt(numericSum('enum_hhs'));
+ $('kpiCoverage').textContent=fmt(completeness())+'%';
+}
+function selectedFeature(){
+ return allFeatures.find(f=>String(idOf(f))===String(selectedId))||null;
+}
+function renderProfile(){
+ const f=selectedFeature(),box=$('eaProfile'),quick=$('eaQuick');
+ if(!f){
+  box.innerHTML='<div class="note">Select an EA to display its 13 approved fields.</div>';
+  quick.textContent='No EA selected.';return;
+ }
+ box.innerHTML=FIELDS.map(k=>
+  '<div class="profile-item"><span>'+LABELS[k]+'</span><b>'+escapeHTML(text(get(f,k)))+'</b></div>'
+ ).join('');
+ quick.innerHTML='<b>'+escapeHTML(featureName(f,0))+'</b><br>'+
+  escapeHTML(text(get(f,'lganame')))+' • '+escapeHTML(text(get(f,'distname')))+' • '+escapeHTML(text(get(f,'wardname')))+
+  '<br>Mapped population: <b>'+fmt(get(f,'map_pop'))+'</b> | Mapped households: <b>'+fmt(get(f,'map_hhs'))+'</b>';
 }
 
-/* ---------- MAP RENDERING ---------- */
+/* DYNAMIC LEGEND */
+function quantile(sorted,p){
+ if(!sorted.length)return null;
+ const pos=(sorted.length-1)*p;
+ const lo=Math.floor(pos),hi=Math.ceil(pos);
+ return sorted[lo]+(sorted[hi]-sorted[lo])*(pos-lo);
+}
+function naturalApprox(sorted){
+ if(!sorted.length)return [];
+ const a=quantile(sorted,1/3),b=quantile(sorted,2/3);
+ return [a,b];
+}
+function getLegendBreaks(values,method){
+ const sorted=values.filter(v=>v!==null).sort((a,b)=>a-b);
+ if(!sorted.length)return null;
+ if(sorted[0]===sorted[sorted.length-1])return [sorted[0],sorted[0]];
+ if(method==='equal'){
+  const min=sorted[0],max=sorted[sorted.length-1],step=(max-min)/3;
+  return [min+step,min+step*2];
+ }
+ if(method==='natural')return naturalApprox(sorted);
+ return [quantile(sorted,1/3),quantile(sorted,2/3)];
+}
+function legendClass(v,br){
+ if(v===null)return -1;
+ if(br[0]===br[1])return v<=br[0]?0:2;
+ return v<=br[0]?0:v<=br[1]?1:2;
+}
+const CLASS_COLORS=['#d62828','#f4c542','#087a45'];
+let currentLegend=null;
 
+function updateLegend(){
+ const metric=$('mapMetric').value;
+ const box=$('dynamicLegend');
+ if(metric==='none'){
+  currentLegend=null;
+  $('legendTitle').textContent='Dynamic map legend • Uniform boundaries';
+  box.innerHTML='<div class="legend-row"><span class="swatch" style="background:#16834e"></span>All displayed EA boundaries</div>'+
+   '<div class="legend-row"><span class="swatch" style="background:#123b70"></span>Selected EA</div>';
+  return;
+ }
+ const vals=filtered.map(f=>clean(get(f,metric))).filter(v=>v!==null);
+ const br=getLegendBreaks(vals,$('legendMethod').value);
+ currentLegend=br;
+ $('legendTitle').textContent='Dynamic legend • '+LABELS[metric]+' • '+$('legendMethod').selectedOptions[0].text;
+ if(!br){
+  box.innerHTML='<div class="legend-row">No numeric values available for this indicator.</div>';
+  return;
+ }
+ let ranges;
+ if(br[0]===br[1]){
+  ranges=[
+   {label:'At or below '+fmt(br[0]),color:CLASS_COLORS[0]},
+   {label:'Above '+fmt(br[0]),color:CLASS_COLORS[2]}
+  ];
+ }else{
+  ranges=[
+   {label:'Low: ≤ '+fmt(br[0]),color:CLASS_COLORS[0]},
+   {label:'Medium: '+fmt(br[0])+' – '+fmt(br[1]),color:CLASS_COLORS[1]},
+   {label:'High: > '+fmt(br[1]),color:CLASS_COLORS[2]}
+  ];
+ }
+ box.innerHTML=ranges.map(r=>
+  '<div class="legend-row"><span class="swatch" style="background:'+r.color+'"></span>'+
+  '<span>'+r.label+'</span></div>'
+ ).join('')+
+ '<div class="legend-row"><span class="swatch" style="background:#94a3b8"></span>No numeric data</div>'+
+ '<div class="legend-row"><span class="swatch" style="background:#123b70"></span>Selected EA outline</div>'+
+ '<div class="note">Break values are recalculated from the currently filtered EA records. Classification is relative to the selected area, not a national fixed standard.</div>';
+}
 function styleFeature(f){
- const yes=f===selected;
+ const metric=$('mapMetric').value;
+ const val=metric==='none'?null:clean(get(f,metric));
+ const chosen=selectedId!==null&&String(idOf(f))===String(selectedId);
+ let fill='#16834e';
+ if(metric!=='none'&&currentLegend){
+  const cls=legendClass(val,currentLegend);
+  fill=cls<0?'#94a3b8':CLASS_COLORS[cls];
+ }
  return {
-  color:yes?"#ffad45":"#19c5df",
-  weight:yes?3:1,
-  fillColor:yes?"#f6a94b":"#19c5df",
-  fillOpacity:yes?.42:.10
+  color:chosen?'#123b70':'#ffffff',
+  weight:chosen?3:1,
+  opacity:1,
+  fillColor:fill,
+  fillOpacity:chosen?0.82:0.55
  };
 }
+function popupHtml(f){
+ const keys=['lganame','distname','wardname','map_pop','map_hhs','ls_pop','ls_hhs','enum_pop','enum_hhs'];
+ return '<div style="min-width:190px"><b>'+escapeHTML(featureName(f,0))+'</b><hr>'+
+  keys.map(k=>'<div style="font-size:11px;margin:3px 0"><b>'+LABELS[k]+':</b> '+escapeHTML(text(get(f,k)))+'</div>').join('')+
+  '<button onclick="window.__selectEA('+f.__dashId+')" style="margin-top:7px;padding:7px;background:#123b70;color:white;border:0;border-radius:5px">Select this EA</button></div>';
+}
+window.__selectEA=function(id){
+ const f=allFeatures.find(x=>x.__dashId===id);
+ if(!f)return;
+ selectedId=String(id);
+ $('lga').value=String(get(f,'lganame')??'');
+ updateDistricts();
+ $('district').value=String(get(f,'distname')??'');
+ updateWards();
+ $('ward').value=String(get(f,'wardname')??'');
+ updateEAs();
+ $('ea').value=selectedId;
+ filtered=subsetByParents();
+ renderAll();
+};
 function renderMap(){
  if(layer)map.removeLayer(layer);
- let data=filtered;
- if($("boundary").value==="selected"&&selected)data=[selected];
- layer=L.geoJSON(data,{
+ updateLegend();
+ const mode=$('boundaryMode').value;
+ let features=filtered;
+ if(mode==='selected')features=selectedId===null?[]:filtered.filter(f=>String(idOf(f))===String(selectedId));
+ layer=L.geoJSON({type:'FeatureCollection',features},{
   style:styleFeature,
   onEachFeature:(f,l)=>{
-   const p=f.properties||{},a=admin();
-   const code=a.ea?p[a.ea]:"EA";
-   l.bindTooltip(esc(code),{sticky:true});
-   l.bindPopup(popup(f));
-   l.on("click",()=>{
-    selected=f;
-    if(a.ea)$("ea").value=String(p[a.ea]??"");
+   l.bindPopup(popupHtml(f));
+   l.on('click',()=>{
+    selectedId=String(idOf(f));
+    $('ea').value=selectedId;
     renderAll();
    });
   }
  }).addTo(map);
- $("mapCount").textContent=fmt(data.length)+" EAs displayed";
- if(data.length&&!selected){
-  const b=layer.getBounds();if(b.isValid())map.fitBounds(b,{padding:[15,15],maxZoom:12});
+ $('mapCount').textContent=features.length.toLocaleString()+' EA boundary feature(s) displayed';
+ if(features.length&&selectedId){
+  const f=features.find(x=>String(idOf(x))===String(selectedId));
+  if(f){
+   const b=L.geoJSON(f).getBounds();
+   if(b.isValid())map.fitBounds(b,{padding:[25,25],maxZoom:14});
+  }
+ }else if(features.length){
+  const b=layer.getBounds();
+  if(b.isValid())map.fitBounds(b,{padding:[15,15],maxZoom:12});
  }
 }
-function popup(f){
- const p=f.properties||{};
- const keys=["lganame","distname","wardname","map_hhs","map_pop","ls_hhs","ls_pop","enum_hhs","enum_pop"];
- return "<div style='color:#173247;min-width:190px'><b>EA profile</b>"+
- keys.filter(k=>fields.includes(k)).map(k=>`<div style="padding:4px;border-bottom:1px solid #ddd"><b>${esc(k)}:</b> ${esc(p[k])}</div>`).join("")+"</div>";
+
+/* CHART ENGINE */
+const chartColors=['#123b70','#d62828','#16834e','#f4c542','#6a4c93','#159a9c','#e76f51'];
+function destroyChart(c){if(c)c.destroy();return null;}
+function createChart(canvas,old,type,data,extraOptions={}){
+ old=destroyChart(old);
+ const pie=['pie','doughnut','polarArea'].includes(type);
+ return new Chart($(canvas),{
+  type,
+  data,
+  options:{
+   responsive:true,maintainAspectRatio:false,
+   plugins:{
+    legend:{display:pie||type==='radar',position:'bottom'},
+    tooltip:{enabled:true}
+   },
+   scales:pie?{}:{
+    x:{ticks:{font:{size:9},maxRotation:55}},
+    y:{beginAtZero:true,ticks:{font:{size:9}}}
+   },
+   ...extraOptions
+  }
+ });
 }
-$("boundary").onchange=renderMap;
-$("fit").onclick=()=>{
- if(layer&&layer.getBounds().isValid())map.fitBounds(layer.getBounds(),{padding:[20,20]});
-};
+function numericRows(key){
+ return filtered.map((f,i)=>({
+  id:idOf(f),label:featureName(f,i),value:clean(get(f,key)),feature:f
+ })).filter(x=>x.value!==null);
+}
+function renderMainChart(){
+ const key=$('chartMetric').value,type=$('chartType').value;
+ let rows=numericRows(key).sort((a,b)=>b.value-a.value).slice(0,30);
+ currentMainRows=rows;
+ const labels=rows.map(x=>x.label),values=rows.map(x=>x.value);
+ mainChart=createChart('mainChart',mainChart,type,{
+  labels,
+  datasets:[{
+   label:LABELS[key],data:values,
+   backgroundColor:labels.map((_,i)=>chartColors[i%chartColors.length]),
+   borderColor:'#123b70',borderWidth:1,
+   tension:.25,fill:false
+  }]
+ });
+ $('chartNote').textContent=rows.length+' EAs with numeric '+LABELS[key]+' values. Showing the highest 30 records.';
+}
+function measureKeys(measure){
+ if(measure==='population')return ['map_pop','ls_pop','enum_pop'];
+ if(measure==='households')return ['map_hhs','ls_hhs','enum_hhs'];
+ if(measure==='compounds')return ['comp_map','comp_ls'];
+ return ['build_map','build_ls'];
+}
+function renderCompareChart(){
+ const measure=$('comparisonMeasure').value;
+ const type=$('comparisonType').value;
+ const keys=measureKeys(measure);
+ const rows=filtered.slice(0,30);
+ currentCompareRows=rows.map((f,i)=>({
+  label:featureName(f,i),
+  values:keys.map(k=>clean(get(f,k)))
+ }));
+ const labels=rows.map((f,i)=>featureName(f,i));
+ const datasets=keys.map((k,i)=>({
+  label:LABELS[k],
+  data:rows.map(f=>clean(get(f,k))),
+  backgroundColor:chartColors[i],
+  borderColor:chartColors[i],
+  borderWidth:2,tension:.25,fill:type==='radar'?false:false
+ }));
+ compareChart=createChart('compareChart',compareChart,type,{labels,datasets});
+ $('comparisonNote').textContent='Comparing '+keys.map(k=>LABELS[k]).join(' and ')+
+  ' across '+rows.length+' displayed EAs. Missing values remain blank.';
+}
+function calculateComparison(a,b,mode){
+ if(a===null||b===null)return null;
+ if(mode==='difference')return a-b;
+ if(mode==='percentage')return b===0?null:((a-b)/Math.abs(b))*100;
+ if(mode==='ratio')return b===0?null:a/b;
+ return null;
+}
+function renderDirectChart(){
+ const aKey=$('indicatorA').value,bKey=$('indicatorB').value;
+ const type=$('directChartType').value,mode=$('comparisonCalculation').value;
+ const rows=filtered.slice(0,30).map((f,i)=>{
+  const a=clean(get(f,aKey)),b=clean(get(f,bKey));
+  return {label:featureName(f,i),a,b,result:calculateComparison(a,b,mode)};
+ });
+ currentDirectRows=rows;
+ let datasets;
+ if(mode==='values'){
+  datasets=[
+   {label:LABELS[aKey],data:rows.map(r=>r.a),backgroundColor:'#123b70',borderColor:'#123b70',borderWidth:2,tension:.25},
+   {label:LABELS[bKey],data:rows.map(r=>r.b),backgroundColor:'#d62828',borderColor:'#d62828',borderWidth:2,tension:.25}
+  ];
+ }else{
+  datasets=[{
+   label:mode==='difference'?'A minus B':mode==='percentage'?'Percentage difference':'A / B ratio',
+   data:rows.map(r=>r.result),backgroundColor:'#16834e',borderColor:'#16834e',
+   borderWidth:2,tension:.25
+  }];
+ }
+ directChart=createChart('directChart',directChart,type,{
+  labels:rows.map(r=>r.label),datasets
+ });
+ const validA=filtered.map(f=>clean(get(f,aKey))).filter(v=>v!==null);
+ const validB=filtered.map(f=>clean(get(f,bKey))).filter(v=>v!==null);
+ const sumA=validA.reduce((s,v)=>s+v,0);
+ const sumB=validB.reduce((s,v)=>s+v,0);
+ let summary='Filtered totals — '+LABELS[aKey]+': '+fmt(sumA)+'; '+LABELS[bKey]+': '+fmt(sumB)+'.';
+ if(mode==='difference')summary+=' Total A − B: '+fmt(sumA-sumB)+'.';
+ if(mode==='percentage')summary+=' Difference relative to B: '+(sumB===0?'Not calculable':fmt(((sumA-sumB)/Math.abs(sumB))*100)+'%')+'.';
+ if(mode==='ratio')summary+=' Total ratio A / B: '+(sumB===0?'Not calculable':fmt(sumA/sumB))+'.';
+ $('directSummary').textContent=summary;
+}
+function renderTable(){
+ $('tableHead').innerHTML='<tr>'+FIELDS.map(k=>'<th>'+LABELS[k]+'</th>').join('')+'</tr>';
+ $('tableBody').innerHTML=filtered.slice(0,300).map(f=>
+  '<tr>'+FIELDS.map(k=>'<td>'+escapeHTML(text(get(f,k)))+'</td>').join('')+'</tr>'
+ ).join('');
+}
+function renderAll(){
+ updateKpis();renderProfile();renderMap();
+ renderMainChart();renderCompareChart();renderDirectChart();renderTable();
+}
+function zoomToResults(){
+ if(!layer)return;
+ const b=layer.getBounds();
+ if(b.isValid())map.fitBounds(b,{padding:[20,20]});
+}
 
-/* ---------- SELECTED EA PROFILE ---------- */
-
-const requested=[
- "lganame","distname","wardname","map_hhs","map_pop","ls_hhs","ls_pop",
- "enum_hhs","enum_pop","comp_map","build_map","comp_ls","build_ls"
-];
-const labels={
- lganame:"Local Government Area",distname:"District",wardname:"Ward",
- map_hhs:"Mapped households",map_pop:"Mapped population",
- ls_hhs:"Listing households",ls_pop:"Listing population",
- enum_hhs:"Enumerated households",enum_pop:"Enumerated population",
- comp_map:"Compare / Map",build_map:"Build / Map",
- comp_ls:"Compare / Listing",build_ls:"Build / Listing"
-};
-function renderProfile(){
- if(!selected){
-  $("profile").innerHTML="<div class='note'>Select an EA on the map to view its profile.</div>";
-  $("allAttributes").innerHTML="<div class='note'>No EA selected.</div>";
+/* GPS CAPTURE AND MAP POPUP */
+function captureGPS(){
+ if(!navigator.geolocation){
+  $('gpsInfo').textContent='Geolocation is not supported by this browser.';
   return;
  }
- const p=selected.properties||{};
- $("profile").innerHTML="<div class='profile'>"+
- requested.filter(k=>fields.includes(k)).map(k=>{
-  const wide=["lganame","distname","wardname"].includes(k);
-  const hi=["map_hhs","map_pop"].includes(k);
-  return `<div class="profile-item ${wide?"wide":""} ${hi?"highlight":""}">
-   <small>${esc(labels[k]||k)} (${esc(k)})</small><strong>${esc(p[k]??"—")}</strong>
-  </div>`;
- }).join("")+"</div>";
- $("allAttributes").innerHTML=fields.map(k=>
-  `<div class="attr"><span>${esc(k)}</span><strong>${esc(p[k]??"—")}</strong></div>`
- ).join("");
+ $('gpsButton').disabled=true;
+ $('gpsButton').textContent='Requesting GPS…';
+ navigator.geolocation.getCurrentPosition(position=>{
+  const c=position.coords;
+  gpsRecord={
+   latitude:c.latitude,
+   longitude:c.longitude,
+   accuracy:c.accuracy,
+   altitude:c.altitude,
+   altitudeAccuracy:c.altitudeAccuracy,
+   heading:c.heading,
+   speed:c.speed,
+   timestamp:new Date(position.timestamp).toISOString()
+  };
+  if(gpsMarker)map.removeLayer(gpsMarker);
+  if(gpsAccuracy)map.removeLayer(gpsAccuracy);
+  const latlng=[c.latitude,c.longitude];
+  gpsMarker=L.marker(latlng).addTo(map);
+  gpsAccuracy=L.circle(latlng,{
+   radius:c.accuracy,color:'#075eab',weight:2,fillColor:'#168bd2',fillOpacity:.12
+  }).addTo(map);
+  const popup='<b>GPS location captured</b><br>'+
+   'Latitude: '+c.latitude.toFixed(7)+'<br>'+
+   'Longitude: '+c.longitude.toFixed(7)+'<br>'+
+   'Accuracy: '+fmt(c.accuracy)+' metres<br>'+
+   'Captured: '+escapeHTML(gpsRecord.timestamp);
+  gpsMarker.bindPopup(popup).openPopup();
+  map.setView(latlng,Math.max(map.getZoom(),15));
+  $('gpsInfo').innerHTML='<b>GPS captured successfully</b><br>'+
+   'Latitude: '+c.latitude.toFixed(7)+'<br>'+
+   'Longitude: '+c.longitude.toFixed(7)+'<br>'+
+   'Accuracy: '+fmt(c.accuracy)+' metres<br>'+
+   'Time: '+escapeHTML(gpsRecord.timestamp);
+  $('downloadGPS').disabled=false;
+  $('clearGPS').disabled=false;
+  $('gpsButton').textContent='◎ Capture GPS again';
+  $('gpsButton').disabled=false;
+ },err=>{
+  const messages={
+   1:'Location permission was denied. Allow location access in your browser settings.',
+   2:'The device could not determine your location. Check GPS or location services.',
+   3:'The GPS request timed out. Please try again.'
+  };
+  $('gpsInfo').textContent=messages[err.code]||err.message||'GPS capture failed.';
+  $('gpsButton').textContent='◎ Retry GPS capture';
+  $('gpsButton').disabled=false;
+ },{enableHighAccuracy:true,timeout:20000,maximumAge:0});
+}
+function clearGPS(){
+ if(gpsMarker)map.removeLayer(gpsMarker);
+ if(gpsAccuracy)map.removeLayer(gpsAccuracy);
+ gpsMarker=null;gpsAccuracy=null;gpsRecord=null;
+ $('gpsInfo').textContent='GPS location cleared.';
+ $('downloadGPS').disabled=true;
+ $('clearGPS').disabled=true;
+ $('gpsButton').textContent='◎ Capture my GPS location';
+}
+function downloadGPS(){
+ if(!gpsRecord)return;
+ const rows=[['latitude','longitude','accuracy_m','altitude_m','altitude_accuracy_m','heading','speed_m_s','timestamp'],
+ [gpsRecord.latitude,gpsRecord.longitude,gpsRecord.accuracy,gpsRecord.altitude,gpsRecord.altitudeAccuracy,gpsRecord.heading,gpsRecord.speed,gpsRecord.timestamp]];
+ downloadFile('GBoS_GPS_Capture.csv',csvText(rows),'text/csv;charset=utf-8');
 }
 
-/* ---------- KPI AND INDICATORS ---------- */
-
-function renderKPIs(){
- const mapH=getField(["map_hhs"]),mapP=getField(["map_pop"]);
- const lsH=getField(["ls_hhs"]),enH=getField(["enum_hhs"]);
- $("kTotal").textContent=fmt(allFeatures.length);
- $("kFiltered").textContent=fmt(filtered.length);
- $("kHhs").textContent=mapH?fmt(sumField(mapH)):"—";
- $("kPop").textContent=mapP?fmt(sumField(mapP)):"—";
- $("kLsHhs").textContent=lsH?fmt(sumField(lsH)):"—";
- $("kEnumHhs").textContent=enH?fmt(sumField(enH)):"—";
-
- const indicatorPairs=[
-  ["Mapped households","map_hhs"],["Listing households","ls_hhs"],["Enumerated households","enum_hhs"],
-  ["Mapped population","map_pop"],["Listing population","ls_pop"],["Enumerated population","enum_pop"]
- ];
- const rows=indicatorPairs.filter(x=>fields.includes(x[1])).map(x=>
-  `<div class="stat"><span>${x[0]}</span><strong>${fmt(sumField(x[1]))}</strong></div>`
- ).join("");
- $("indicators").innerHTML=rows||"No corresponding household/population fields found.";
- const vals=indicatorPairs.filter(x=>fields.includes(x[1]));
- drawSimpleBars("indicatorCanvas",vals.map(x=>x[0]),vals.map(x=>sumField(x[1])||0));
+/* DOWNLOADS */
+function downloadFile(name,content,type){
+ const blob=new Blob([content],{type});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;a.download=name;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+function csvText(rows){
+ return '\ufeff'+rows.map(r=>r.map(v=>{
+  if(v===null||v===undefined)return '""';
+  return '"'+String(v).replace(/"/g,'""')+'"';
+ }).join(',')).join('\r\n');
+}
+function exportCSV(){
+ const rows=[FIELDS.map(k=>LABELS[k]),...filtered.map(f=>FIELDS.map(k=>get(f,k)??''))];
+ downloadFile('GBoS_filtered_EA_indicators.csv',csvText(rows),'text/csv;charset=utf-8');
+}
+function exportSelectedCSV(){
+ const f=selectedFeature();
+ if(!f){alert('Please select an EA first.');return;}
+ const rows=[FIELDS.map(k=>LABELS[k]),FIELDS.map(k=>get(f,k)??'')];
+ downloadFile('GBoS_selected_EA_'+featureName(f,0)+'.csv',csvText(rows),'text/csv;charset=utf-8');
+}
+function exportGeoJSON(){
+ const out={
+  type:'FeatureCollection',
+  features:filtered.map(f=>({
+   type:'Feature',
+   geometry:f.geometry,
+   properties:Object.fromEntries(FIELDS.map(k=>[k,get(f,k)]))
+  }))
+ };
+ downloadFile('GBoS_filtered_EA_boundaries.geojson',JSON.stringify(out,null,2),'application/geo+json');
+}
+function downloadChartPNG(chartObj,name){
+ if(!chartObj){alert('There is no chart to download yet.');return;}
+ const a=document.createElement('a');
+ a.href=chartObj.toBase64Image('image/png',1);
+ a.download=name+'.png';
+ a.click();
+}
+function downloadMainCSV(){
+ const key=$('chartMetric').value;
+ const rows=[['EA','Indicator','Value'],...currentMainRows.map(r=>[r.label,LABELS[key],r.value])];
+ downloadFile('GBoS_EA_chart_data.csv',csvText(rows),'text/csv;charset=utf-8');
+}
+function downloadCompareCSV(){
+ const measure=$('comparisonMeasure').value;
+ const keys=measureKeys(measure);
+ const rows=[['EA',...keys.map(k=>LABELS[k])],...currentCompareRows.map(r=>[r.label,...r.values])];
+ downloadFile('GBoS_multi_indicator_comparison.csv',csvText(rows),'text/csv;charset=utf-8');
+}
+function downloadDirectCSV(){
+ const mode=$('comparisonCalculation').value;
+ const a=$('indicatorA').value,b=$('indicatorB').value;
+ const rows=[['EA',LABELS[a],LABELS[b],mode==='values'?'Comparison result':mode],
+ ...currentDirectRows.map(r=>[r.label,r.a,r.b,mode==='values'?'':r.result])];
+ downloadFile('GBoS_indicator_A_B_comparison.csv',csvText(rows),'text/csv;charset=utf-8');
 }
 
-/* ---------- CANVAS CHART ENGINE ---------- */
-
-const palette=["#19c5df","#3987ff","#35d49a","#f6a94b","#b78cff","#ff6978","#74d6ce","#d6c56b"];
-
-function canvasSetup(id){
- const c=$(id),r=c.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
- const w=Math.max(250,r.width),h=Math.max(150,r.height);
- c.width=w*ratio;c.height=h*ratio;
- const ctx=c.getContext("2d");ctx.setTransform(ratio,0,0,ratio,0,0);
- ctx.clearRect(0,0,w,h);ctx.fillStyle="#091a2a";ctx.fillRect(0,0,w,h);
- return {ctx,w,h};
-}
-function axes(ctx,w,h,p={l:36,r:12,t:15,b:35}){
- ctx.strokeStyle="#29435a";ctx.lineWidth=1;ctx.beginPath();
- ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,h-p.b);ctx.lineTo(w-p.r,h-p.b);ctx.stroke();
- return {cw:w-p.l-p.r,ch:h-p.t-p.b,...p};
-}
-function drawSimpleBars(id,labels,values){
- const {ctx,w,h}=canvasSetup(id);
- if(!values.length)return;
- const p=axes(ctx,w,h),max=Math.max(...values,1),gap=7;
- const bw=(p.cw-gap*(values.length-1))/values.length;
- values.forEach((v,i)=>{
-  const bh=v/max*p.ch,x=p.l+i*(bw+gap),y=h-p.b-bh;
-  ctx.fillStyle=palette[i%palette.length];ctx.fillRect(x,y,bw,bh);
-  ctx.fillStyle="#e3edf6";ctx.font="9px Arial";ctx.textAlign="center";
-  ctx.fillText(fmt(v),x+bw/2,Math.max(10,y-4));
-  ctx.save();ctx.translate(x+bw/2,h-7);ctx.rotate(-.35);
-  ctx.fillStyle="#91a8bd";ctx.fillText(String(labels[i]).slice(0,13),0,0);ctx.restore();
- });
-}
-function drawHistogram(id,values){
- const a=values.filter(v=>v!==null);
- const {ctx,w,h}=canvasSetup(id);
- if(!a.length)return;
- const min=Math.min(...a),max=Math.max(...a),bins=10;
- const counts=Array(bins).fill(0);
- a.forEach(v=>{let i=max===min?0:Math.floor((v-min)/(max-min)*bins);counts[Math.min(bins-1,i)]++;});
- drawSimpleBarsFromContext(ctx,w,h,counts,counts.map((v,i)=>max===min?"Same":fmt(min+(max-min)*i/bins)));
-}
-function drawSimpleBarsFromContext(ctx,w,h,values,labels){
- const p=axes(ctx,w,h),max=Math.max(...values,1),gap=4,bw=(p.cw-gap*(values.length-1))/values.length;
- values.forEach((v,i)=>{
-  const bh=v/max*p.ch,x=p.l+i*(bw+gap),y=h-p.b-bh;
-  ctx.fillStyle=palette[0];ctx.fillRect(x,y,bw,bh);
-  ctx.fillStyle="#dceaf5";ctx.font="9px Arial";ctx.textAlign="center";
-  ctx.fillText(String(v),x+bw/2,Math.max(10,y-4));
-  ctx.save();ctx.translate(x+bw/2,h-7);ctx.rotate(-.45);
-  ctx.fillStyle="#91a8bd";ctx.fillText(String(labels[i]).slice(0,12),0,0);ctx.restore();
- });
-}
-function drawPie(id,labels,values,doughnut=false){
- const {ctx,w,h}=canvasSetup(id),total=values.reduce((a,b)=>a+b,0);
- if(!total)return;
- const cx=w*.45,cy=h*.48,r=Math.min(w*.28,h*.36);
- let start=-Math.PI/2;
- values.forEach((v,i)=>{
-  const end=start+v/total*Math.PI*2;
-  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
-  ctx.fillStyle=palette[i%palette.length];ctx.fill();
-  start=end;
- });
- if(doughnut){
-  ctx.beginPath();ctx.arc(cx,cy,r*.52,0,Math.PI*2);ctx.fillStyle="#091a2a";ctx.fill();
-  ctx.fillStyle="#e9f3fb";ctx.textAlign="center";ctx.font="bold 13px Arial";
-  ctx.fillText(fmt(total),cx,cy+4);
- }
- ctx.font="9px Arial";ctx.textAlign="left";
- labels.forEach((l,i)=>{
-  const y=20+i*18,x=w*.73;
-  ctx.fillStyle=palette[i%palette.length];ctx.fillRect(x,y-7,8,8);
-  ctx.fillStyle="#b9cbd9";ctx.fillText(String(l).slice(0,16),x+12,y);
- });
-}
-function drawLine(id,values){
- const {ctx,w,h}=canvasSetup(id),a=values.filter(v=>v!==null);
- if(!a.length)return;
- const p=axes(ctx,w,h),min=Math.min(...a),max=Math.max(...a),range=max-min||1;
- ctx.strokeStyle=palette[0];ctx.lineWidth=2;ctx.beginPath();
- values.forEach((v,i)=>{
-  if(v===null)return;
-  const x=p.l+(values.length===1?0:i/(values.length-1)*p.cw);
-  const y=h-p.b-(v-min)/range*p.ch;
-  if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
- });
- ctx.stroke();
-}
-function drawScatter(id,xs,ys){
- const {ctx,w,h}=canvasSetup(id),pairs=[];
- for(let i=0;i<Math.min(xs.length,ys.length);i++)
-  if(xs[i]!==null&&ys[i]!==null)pairs.push([xs[i],ys[i]]);
- if(!pairs.length)return;
- const p=axes(ctx,w,h),xmin=Math.min(...pairs.map(x=>x[0])),xmax=Math.max(...pairs.map(x=>x[0]));
- const ymin=Math.min(...pairs.map(x=>x[1])),ymax=Math.max(...pairs.map(x=>x[1]));
- pairs.forEach(([x,y])=>{
-  const px=p.l+(x-xmin)/(xmax-xmin||1)*p.cw;
-  const py=h-p.b-(y-ymin)/(ymax-ymin||1)*p.ch;
-  ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fillStyle=palette[0];ctx.fill();
- });
-}
-function drawBox(id,values){
- const a=values.filter(v=>v!==null);
- const {ctx,w,h}=canvasSetup(id);if(!a.length)return;
- const s=stats(a),p=axes(ctx,w,h),min=s.min,max=s.max,range=max-min||1;
- const y=v=>h-p.b-(v-min)/range*p.ch,cx=w/2;
- ctx.strokeStyle=palette[0];ctx.fillStyle="#19c5df";
- ctx.beginPath();ctx.moveTo(cx,y(s.min));ctx.lineTo(cx,y(s.max));ctx.stroke();
- ctx.fillRect(cx-35,y(s.q3),70,y(s.q1)-y(s.q3));
- ctx.strokeStyle="#e9f3fb";ctx.beginPath();ctx.moveTo(cx-35,y(s.median));ctx.lineTo(cx+35,y(s.median));ctx.stroke();
- ctx.fillStyle="#91a8bd";ctx.font="10px Arial";ctx.fillText("Min "+fmt(s.min),cx+42,y(s.min));
- ctx.fillText("Q1 "+fmt(s.q1),cx+42,y(s.q1));
- ctx.fillText("Median "+fmt(s.median),cx+42,y(s.median));
- ctx.fillText("Q3 "+fmt(s.q3),cx+42,y(s.q3));
- ctx.fillText("Max "+fmt(s.max),cx+42,y(s.max));
-}
-
-/* ---------- MAIN CHART AND DESCRIPTIVE STATS ---------- */
-
-function drawMain(){
- if(!filtered.length)return;
- const f1=$("field1").value,f2=$("field2").value,type=$("chartType").value;
- const raw=filtered.map(f=>f.properties?.[f1]);
- const nums=raw.map(val),valid=nums.filter(v=>v!==null);
- const s=stats(valid);
- $("chartLegend").innerHTML=`<span><i class="dot" style="background:${palette[0]}"></i>${esc(f1)}</span>`;
- const chart=$("mainChart");
- if(type==="histogram")drawHistogram("mainChart",nums);
- else if(type==="box")drawBox("mainChart",nums);
- else if(type==="line")drawLine("mainChart",nums);
- else if(type==="scatter")drawScatter("mainChart",nums,filtered.map(f=>val(f.properties?.[f2])));
- else{
-  const counts={};
-  raw.forEach(v=>{if(v!==null&&v!==undefined&&v!=="")counts[String(v)]=(counts[String(v)]||0)+1;});
-  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,12);
-  if(type==="pie"||type==="doughnut")drawPie("mainChart",top.map(x=>x[0]),top.map(x=>x[1]),type==="doughnut");
-  else drawSimpleBars("mainChart",top.map(x=>x[0]),top.map(x=>x[1]));
- }
-
- $("descriptiveStats").innerHTML=s?[
-  ["Valid numeric values",s.n],["Sum",fmt(s.sum)],["Mean",fmt(s.mean)],
-  ["Median",fmt(s.median)],["Standard deviation",fmt(s.sd)],
-  ["Minimum",fmt(s.min)],["Maximum",fmt(s.max)],
-  ["First quartile (Q1)",fmt(s.q1)],["Third quartile (Q3)",fmt(s.q3)],
-  ["Interquartile range",fmt(s.q3-s.q1)]
- ].map(x=>`<div class="stat"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("")
- :`<div class="note">No numeric values available for descriptive statistics. Categorical frequencies are shown in the chart.</div>`;
-}
-$("draw").onclick=drawMain;
-$("chartType").onchange=drawMain;
-$("chartReset").onclick=()=>{
- $("chartType").value="histogram";drawMain();
-};
-
-/* ---------- FIELD-TO-FIELD COMPARISON ---------- */
-
-function comparisonData(){
- const a=$("field1").value,b=$("field2").value;
- const x=filtered.map(f=>val(f.properties?.[a]));
- const y=filtered.map(f=>val(f.properties?.[b]));
- const mode=$("compareMode").value;
- const rows=[];
- filtered.forEach((f,i)=>{
-  if(x[i]===null||y[i]===null)return;
-  let result=null;
-  if(mode==="difference")result=x[i]-y[i];
-  else if(mode==="ratio")result=y[i]!==0?x[i]/y[i]:null;
-  else if(mode==="percent")result=y[i]!==0?(x[i]-y[i])/Math.abs(y[i])*100:null;
-  rows.push({feature:f,x:x[i],y:y[i],result});
- });
- return {a,b,x,y,rows,mode};
-}
-function runComparison(){
- const d=comparisonData(),type=$("compareChart").value;
- const x=d.x,y=d.y;
- const pairs=d.rows;
- const validX=x.filter(v=>v!==null),validY=y.filter(v=>v!==null);
- const correlation=pearson(x,y);
-
- if(d.mode==="correlation"){
-  $("compareResults").innerHTML=`<div class="stat"><span>Pearson correlation</span><strong>${fmt(correlation.r)}</strong></div>
-  <div class="stat"><span>Paired EAs</span><strong>${fmt(correlation.n)}</strong></div>`;
-  drawScatter("compareCanvas",x,y);return;
- }
- if(type==="scatter"){
-  drawScatter("compareCanvas",x,y);
- }else if(type==="line"){
-  drawTwoLines(x,y);
- }else if(type==="difference"||d.mode==="difference"||d.mode==="ratio"||d.mode==="percent"){
-  const vals=pairs.map(p=>p.x-p.y);
-  const selectedMode=d.mode;
-  const output=pairs.map(p=>selectedMode==="difference"?p.x-p.y:
-   selectedMode==="ratio"?(p.y!==0?p.x/p.y:null):
-   selectedMode==="percent"?(p.y!==0?(p.x-p.y)/Math.abs(p.y)*100:null):p.x-p.y);
-  drawSimpleBars("compareCanvas",pairs.map((p,i)=>"EA "+(i+1)),output.map(v=>v??0).slice(0,30));
- }else{
-  drawGrouped(x,y);
- }
-
- const differences=pairs.map(p=>p.x-p.y);
- const ds=stats(differences);
- const ratioPairs=pairs.filter(p=>p.y!==0).map(p=>p.x/p.y);
- const rs=stats(ratioPairs);
- $("compareResults").innerHTML=`
-  <div class="stat"><span>Variable 1</span><strong>${esc(d.a)}</strong></div>
-  <div class="stat"><span>Variable 2</span><strong>${esc(d.b)}</strong></div>
-  <div class="stat"><span>Valid paired EAs</span><strong>${fmt(pairs.length)}</strong></div>
-  <div class="stat"><span>Field 1 total</span><strong>${fmt(validX.reduce((a,b)=>a+b,0))}</strong></div>
-  <div class="stat"><span>Field 2 total</span><strong>${fmt(validY.reduce((a,b)=>a+b,0))}</strong></div>
-  <div class="stat"><span>Mean difference</span><strong>${fmt(ds?.mean)}</strong></div>
-  <div class="stat"><span>Median difference</span><strong>${fmt(ds?.median)}</strong></div>
-  <div class="stat"><span>Mean ratio (field1 / field2)</span><strong>${fmt(rs?.mean)}</strong></div>
-  <div class="stat"><span>Correlation</span><strong>${fmt(correlation.r)}</strong></div>
- `;
-}
-function drawGrouped(x,y){
- const {ctx,w,h}=canvasSetup("compareCanvas");
- const p=axes(ctx,w,h),n=Math.min(20,x.length),max=Math.max(1,...x.filter(v=>v!==null),...y.filter(v=>v!==null));
- const group=p.cw/Math.max(n,1),bw=Math.max(2,group*.28);
- for(let i=0;i<n;i++){
-  const a=x[i],b=y[i],gx=p.l+i*group+group*.2;
-  if(a!==null){const bh=a/max*p.ch;ctx.fillStyle=palette[0];ctx.fillRect(gx,h-p.b-bh,bw,bh);}
-  if(b!==null){const bh=b/max*p.ch;ctx.fillStyle=palette[1];ctx.fillRect(gx+bw+2,h-p.b-bh,bw,bh);}
- }
- $("chartLegend").innerHTML=`<span><i class="dot" style="background:${palette[0]}"></i>${esc($("field1").value)}</span><span><i class="dot" style="background:${palette[1]}"></i>${esc($("field2").value)}</span>`;
-}
-function drawTwoLines(x,y){
- const {ctx,w,h}=canvasSetup("compareCanvas"),p=axes(ctx,w,h);
- const all=[...x,...y].filter(v=>v!==null);
- if(!all.length)return;
- const min=Math.min(...all),max=Math.max(...all),range=max-min||1;
- [x,y].forEach((arr,j)=>{
-  ctx.strokeStyle=palette[j];ctx.lineWidth=2;ctx.beginPath();let started=false;
-  arr.forEach((v,i)=>{
-   if(v===null)return;
-   const px=p.l+(i/Math.max(1,arr.length-1))*p.cw;
-   const py=h-p.b-(v-min)/range*p.ch;
-   if(!started){ctx.moveTo(px,py);started=true;}else ctx.lineTo(px,py);
-  });ctx.stroke();
- });
-}
-$("runCompare").onclick=runComparison;
-
-/* ---------- CORRELATION ---------- */
-
-$("correlate").onclick=()=>{
- const a=$("corr1").value,b=$("corr2").value;
- const x=filtered.map(f=>val(f.properties?.[a]));
- const y=filtered.map(f=>val(f.properties?.[b]));
- const r=pearson(x,y);
- let interpretation="Insufficient paired numeric values";
- if(r.r!==null){
-  const abs=Math.abs(r.r);
-  interpretation=abs<.2?"Very weak linear relationship":
-   abs<.4?"Weak linear relationship":
-   abs<.6?"Moderate linear relationship":
-   abs<.8?"Strong linear relationship":"Very strong linear relationship";
-  if(r.r<0)interpretation+=" (negative)";
-  else interpretation+=" (positive)";
- }
- $("correlationResult").innerHTML=`
-  <div class="stat"><span>Variable X</span><strong>${esc(a)}</strong></div>
-  <div class="stat"><span>Variable Y</span><strong>${esc(b)}</strong></div>
-  <div class="stat"><span>Pearson r</span><strong>${fmt(r.r)}</strong></div>
-  <div class="stat"><span>Paired observations</span><strong>${fmt(r.n)}</strong></div>
-  <div class="stat"><span>Interpretation</span><strong>${interpretation}</strong></div>
-  <div class="note">Correlation describes linear association, not causation.</div>`;
- drawScatter("compareCanvas",x,y);
-};
-
-/* ---------- DATA QUALITY ---------- */
-
-function renderQuality(){
- if(!fields.length)return;
- const total=filtered.length*fields.length;
- let valid=0,missing=0;
- const fieldCompleteness=[];
- fields.forEach(k=>{
-  let count=0;
-  filtered.forEach(f=>{
-   const v=f.properties?.[k];
-   if(v!==null&&v!==undefined&&v!=="")count++;
-  });
-  valid+=count;missing+=filtered.length-count;
-  fieldCompleteness.push({field:k,pct:filtered.length?count/filtered.length*100:0});
- });
- const pct=total?valid/total*100:0;
- const complete=fieldCompleteness.filter(x=>x.pct===100).length;
- const partial=fieldCompleteness.filter(x=>x.pct>0&&x.pct<100).length;
- const empty=fieldCompleteness.filter(x=>x.pct===0).length;
- $("quality").innerHTML=`
-  <div class="stat"><span>Overall completeness</span><strong>${fmt(pct)}%</strong></div>
-  <div class="stat"><span>Present values</span><strong>${fmt(valid)}</strong></div>
-  <div class="stat"><span>Missing values</span><strong>${fmt(missing)}</strong></div>
-  <div class="stat"><span>Fully populated fields</span><strong>${fmt(complete)}</strong></div>
-  <div class="stat"><span>Partially populated fields</span><strong>${fmt(partial)}</strong></div>
-  <div class="stat"><span>Empty fields</span><strong>${fmt(empty)}</strong></div>`;
- drawSimpleBars("qualityCanvas",["Complete","Partial","Empty"],[complete,partial,empty]);
-}
-
-/* ---------- FIELD INVENTORY ---------- */
-
-function renderInventory(){
- $("fieldInventory").innerHTML=`
-  <div class="stat"><span>Total properties</span><strong>${fmt(fields.length)}</strong></div>
-  <div class="stat"><span>Numeric properties</span><strong>${fmt(fields.filter(k=>numValues(k).length>0).length)}</strong></div>
-  <div class="stat"><span>Categorical / text properties</span><strong>${fmt(fields.filter(k=>numValues(k).length===0).length)}</strong></div>
- `+fields.map(k=>`<div class="stat"><span>${esc(k)}</span><strong>${fmt(filtered.filter(f=>f.properties?.[k]!==null&&f.properties?.[k]!==undefined&&f.properties?.[k]!=="").length)} / ${fmt(filtered.length)}</strong></div>`).join("");
-}
-
-/* ---------- EXPORTS ---------- */
-
-$("csv").onclick=()=>{
- if(!filtered.length)return alert("No filtered EA records.");
- const rows=[fields.map(csvCell).join(","),
- ...filtered.map(f=>fields.map(k=>csvCell(f.properties?.[k])).join(","))];
- download("\uFEFF"+rows.join("\n"),"Gambia_EA_Attributes.csv","text/csv;charset=utf-8");
-};
-$("geojson").onclick=()=>{
- if(!filtered.length)return alert("No filtered EA records.");
- download(JSON.stringify({type:"FeatureCollection",features:filtered},null,2),
- "Gambia_Filtered_EAs.geojson","application/geo+json");
-};
-$("statsCsv").onclick=()=>{
- const rows=[["field","valid","missing","unique","sum","mean","median","minimum","maximum","standard_deviation"]];
- fields.forEach(k=>{
-  const raw=filtered.map(f=>f.properties?.[k]);
-  const a=raw.map(val).filter(v=>v!==null),s=stats(a);
-  rows.push([k,a.length,raw.length-a.length,
-   uniq(raw).length,s?.sum??"",s?.mean??"",s?.median??"",
-   s?.min??"",s?.max??"",s?.sd??""]);
- });
- download("\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\n"),
- "Gambia_EA_Statistics_All_Fields.csv","text/csv;charset=utf-8");
-};
-$("compareCsv").onclick=()=>{
- const d=comparisonData();
- const rows=[["EA_index","field_1","field_2","value_1","value_2","difference","ratio","percent_difference"]];
- d.rows.forEach((p,i)=>{
-  rows.push([i+1,d.a,d.b,p.x,p.y,p.x-p.y,p.y!==0?p.x/p.y:"",p.y!==0?(p.x-p.y)/Math.abs(p.y)*100:""]);
- });
- download("\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\n"),
- "Gambia_EA_Field_Comparison.csv","text/csv;charset=utf-8");
-};
-
-/* ---------- MASTER RENDER ---------- */
-
-function renderAll(){
- renderMap();
- renderProfile();
- renderKPIs();
- renderQuality();
- renderInventory();
- if(fields.length){
-  drawMain();
-  runComparison();
- }
-}
-window.addEventListener("resize",()=>{
- if(fields.length){
-  drawMain();runComparison();renderQuality();
- }
- map.invalidateSize();
+/* EVENTS */
+$('loadUrl').addEventListener('click',loadFromUrl);
+$('fileInput').addEventListener('change',async e=>{
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ try{loadData(JSON.parse(await f.text()),f.name);}
+ catch(err){error(err.message);status('File loading failed',true);}
 });
-map.whenReady(()=>setTimeout(()=>map.invalidateSize(),200));
+$('apply').addEventListener('click',applyFilters);
+$('fit').addEventListener('click',zoomToResults);
+$('reset').addEventListener('click',()=>{
+ $('lga').value='';$('district').value='';$('ward').value='';$('ea').value='';
+ $('boundaryMode').value='filtered';
+ $('mapMetric').value='none';$('mapMetricTop').value='none';
+ populateSelectors();applyFilters();
+});
+$('ea').addEventListener('change',()=>{
+ selectedId=$('ea').value||null;
+ renderAll();
+});
+$('boundaryMode').addEventListener('change',renderMap);
+$('mapMetric').addEventListener('change',()=>{
+ $('mapMetricTop').value=$('mapMetric').value;renderMap();
+});
+$('mapMetricTop').addEventListener('change',()=>{
+ $('mapMetric').value=$('mapMetricTop').value;renderMap();
+});
+$('legendMethod').addEventListener('change',renderMap);
+$('mapRefresh').addEventListener('click',renderMap);
 
+$('chartType').addEventListener('change',renderMainChart);
+$('chartMetric').addEventListener('change',renderMainChart);
+$('comparisonMeasure').addEventListener('change',renderCompareChart);
+$('comparisonType').addEventListener('change',renderCompareChart);
+['indicatorA','indicatorB','directChartType','comparisonCalculation'].forEach(id=>
+ $(id).addEventListener('change',renderDirectChart)
+);
+
+$('gpsButton').addEventListener('click',captureGPS);
+$('downloadGPS').addEventListener('click',downloadGPS);
+$('clearGPS').addEventListener('click',clearGPS);
+
+$('csv').addEventListener('click',exportCSV);
+$('geojson').addEventListener('click',exportGeoJSON);
+$('selectedCSV').addEventListener('click',exportSelectedCSV);
+
+$('downloadMainPNG').addEventListener('click',()=>downloadChartPNG(mainChart,'GBoS_EA_Indicator_Chart'));
+$('downloadComparePNG').addEventListener('click',()=>downloadChartPNG(compareChart,'GBoS_EA_Multi_Indicator_Comparison'));
+$('downloadDirectPNG').addEventListener('click',()=>downloadChartPNG(directChart,'GBoS_EA_Indicator_A_B_Comparison'));
+
+$('downloadMainCSV').addEventListener('click',downloadMainCSV);
+$('downloadCompareCSV').addEventListener('click',downloadCompareCSV);
+$('downloadDirectCSV').addEventListener('click',downloadDirectCSV);
+
+window.addEventListener('resize',()=>{
+ if(mainChart)mainChart.resize();
+ if(compareChart)compareChart.resize();
+ if(directChart)directChart.resize();
+});
+
+$('sourceUrl').value=DEFAULT_URL;
+loadFromUrl();
+
+})();
 </script>
 </body>
 </html>
