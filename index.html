@@ -1,0 +1,1022 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GBoS GEOAI | Gambia EA Statistical Intelligence</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+:root{
+ --bg:#071321;--panel:#0d1d30;--panel2:#11283e;--border:#254158;
+ --cyan:#19c5df;--blue:#3987ff;--green:#35d49a;--orange:#f6a94b;
+ --red:#ff6978;--text:#e9f3fb;--muted:#91a8bd;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{height:66px;background:#091a2b;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 18px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:39px;height:39px;border-radius:9px;background:linear-gradient(135deg,#087fa8,#20d6c1);display:grid;place-items:center;font-weight:bold}
+.brand h1{font-size:15px;margin:0 0 4px}
+.brand small{font-size:9px;color:var(--muted);letter-spacing:1px}
+.header-right{text-align:right;color:var(--muted);font-size:10px}
+main{height:calc(100vh - 66px);display:grid;grid-template-columns:260px minmax(300px,1fr) 355px;gap:9px;padding:9px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:#31516d transparent}
+.section{padding:12px;border-bottom:1px solid var(--border)}
+.heading{font-size:10px;color:var(--cyan);font-weight:bold;letter-spacing:1px;text-transform:uppercase;margin-bottom:11px}
+label{display:block;color:var(--muted);font-size:10px;margin:10px 0 5px}
+input,select,button{width:100%;background:#091a2a;border:1px solid var(--border);border-radius:5px;padding:9px;color:var(--text);font-size:11px}
+button{cursor:pointer;font-weight:bold}
+button:hover{filter:brightness(1.2)}
+.primary{background:#087f9b;border-color:#087f9b}
+.secondary{background:#172e45}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.status{font-size:10px;padding:9px;background:#102a3b;border-radius:5px;color:var(--green);margin-top:8px;line-height:1.5;overflow-wrap:anywhere}
+.note{font-size:10px;color:var(--muted);line-height:1.5}
+.map-panel{position:relative;min-height:0;overflow:hidden;border:1px solid var(--border);border-radius:8px}
+#map{width:100%;height:100%;background:#0b1724}
+.map-top{position:absolute;z-index:500;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
+.chip{background:#081a2bed;border:1px solid #31516d;border-radius:5px;padding:8px 10px;font-size:10px;pointer-events:auto}
+.chip b{color:var(--cyan)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.kpi{background:var(--panel2);border:1px solid var(--border);padding:10px;border-radius:6px;min-width:0}
+.kpi small{font-size:9px;color:var(--muted)}
+.kpi strong{display:block;font-size:18px;color:var(--cyan);margin-top:5px;overflow-wrap:anywhere}
+.profile{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.profile-item{background:#10263a;border:1px solid #203c55;border-radius:5px;padding:8px;min-width:0}
+.profile-item.wide{grid-column:1/-1}
+.profile-item.highlight{border-color:#087f9b}
+.profile-item small{display:block;color:var(--muted);font-size:9px;margin-bottom:5px}
+.profile-item strong{font-size:12px;overflow-wrap:anywhere}
+.profile-item.highlight strong{color:var(--cyan)}
+.chart-box{height:245px;background:#091a2a;border:1px solid var(--border);border-radius:6px;margin-top:9px;position:relative}
+canvas{width:100%;height:100%;display:block}
+.chart-legend{font-size:9px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:7px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.stat{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #1d354b;padding:7px 0;font-size:10px}
+.stat span{color:var(--muted)}
+.stat strong{text-align:right;overflow-wrap:anywhere}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.table-wrap{overflow:auto;max-height:250px}
+table{border-collapse:collapse;width:100%;font-size:9px}
+th,td{padding:7px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}
+th{background:#10263a;color:var(--cyan);position:sticky;top:0}
+th:first-child,td:first-child{text-align:left}
+.attribute-list{max-height:260px;overflow:auto}
+.attr{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #1b344a;font-size:9px}
+.attr span{color:var(--muted);overflow-wrap:anywhere}
+.attr strong{text-align:right;overflow-wrap:anywhere}
+footer{text-align:center;color:#7892a9;font-size:9px;line-height:1.6;padding:12px}
+@media(max-width:1050px){
+ main{height:auto;min-height:calc(100vh - 66px);grid-template-columns:1fr}
+ .map-panel{height:60vh;min-height:400px;grid-row:1}
+ .panel{max-height:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="brand">
+  <div class="logo">G</div>
+  <div>
+   <h1>GBoS GEOAI | Gambia EA Statistical Intelligence</h1>
+   <small>ENUMERATION AREA • DATA QUALITY • COMPARATIVE ANALYSIS</small>
+  </div>
+ </div>
+ <div class="header-right">THE GAMBIA<br><span id="headerStatus">Awaiting dataset</span></div>
+</header>
+
+<main>
+
+<!-- LEFT CONTROLS -->
+<aside class="panel">
+
+ <div class="section">
+  <div class="heading">01 / Data source</div>
+  <label>Upload GeoJSON or JSON</label>
+  <input type="file" id="file" accept=".json,.geojson,application/json,application/geo+json">
+  <label>Or public raw GeoJSON URL</label>
+  <input id="url" placeholder="Paste GitHub raw URL">
+  <button class="primary" id="loadUrl" style="margin-top:8px">Load URL</button>
+  <div class="status" id="status">No dataset loaded.</div>
+ </div>
+
+ <div class="section">
+  <div class="heading">02 / Administrative filters</div>
+  <label>Local Government Area</label>
+  <select id="lga"><option value="">All LGAs</option></select>
+  <label>District</label>
+  <select id="district"><option value="">All districts</option></select>
+  <label>Ward</label>
+  <select id="ward"><option value="">All wards</option></select>
+  <label>Enumeration Area</label>
+  <select id="ea"><option value="">All EAs</option></select>
+  <div class="row">
+   <button class="primary" id="apply">Apply filters</button>
+   <button class="secondary" id="reset">Reset filters</button>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="heading">03 / Map configuration</div>
+  <label>Basemap</label>
+  <select id="basemap">
+   <option value="hybrid">Esri Hybrid</option>
+   <option value="osm">OpenStreetMap</option>
+   <option value="satellite">Satellite imagery</option>
+   <option value="topo">Topographic</option>
+   <option value="terrain">Shaded terrain</option>
+   <option value="light">Carto Light</option>
+   <option value="dark">Carto Dark</option>
+  </select>
+  <label>Boundary visibility</label>
+  <select id="boundary">
+   <option value="all">All filtered EAs</option>
+   <option value="selected">Selected EA only</option>
+  </select>
+  <div class="row">
+   <button class="secondary" id="fit">Zoom to EAs</button>
+   <button class="secondary" id="clear">Clear selected EA</button>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="heading">04 / Statistical exports</div>
+  <button class="secondary" id="csv">Export EA data CSV</button>
+  <button class="secondary" id="geojson" style="margin-top:6px">Export filtered GeoJSON</button>
+  <button class="secondary" id="statsCsv" style="margin-top:6px">Export statistics CSV</button>
+  <button class="secondary" id="compareCsv" style="margin-top:6px">Export comparison CSV</button>
+ </div>
+
+ <div class="section">
+  <div class="heading">05 / Analysis guide</div>
+  <div class="note">
+   • Descriptive statistics<br>
+   • Field-to-field comparison<br>
+   • Numeric distributions<br>
+   • Categorical frequencies<br>
+   • Correlation analysis<br>
+   • Data completeness<br>
+   • Household and population indicators
+  </div>
+ </div>
+
+</aside>
+
+<!-- MAP -->
+<section class="map-panel">
+ <div id="map"></div>
+ <div class="map-top">
+  <div class="chip"><b>GAMBIA</b> | EA Spatial Distribution</div>
+  <div class="chip" id="mapCount">0 EAs</div>
+ </div>
+</section>
+
+<!-- RIGHT ANALYTICS -->
+<aside class="panel">
+
+ <div class="section">
+  <div class="heading">06 / Key performance indicators</div>
+  <div class="kpis">
+   <div class="kpi"><small>Loaded EAs</small><strong id="kTotal">0</strong></div>
+   <div class="kpi"><small>Filtered EAs</small><strong id="kFiltered">0</strong></div>
+   <div class="kpi"><small>Mapped households</small><strong id="kHhs">—</strong></div>
+   <div class="kpi"><small>Mapped population</small><strong id="kPop">—</strong></div>
+   <div class="kpi"><small>Listing households</small><strong id="kLsHhs">—</strong></div>
+   <div class="kpi"><small>Enumerated households</small><strong id="kEnumHhs">—</strong></div>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="heading">07 / Selected EA profile</div>
+  <div id="profile" class="note">Click an EA on the map or select one from the EA selector.</div>
+ </div>
+
+ <div class="section">
+  <div class="heading">08 / Statistical analysis</div>
+
+  <label>Primary variable</label>
+  <select id="field1"></select>
+
+  <label>Chart type</label>
+  <select id="chartType">
+   <option value="histogram">Histogram / distribution</option>
+   <option value="bar">Ranked bar chart</option>
+   <option value="line">Line chart</option>
+   <option value="pie">Pie chart</option>
+   <option value="doughnut">Doughnut chart</option>
+   <option value="scatter">Scatter plot</option>
+   <option value="box">Box plot</option>
+   <option value="frequency">Category frequency</option>
+  </select>
+
+  <label>Secondary variable (for scatter/comparison)</label>
+  <select id="field2"></select>
+
+  <div class="row">
+   <button class="primary" id="draw">Update chart</button>
+   <button class="secondary" id="chartReset">Reset chart</button>
+  </div>
+
+  <div class="chart-box"><canvas id="mainChart"></canvas></div>
+  <div class="chart-legend" id="chartLegend"></div>
+  <div id="descriptiveStats"></div>
+ </div>
+
+ <div class="section">
+  <div class="heading">09 / Field comparison analysis</div>
+
+  <label>Comparison indicator</label>
+  <select id="compareMode">
+   <option value="paired">Compare two fields per EA</option>
+   <option value="difference">Difference: field 1 − field 2</option>
+   <option value="ratio">Ratio: field 1 / field 2</option>
+   <option value="percent">Percentage difference</option>
+   <option value="correlation">Correlation coefficient</option>
+  </select>
+
+  <label>Comparison chart</label>
+  <select id="compareChart">
+   <option value="grouped">Grouped bar chart</option>
+   <option value="line">Line comparison</option>
+   <option value="scatter">Scatter comparison</option>
+   <option value="difference">Difference by EA</option>
+  </select>
+
+  <button class="primary" id="runCompare" style="margin-top:9px">Run field comparison</button>
+  <div class="chart-box"><canvas id="compareCanvas"></canvas></div>
+  <div id="compareResults"></div>
+ </div>
+
+ <div class="section">
+  <div class="heading">10 / Correlation analysis</div>
+  <label>First variable</label>
+  <select id="corr1"></select>
+  <label>Second variable</label>
+  <select id="corr2"></select>
+  <button class="secondary" id="correlate" style="margin-top:8px">Calculate correlation</button>
+  <div id="correlationResult"></div>
+ </div>
+
+ <div class="section">
+  <div class="heading">11 / Data quality and completeness</div>
+  <div id="quality"></div>
+  <div class="chart-box" style="height:170px"><canvas id="qualityCanvas"></canvas></div>
+ </div>
+
+ <div class="section">
+  <div class="heading">12 / Household and population indicators</div>
+  <div id="indicators"></div>
+  <div class="chart-box" style="height:190px"><canvas id="indicatorCanvas"></canvas></div>
+ </div>
+
+ <div class="section">
+  <div class="heading">13 / All properties for selected EA</div>
+  <div class="attribute-list" id="allAttributes">
+   <div class="note">Select an EA to display its complete attribute record.</div>
+  </div>
+ </div>
+
+ <div class="section">
+  <div class="heading">14 / Field inventory</div>
+  <div id="fieldInventory" class="note">Load a dataset to view its properties.</div>
+ </div>
+
+ <footer>
+  <b>GBoS GEOAI</b><br>
+  Produced by Ansu Singhateh<br>
+  GIS Analyst | GIS / Cartography Unit | Gambia Bureau of Statistics<br>
+  GBoS GEOAI • Research and educational use
+ </footer>
+</aside>
+
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+"use strict";
+
+/* ============================================================
+ GBoS GEOAI | GAMBIA EA STATISTICAL INTELLIGENCE
+ Full-property analysis, field comparison, charts and mapping.
+ All calculations use the currently filtered EA records.
+============================================================ */
+
+const $=id=>document.getElementById(id);
+let allFeatures=[],filtered=[],fields=[],selected=null;
+let layer=null,baseLayer=null;
+
+const map=L.map("map",{center:[13.45,-15.55],zoom:8});
+
+const base={
+ osm:L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}),
+ satellite:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"© Esri"}),
+ hybrid:L.layerGroup([
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19}),
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})
+ ]),
+ topo:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:19}),
+ terrain:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}",{maxZoom:13}),
+ light:L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{maxZoom:19}),
+ dark:L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:19})
+};
+baseLayer=base.hybrid.addTo(map);
+
+$("basemap").onchange=()=>{
+ map.removeLayer(baseLayer);
+ baseLayer=base[$("basemap").value].addTo(map);
+};
+
+/* ---------- UTILITIES ---------- */
+
+function esc(v){
+ return String(v??"—").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[c]);
+}
+function val(v){
+ if(v===null||v===undefined||v==="")return null;
+ if(typeof v==="boolean")return null;
+ if(typeof v==="number")return Number.isFinite(v)?v:null;
+ if(typeof v==="string"){
+  const s=v.replace(/,/g,"").trim();
+  if(!s)return null;
+  const n=Number(s);
+  return Number.isFinite(n)?n:null;
+ }
+ return null;
+}
+function fmt(n){
+ return n===null||n===undefined||!Number.isFinite(Number(n))?"—":
+ Number(n).toLocaleString("en-US",{maximumFractionDigits:2});
+}
+function uniq(arr){
+ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!=="").map(String))]
+ .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+}
+function getField(candidates){
+ const lower=fields.map(f=>[f,f.toLowerCase()]);
+ for(const c of candidates){
+  const found=lower.find(x=>x[1]===c.toLowerCase());
+  if(found)return found[0];
+ }
+ return null;
+}
+function numValues(field,records=filtered){
+ return records.map(f=>val(f.properties?.[field])).filter(v=>v!==null);
+}
+function sumField(field,records=filtered){
+ const a=numValues(field,records);
+ return a.length?a.reduce((x,y)=>x+y,0):null;
+}
+function median(a){
+ if(!a.length)return null;
+ const s=[...a].sort((x,y)=>x-y),m=Math.floor(s.length/2);
+ return s.length%2?s[m]:(s[m-1]+s[m])/2;
+}
+function quantile(a,q){
+ if(!a.length)return null;
+ const s=[...a].sort((x,y)=>x-y);
+ const pos=(s.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos);
+ return s[lo]+(s[hi]-s[lo])*(pos-lo);
+}
+function stats(a){
+ if(!a.length)return null;
+ const sorted=[...a].sort((x,y)=>x-y);
+ const mean=a.reduce((x,y)=>x+y,0)/a.length;
+ const variance=a.reduce((s,x)=>s+(x-mean)**2,0)/a.length;
+ return {
+  n:a.length,sum:a.reduce((x,y)=>x+y,0),mean,median:median(a),
+  min:sorted[0],max:sorted[sorted.length-1],
+  sd:Math.sqrt(variance),q1:quantile(a,.25),q3:quantile(a,.75)
+ };
+}
+function pearson(x,y){
+ const pairs=[];
+ for(let i=0;i<Math.min(x.length,y.length);i++){
+  if(x[i]!==null&&y[i]!==null&&Number.isFinite(x[i])&&Number.isFinite(y[i]))
+   pairs.push([x[i],y[i]]);
+ }
+ if(pairs.length<2)return {r:null,n:pairs.length};
+ const mx=pairs.reduce((s,p)=>s+p[0],0)/pairs.length;
+ const my=pairs.reduce((s,p)=>s+p[1],0)/pairs.length;
+ let numerator=0,dx=0,dy=0;
+ pairs.forEach(p=>{
+  numerator+=(p[0]-mx)*(p[1]-my);
+  dx+=(p[0]-mx)**2;dy+=(p[1]-my)**2;
+ });
+ const den=Math.sqrt(dx*dy);
+ return {r:den?numerator/den:null,n:pairs.length};
+}
+function download(content,name,type){
+ const blob=new Blob([content],{type});
+ const u=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);
+}
+function csvCell(v){
+ const s=v===null||v===undefined?"":typeof v==="object"?JSON.stringify(v):String(v);
+ return '"'+s.replace(/"/g,'""')+'"';
+}
+function setStatus(s,error=false){
+ $("status").textContent=s;
+ $("status").style.color=error?"#ff8792":"#35d49a";
+}
+
+/* ---------- LOAD DATA ---------- */
+
+$("file").addEventListener("change",async e=>{
+ const f=e.target.files?.[0];if(!f)return;
+ try{loadData(JSON.parse(await f.text()),f.name);}
+ catch(err){setStatus("File error: "+err.message,true);}
+});
+$("loadUrl").onclick=async()=>{
+ const u=$("url").value.trim();
+ if(!u)return setStatus("Enter a public raw GeoJSON URL.",true);
+ setStatus("Loading GeoJSON...");
+ try{
+  const r=await fetch(u);
+  if(!r.ok)throw Error("HTTP "+r.status);
+  loadData(await r.json(),u);
+ }catch(err){setStatus("URL error: "+err.message+". Check URL and CORS access.",true);}
+};
+
+function loadData(data,source){
+ if(!data||!Array.isArray(data.features))
+  return setStatus("Invalid GeoJSON: expected a FeatureCollection.",true);
+ allFeatures=data.features.filter(f=>f?.type==="Feature"&&f.geometry?.coordinates);
+ if(!allFeatures.length)return setStatus("No valid spatial features found.",true);
+ fields=[...new Set(allFeatures.flatMap(f=>Object.keys(f.properties||{})))].sort();
+ filtered=[...allFeatures];selected=null;
+ buildSelectors();buildFields();renderAll();
+ setStatus("Loaded "+fmt(allFeatures.length)+" features from "+source);
+ $("headerStatus").textContent=fmt(allFeatures.length)+" EA records loaded";
+}
+
+/* ---------- ADMINISTRATIVE FILTERS ---------- */
+
+function admin(){
+ return {
+  lga:getField(["lganame","lga_name","lga","region"]),
+  dist:getField(["distname","district_name","district"]),
+  ward:getField(["wardname","ward_name","ward"]),
+  ea:getField(["feacode","ea_code","eaname","enum_area","ea"])
+ };
+}
+function populate(id,values,label,counts,total){
+ const el=$(id);el.innerHTML="";
+ const o=document.createElement("option");o.value="";
+ o.textContent=label+" ("+fmt(total)+" EAs)";el.appendChild(o);
+ values.forEach(v=>{
+  const x=document.createElement("option");x.value=v;
+  x.textContent=v+" ("+fmt(counts[v]||0)+" EAs)";
+  el.appendChild(x);
+ });
+}
+function subsetBy(field,value,records){
+ return value&&field?records.filter(f=>String(f.properties?.[field]??"")===value):records;
+}
+function buildSelectors(){
+ const a=admin();
+ let s=allFeatures;
+ let values=a.lga?uniq(s.map(f=>f.properties?.[a.lga])):[];
+ let counts={};values.forEach(v=>counts[v]=s.filter(f=>String(f.properties?.[a.lga])===v).length);
+ populate("lga",values,"All LGAs",counts,s.length);
+ updateDistrict();updateWard();updateEA();
+}
+function updateDistrict(){
+ const a=admin(),s=subsetBy(a.lga,$("lga").value,allFeatures);
+ const vs=a.dist?uniq(s.map(f=>f.properties?.[a.dist])):[];
+ const c={};vs.forEach(v=>c[v]=s.filter(f=>String(f.properties?.[a.dist])===v).length);
+ populate("district",vs,"All districts",c,s.length);
+}
+function updateWard(){
+ const a=admin();
+ let s=subsetBy(a.lga,$("lga").value,allFeatures);
+ s=subsetBy(a.dist,$("district").value,s);
+ const vs=a.ward?uniq(s.map(f=>f.properties?.[a.ward])):[];
+ const c={};vs.forEach(v=>c[v]=s.filter(f=>String(f.properties?.[a.ward])===v).length);
+ populate("ward",vs,"All wards",c,s.length);
+}
+function updateEA(){
+ const a=admin();
+ let s=subsetBy(a.lga,$("lga").value,allFeatures);
+ s=subsetBy(a.dist,$("district").value,s);
+ s=subsetBy(a.ward,$("ward").value,s);
+ const vs=a.ea?uniq(s.map(f=>f.properties?.[a.ea])):[];
+ const c={};vs.forEach(v=>c[v]=s.filter(f=>String(f.properties?.[a.ea])===v).length);
+ populate("ea",vs,"All EAs",c,s.length);
+}
+$("lga").onchange=()=>{updateDistrict();updateWard();updateEA();};
+$("district").onchange=()=>{updateWard();updateEA();};
+$("ward").onchange=updateEA;
+$("apply").onclick=()=>{
+ const a=admin();
+ let s=allFeatures;
+ s=subsetBy(a.lga,$("lga").value,s);
+ s=subsetBy(a.dist,$("district").value,s);
+ s=subsetBy(a.ward,$("ward").value,s);
+ s=subsetBy(a.ea,$("ea").value,s);
+ filtered=s;selected=null;renderAll();
+};
+$("reset").onclick=()=>{
+ ["lga","district","ward","ea"].forEach(id=>$(id).value="");
+ filtered=[...allFeatures];selected=null;renderAll();
+};
+$("clear").onclick=()=>{selected=null;$("ea").value="";renderAll();};
+
+/* ---------- FIELD SELECTORS ---------- */
+
+function buildFields(){
+ const ids=["field1","field2","corr1","corr2"];
+ ids.forEach(id=>{
+  const el=$(id);el.innerHTML="";
+  fields.forEach(f=>{
+   const o=document.createElement("option");o.value=f;o.textContent=f;el.appendChild(o);
+  });
+ });
+ const choices=[
+  ["field1",["map_pop","sum_pop","enum_pop","ls_pop"]],
+  ["field2",["map_hhs","sum_hhs","enum_hhs","ls_hhs"]],
+  ["corr1",["map_pop","sum_pop","enum_pop"]],
+  ["corr2",["map_hhs","sum_hhs","enum_hhs"]]
+ ];
+ choices.forEach(([id,candidates])=>{
+  const f=getField(candidates);if(f)$(id).value=f;
+ });
+ $("field1").onchange=()=>{drawMain();};
+ $("field2").onchange=()=>{drawMain();};
+}
+
+/* ---------- MAP RENDERING ---------- */
+
+function styleFeature(f){
+ const yes=f===selected;
+ return {
+  color:yes?"#ffad45":"#19c5df",
+  weight:yes?3:1,
+  fillColor:yes?"#f6a94b":"#19c5df",
+  fillOpacity:yes?.42:.10
+ };
+}
+function renderMap(){
+ if(layer)map.removeLayer(layer);
+ let data=filtered;
+ if($("boundary").value==="selected"&&selected)data=[selected];
+ layer=L.geoJSON(data,{
+  style:styleFeature,
+  onEachFeature:(f,l)=>{
+   const p=f.properties||{},a=admin();
+   const code=a.ea?p[a.ea]:"EA";
+   l.bindTooltip(esc(code),{sticky:true});
+   l.bindPopup(popup(f));
+   l.on("click",()=>{
+    selected=f;
+    if(a.ea)$("ea").value=String(p[a.ea]??"");
+    renderAll();
+   });
+  }
+ }).addTo(map);
+ $("mapCount").textContent=fmt(data.length)+" EAs displayed";
+ if(data.length&&!selected){
+  const b=layer.getBounds();if(b.isValid())map.fitBounds(b,{padding:[15,15],maxZoom:12});
+ }
+}
+function popup(f){
+ const p=f.properties||{};
+ const keys=["lganame","distname","wardname","map_hhs","map_pop","ls_hhs","ls_pop","enum_hhs","enum_pop"];
+ return "<div style='color:#173247;min-width:190px'><b>EA profile</b>"+
+ keys.filter(k=>fields.includes(k)).map(k=>`<div style="padding:4px;border-bottom:1px solid #ddd"><b>${esc(k)}:</b> ${esc(p[k])}</div>`).join("")+"</div>";
+}
+$("boundary").onchange=renderMap;
+$("fit").onclick=()=>{
+ if(layer&&layer.getBounds().isValid())map.fitBounds(layer.getBounds(),{padding:[20,20]});
+};
+
+/* ---------- SELECTED EA PROFILE ---------- */
+
+const requested=[
+ "lganame","distname","wardname","map_hhs","map_pop","ls_hhs","ls_pop",
+ "enum_hhs","enum_pop","comp_map","build_map","comp_ls","build_ls"
+];
+const labels={
+ lganame:"Local Government Area",distname:"District",wardname:"Ward",
+ map_hhs:"Mapped households",map_pop:"Mapped population",
+ ls_hhs:"Listing households",ls_pop:"Listing population",
+ enum_hhs:"Enumerated households",enum_pop:"Enumerated population",
+ comp_map:"Compare / Map",build_map:"Build / Map",
+ comp_ls:"Compare / Listing",build_ls:"Build / Listing"
+};
+function renderProfile(){
+ if(!selected){
+  $("profile").innerHTML="<div class='note'>Select an EA on the map to view its profile.</div>";
+  $("allAttributes").innerHTML="<div class='note'>No EA selected.</div>";
+  return;
+ }
+ const p=selected.properties||{};
+ $("profile").innerHTML="<div class='profile'>"+
+ requested.filter(k=>fields.includes(k)).map(k=>{
+  const wide=["lganame","distname","wardname"].includes(k);
+  const hi=["map_hhs","map_pop"].includes(k);
+  return `<div class="profile-item ${wide?"wide":""} ${hi?"highlight":""}">
+   <small>${esc(labels[k]||k)} (${esc(k)})</small><strong>${esc(p[k]??"—")}</strong>
+  </div>`;
+ }).join("")+"</div>";
+ $("allAttributes").innerHTML=fields.map(k=>
+  `<div class="attr"><span>${esc(k)}</span><strong>${esc(p[k]??"—")}</strong></div>`
+ ).join("");
+}
+
+/* ---------- KPI AND INDICATORS ---------- */
+
+function renderKPIs(){
+ const mapH=getField(["map_hhs"]),mapP=getField(["map_pop"]);
+ const lsH=getField(["ls_hhs"]),enH=getField(["enum_hhs"]);
+ $("kTotal").textContent=fmt(allFeatures.length);
+ $("kFiltered").textContent=fmt(filtered.length);
+ $("kHhs").textContent=mapH?fmt(sumField(mapH)):"—";
+ $("kPop").textContent=mapP?fmt(sumField(mapP)):"—";
+ $("kLsHhs").textContent=lsH?fmt(sumField(lsH)):"—";
+ $("kEnumHhs").textContent=enH?fmt(sumField(enH)):"—";
+
+ const indicatorPairs=[
+  ["Mapped households","map_hhs"],["Listing households","ls_hhs"],["Enumerated households","enum_hhs"],
+  ["Mapped population","map_pop"],["Listing population","ls_pop"],["Enumerated population","enum_pop"]
+ ];
+ const rows=indicatorPairs.filter(x=>fields.includes(x[1])).map(x=>
+  `<div class="stat"><span>${x[0]}</span><strong>${fmt(sumField(x[1]))}</strong></div>`
+ ).join("");
+ $("indicators").innerHTML=rows||"No corresponding household/population fields found.";
+ const vals=indicatorPairs.filter(x=>fields.includes(x[1]));
+ drawSimpleBars("indicatorCanvas",vals.map(x=>x[0]),vals.map(x=>sumField(x[1])||0));
+}
+
+/* ---------- CANVAS CHART ENGINE ---------- */
+
+const palette=["#19c5df","#3987ff","#35d49a","#f6a94b","#b78cff","#ff6978","#74d6ce","#d6c56b"];
+
+function canvasSetup(id){
+ const c=$(id),r=c.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
+ const w=Math.max(250,r.width),h=Math.max(150,r.height);
+ c.width=w*ratio;c.height=h*ratio;
+ const ctx=c.getContext("2d");ctx.setTransform(ratio,0,0,ratio,0,0);
+ ctx.clearRect(0,0,w,h);ctx.fillStyle="#091a2a";ctx.fillRect(0,0,w,h);
+ return {ctx,w,h};
+}
+function axes(ctx,w,h,p={l:36,r:12,t:15,b:35}){
+ ctx.strokeStyle="#29435a";ctx.lineWidth=1;ctx.beginPath();
+ ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,h-p.b);ctx.lineTo(w-p.r,h-p.b);ctx.stroke();
+ return {cw:w-p.l-p.r,ch:h-p.t-p.b,...p};
+}
+function drawSimpleBars(id,labels,values){
+ const {ctx,w,h}=canvasSetup(id);
+ if(!values.length)return;
+ const p=axes(ctx,w,h),max=Math.max(...values,1),gap=7;
+ const bw=(p.cw-gap*(values.length-1))/values.length;
+ values.forEach((v,i)=>{
+  const bh=v/max*p.ch,x=p.l+i*(bw+gap),y=h-p.b-bh;
+  ctx.fillStyle=palette[i%palette.length];ctx.fillRect(x,y,bw,bh);
+  ctx.fillStyle="#e3edf6";ctx.font="9px Arial";ctx.textAlign="center";
+  ctx.fillText(fmt(v),x+bw/2,Math.max(10,y-4));
+  ctx.save();ctx.translate(x+bw/2,h-7);ctx.rotate(-.35);
+  ctx.fillStyle="#91a8bd";ctx.fillText(String(labels[i]).slice(0,13),0,0);ctx.restore();
+ });
+}
+function drawHistogram(id,values){
+ const a=values.filter(v=>v!==null);
+ const {ctx,w,h}=canvasSetup(id);
+ if(!a.length)return;
+ const min=Math.min(...a),max=Math.max(...a),bins=10;
+ const counts=Array(bins).fill(0);
+ a.forEach(v=>{let i=max===min?0:Math.floor((v-min)/(max-min)*bins);counts[Math.min(bins-1,i)]++;});
+ drawSimpleBarsFromContext(ctx,w,h,counts,counts.map((v,i)=>max===min?"Same":fmt(min+(max-min)*i/bins)));
+}
+function drawSimpleBarsFromContext(ctx,w,h,values,labels){
+ const p=axes(ctx,w,h),max=Math.max(...values,1),gap=4,bw=(p.cw-gap*(values.length-1))/values.length;
+ values.forEach((v,i)=>{
+  const bh=v/max*p.ch,x=p.l+i*(bw+gap),y=h-p.b-bh;
+  ctx.fillStyle=palette[0];ctx.fillRect(x,y,bw,bh);
+  ctx.fillStyle="#dceaf5";ctx.font="9px Arial";ctx.textAlign="center";
+  ctx.fillText(String(v),x+bw/2,Math.max(10,y-4));
+  ctx.save();ctx.translate(x+bw/2,h-7);ctx.rotate(-.45);
+  ctx.fillStyle="#91a8bd";ctx.fillText(String(labels[i]).slice(0,12),0,0);ctx.restore();
+ });
+}
+function drawPie(id,labels,values,doughnut=false){
+ const {ctx,w,h}=canvasSetup(id),total=values.reduce((a,b)=>a+b,0);
+ if(!total)return;
+ const cx=w*.45,cy=h*.48,r=Math.min(w*.28,h*.36);
+ let start=-Math.PI/2;
+ values.forEach((v,i)=>{
+  const end=start+v/total*Math.PI*2;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
+  ctx.fillStyle=palette[i%palette.length];ctx.fill();
+  start=end;
+ });
+ if(doughnut){
+  ctx.beginPath();ctx.arc(cx,cy,r*.52,0,Math.PI*2);ctx.fillStyle="#091a2a";ctx.fill();
+  ctx.fillStyle="#e9f3fb";ctx.textAlign="center";ctx.font="bold 13px Arial";
+  ctx.fillText(fmt(total),cx,cy+4);
+ }
+ ctx.font="9px Arial";ctx.textAlign="left";
+ labels.forEach((l,i)=>{
+  const y=20+i*18,x=w*.73;
+  ctx.fillStyle=palette[i%palette.length];ctx.fillRect(x,y-7,8,8);
+  ctx.fillStyle="#b9cbd9";ctx.fillText(String(l).slice(0,16),x+12,y);
+ });
+}
+function drawLine(id,values){
+ const {ctx,w,h}=canvasSetup(id),a=values.filter(v=>v!==null);
+ if(!a.length)return;
+ const p=axes(ctx,w,h),min=Math.min(...a),max=Math.max(...a),range=max-min||1;
+ ctx.strokeStyle=palette[0];ctx.lineWidth=2;ctx.beginPath();
+ values.forEach((v,i)=>{
+  if(v===null)return;
+  const x=p.l+(values.length===1?0:i/(values.length-1)*p.cw);
+  const y=h-p.b-(v-min)/range*p.ch;
+  if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+ });
+ ctx.stroke();
+}
+function drawScatter(id,xs,ys){
+ const {ctx,w,h}=canvasSetup(id),pairs=[];
+ for(let i=0;i<Math.min(xs.length,ys.length);i++)
+  if(xs[i]!==null&&ys[i]!==null)pairs.push([xs[i],ys[i]]);
+ if(!pairs.length)return;
+ const p=axes(ctx,w,h),xmin=Math.min(...pairs.map(x=>x[0])),xmax=Math.max(...pairs.map(x=>x[0]));
+ const ymin=Math.min(...pairs.map(x=>x[1])),ymax=Math.max(...pairs.map(x=>x[1]));
+ pairs.forEach(([x,y])=>{
+  const px=p.l+(x-xmin)/(xmax-xmin||1)*p.cw;
+  const py=h-p.b-(y-ymin)/(ymax-ymin||1)*p.ch;
+  ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);ctx.fillStyle=palette[0];ctx.fill();
+ });
+}
+function drawBox(id,values){
+ const a=values.filter(v=>v!==null);
+ const {ctx,w,h}=canvasSetup(id);if(!a.length)return;
+ const s=stats(a),p=axes(ctx,w,h),min=s.min,max=s.max,range=max-min||1;
+ const y=v=>h-p.b-(v-min)/range*p.ch,cx=w/2;
+ ctx.strokeStyle=palette[0];ctx.fillStyle="#19c5df";
+ ctx.beginPath();ctx.moveTo(cx,y(s.min));ctx.lineTo(cx,y(s.max));ctx.stroke();
+ ctx.fillRect(cx-35,y(s.q3),70,y(s.q1)-y(s.q3));
+ ctx.strokeStyle="#e9f3fb";ctx.beginPath();ctx.moveTo(cx-35,y(s.median));ctx.lineTo(cx+35,y(s.median));ctx.stroke();
+ ctx.fillStyle="#91a8bd";ctx.font="10px Arial";ctx.fillText("Min "+fmt(s.min),cx+42,y(s.min));
+ ctx.fillText("Q1 "+fmt(s.q1),cx+42,y(s.q1));
+ ctx.fillText("Median "+fmt(s.median),cx+42,y(s.median));
+ ctx.fillText("Q3 "+fmt(s.q3),cx+42,y(s.q3));
+ ctx.fillText("Max "+fmt(s.max),cx+42,y(s.max));
+}
+
+/* ---------- MAIN CHART AND DESCRIPTIVE STATS ---------- */
+
+function drawMain(){
+ if(!filtered.length)return;
+ const f1=$("field1").value,f2=$("field2").value,type=$("chartType").value;
+ const raw=filtered.map(f=>f.properties?.[f1]);
+ const nums=raw.map(val),valid=nums.filter(v=>v!==null);
+ const s=stats(valid);
+ $("chartLegend").innerHTML=`<span><i class="dot" style="background:${palette[0]}"></i>${esc(f1)}</span>`;
+ const chart=$("mainChart");
+ if(type==="histogram")drawHistogram("mainChart",nums);
+ else if(type==="box")drawBox("mainChart",nums);
+ else if(type==="line")drawLine("mainChart",nums);
+ else if(type==="scatter")drawScatter("mainChart",nums,filtered.map(f=>val(f.properties?.[f2])));
+ else{
+  const counts={};
+  raw.forEach(v=>{if(v!==null&&v!==undefined&&v!=="")counts[String(v)]=(counts[String(v)]||0)+1;});
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  if(type==="pie"||type==="doughnut")drawPie("mainChart",top.map(x=>x[0]),top.map(x=>x[1]),type==="doughnut");
+  else drawSimpleBars("mainChart",top.map(x=>x[0]),top.map(x=>x[1]));
+ }
+
+ $("descriptiveStats").innerHTML=s?[
+  ["Valid numeric values",s.n],["Sum",fmt(s.sum)],["Mean",fmt(s.mean)],
+  ["Median",fmt(s.median)],["Standard deviation",fmt(s.sd)],
+  ["Minimum",fmt(s.min)],["Maximum",fmt(s.max)],
+  ["First quartile (Q1)",fmt(s.q1)],["Third quartile (Q3)",fmt(s.q3)],
+  ["Interquartile range",fmt(s.q3-s.q1)]
+ ].map(x=>`<div class="stat"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("")
+ :`<div class="note">No numeric values available for descriptive statistics. Categorical frequencies are shown in the chart.</div>`;
+}
+$("draw").onclick=drawMain;
+$("chartType").onchange=drawMain;
+$("chartReset").onclick=()=>{
+ $("chartType").value="histogram";drawMain();
+};
+
+/* ---------- FIELD-TO-FIELD COMPARISON ---------- */
+
+function comparisonData(){
+ const a=$("field1").value,b=$("field2").value;
+ const x=filtered.map(f=>val(f.properties?.[a]));
+ const y=filtered.map(f=>val(f.properties?.[b]));
+ const mode=$("compareMode").value;
+ const rows=[];
+ filtered.forEach((f,i)=>{
+  if(x[i]===null||y[i]===null)return;
+  let result=null;
+  if(mode==="difference")result=x[i]-y[i];
+  else if(mode==="ratio")result=y[i]!==0?x[i]/y[i]:null;
+  else if(mode==="percent")result=y[i]!==0?(x[i]-y[i])/Math.abs(y[i])*100:null;
+  rows.push({feature:f,x:x[i],y:y[i],result});
+ });
+ return {a,b,x,y,rows,mode};
+}
+function runComparison(){
+ const d=comparisonData(),type=$("compareChart").value;
+ const x=d.x,y=d.y;
+ const pairs=d.rows;
+ const validX=x.filter(v=>v!==null),validY=y.filter(v=>v!==null);
+ const correlation=pearson(x,y);
+
+ if(d.mode==="correlation"){
+  $("compareResults").innerHTML=`<div class="stat"><span>Pearson correlation</span><strong>${fmt(correlation.r)}</strong></div>
+  <div class="stat"><span>Paired EAs</span><strong>${fmt(correlation.n)}</strong></div>`;
+  drawScatter("compareCanvas",x,y);return;
+ }
+ if(type==="scatter"){
+  drawScatter("compareCanvas",x,y);
+ }else if(type==="line"){
+  drawTwoLines(x,y);
+ }else if(type==="difference"||d.mode==="difference"||d.mode==="ratio"||d.mode==="percent"){
+  const vals=pairs.map(p=>p.x-p.y);
+  const selectedMode=d.mode;
+  const output=pairs.map(p=>selectedMode==="difference"?p.x-p.y:
+   selectedMode==="ratio"?(p.y!==0?p.x/p.y:null):
+   selectedMode==="percent"?(p.y!==0?(p.x-p.y)/Math.abs(p.y)*100:null):p.x-p.y);
+  drawSimpleBars("compareCanvas",pairs.map((p,i)=>"EA "+(i+1)),output.map(v=>v??0).slice(0,30));
+ }else{
+  drawGrouped(x,y);
+ }
+
+ const differences=pairs.map(p=>p.x-p.y);
+ const ds=stats(differences);
+ const ratioPairs=pairs.filter(p=>p.y!==0).map(p=>p.x/p.y);
+ const rs=stats(ratioPairs);
+ $("compareResults").innerHTML=`
+  <div class="stat"><span>Variable 1</span><strong>${esc(d.a)}</strong></div>
+  <div class="stat"><span>Variable 2</span><strong>${esc(d.b)}</strong></div>
+  <div class="stat"><span>Valid paired EAs</span><strong>${fmt(pairs.length)}</strong></div>
+  <div class="stat"><span>Field 1 total</span><strong>${fmt(validX.reduce((a,b)=>a+b,0))}</strong></div>
+  <div class="stat"><span>Field 2 total</span><strong>${fmt(validY.reduce((a,b)=>a+b,0))}</strong></div>
+  <div class="stat"><span>Mean difference</span><strong>${fmt(ds?.mean)}</strong></div>
+  <div class="stat"><span>Median difference</span><strong>${fmt(ds?.median)}</strong></div>
+  <div class="stat"><span>Mean ratio (field1 / field2)</span><strong>${fmt(rs?.mean)}</strong></div>
+  <div class="stat"><span>Correlation</span><strong>${fmt(correlation.r)}</strong></div>
+ `;
+}
+function drawGrouped(x,y){
+ const {ctx,w,h}=canvasSetup("compareCanvas");
+ const p=axes(ctx,w,h),n=Math.min(20,x.length),max=Math.max(1,...x.filter(v=>v!==null),...y.filter(v=>v!==null));
+ const group=p.cw/Math.max(n,1),bw=Math.max(2,group*.28);
+ for(let i=0;i<n;i++){
+  const a=x[i],b=y[i],gx=p.l+i*group+group*.2;
+  if(a!==null){const bh=a/max*p.ch;ctx.fillStyle=palette[0];ctx.fillRect(gx,h-p.b-bh,bw,bh);}
+  if(b!==null){const bh=b/max*p.ch;ctx.fillStyle=palette[1];ctx.fillRect(gx+bw+2,h-p.b-bh,bw,bh);}
+ }
+ $("chartLegend").innerHTML=`<span><i class="dot" style="background:${palette[0]}"></i>${esc($("field1").value)}</span><span><i class="dot" style="background:${palette[1]}"></i>${esc($("field2").value)}</span>`;
+}
+function drawTwoLines(x,y){
+ const {ctx,w,h}=canvasSetup("compareCanvas"),p=axes(ctx,w,h);
+ const all=[...x,...y].filter(v=>v!==null);
+ if(!all.length)return;
+ const min=Math.min(...all),max=Math.max(...all),range=max-min||1;
+ [x,y].forEach((arr,j)=>{
+  ctx.strokeStyle=palette[j];ctx.lineWidth=2;ctx.beginPath();let started=false;
+  arr.forEach((v,i)=>{
+   if(v===null)return;
+   const px=p.l+(i/Math.max(1,arr.length-1))*p.cw;
+   const py=h-p.b-(v-min)/range*p.ch;
+   if(!started){ctx.moveTo(px,py);started=true;}else ctx.lineTo(px,py);
+  });ctx.stroke();
+ });
+}
+$("runCompare").onclick=runComparison;
+
+/* ---------- CORRELATION ---------- */
+
+$("correlate").onclick=()=>{
+ const a=$("corr1").value,b=$("corr2").value;
+ const x=filtered.map(f=>val(f.properties?.[a]));
+ const y=filtered.map(f=>val(f.properties?.[b]));
+ const r=pearson(x,y);
+ let interpretation="Insufficient paired numeric values";
+ if(r.r!==null){
+  const abs=Math.abs(r.r);
+  interpretation=abs<.2?"Very weak linear relationship":
+   abs<.4?"Weak linear relationship":
+   abs<.6?"Moderate linear relationship":
+   abs<.8?"Strong linear relationship":"Very strong linear relationship";
+  if(r.r<0)interpretation+=" (negative)";
+  else interpretation+=" (positive)";
+ }
+ $("correlationResult").innerHTML=`
+  <div class="stat"><span>Variable X</span><strong>${esc(a)}</strong></div>
+  <div class="stat"><span>Variable Y</span><strong>${esc(b)}</strong></div>
+  <div class="stat"><span>Pearson r</span><strong>${fmt(r.r)}</strong></div>
+  <div class="stat"><span>Paired observations</span><strong>${fmt(r.n)}</strong></div>
+  <div class="stat"><span>Interpretation</span><strong>${interpretation}</strong></div>
+  <div class="note">Correlation describes linear association, not causation.</div>`;
+ drawScatter("compareCanvas",x,y);
+};
+
+/* ---------- DATA QUALITY ---------- */
+
+function renderQuality(){
+ if(!fields.length)return;
+ const total=filtered.length*fields.length;
+ let valid=0,missing=0;
+ const fieldCompleteness=[];
+ fields.forEach(k=>{
+  let count=0;
+  filtered.forEach(f=>{
+   const v=f.properties?.[k];
+   if(v!==null&&v!==undefined&&v!=="")count++;
+  });
+  valid+=count;missing+=filtered.length-count;
+  fieldCompleteness.push({field:k,pct:filtered.length?count/filtered.length*100:0});
+ });
+ const pct=total?valid/total*100:0;
+ const complete=fieldCompleteness.filter(x=>x.pct===100).length;
+ const partial=fieldCompleteness.filter(x=>x.pct>0&&x.pct<100).length;
+ const empty=fieldCompleteness.filter(x=>x.pct===0).length;
+ $("quality").innerHTML=`
+  <div class="stat"><span>Overall completeness</span><strong>${fmt(pct)}%</strong></div>
+  <div class="stat"><span>Present values</span><strong>${fmt(valid)}</strong></div>
+  <div class="stat"><span>Missing values</span><strong>${fmt(missing)}</strong></div>
+  <div class="stat"><span>Fully populated fields</span><strong>${fmt(complete)}</strong></div>
+  <div class="stat"><span>Partially populated fields</span><strong>${fmt(partial)}</strong></div>
+  <div class="stat"><span>Empty fields</span><strong>${fmt(empty)}</strong></div>`;
+ drawSimpleBars("qualityCanvas",["Complete","Partial","Empty"],[complete,partial,empty]);
+}
+
+/* ---------- FIELD INVENTORY ---------- */
+
+function renderInventory(){
+ $("fieldInventory").innerHTML=`
+  <div class="stat"><span>Total properties</span><strong>${fmt(fields.length)}</strong></div>
+  <div class="stat"><span>Numeric properties</span><strong>${fmt(fields.filter(k=>numValues(k).length>0).length)}</strong></div>
+  <div class="stat"><span>Categorical / text properties</span><strong>${fmt(fields.filter(k=>numValues(k).length===0).length)}</strong></div>
+ `+fields.map(k=>`<div class="stat"><span>${esc(k)}</span><strong>${fmt(filtered.filter(f=>f.properties?.[k]!==null&&f.properties?.[k]!==undefined&&f.properties?.[k]!=="").length)} / ${fmt(filtered.length)}</strong></div>`).join("");
+}
+
+/* ---------- EXPORTS ---------- */
+
+$("csv").onclick=()=>{
+ if(!filtered.length)return alert("No filtered EA records.");
+ const rows=[fields.map(csvCell).join(","),
+ ...filtered.map(f=>fields.map(k=>csvCell(f.properties?.[k])).join(","))];
+ download("\uFEFF"+rows.join("\n"),"Gambia_EA_Attributes.csv","text/csv;charset=utf-8");
+};
+$("geojson").onclick=()=>{
+ if(!filtered.length)return alert("No filtered EA records.");
+ download(JSON.stringify({type:"FeatureCollection",features:filtered},null,2),
+ "Gambia_Filtered_EAs.geojson","application/geo+json");
+};
+$("statsCsv").onclick=()=>{
+ const rows=[["field","valid","missing","unique","sum","mean","median","minimum","maximum","standard_deviation"]];
+ fields.forEach(k=>{
+  const raw=filtered.map(f=>f.properties?.[k]);
+  const a=raw.map(val).filter(v=>v!==null),s=stats(a);
+  rows.push([k,a.length,raw.length-a.length,
+   uniq(raw).length,s?.sum??"",s?.mean??"",s?.median??"",
+   s?.min??"",s?.max??"",s?.sd??""]);
+ });
+ download("\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\n"),
+ "Gambia_EA_Statistics_All_Fields.csv","text/csv;charset=utf-8");
+};
+$("compareCsv").onclick=()=>{
+ const d=comparisonData();
+ const rows=[["EA_index","field_1","field_2","value_1","value_2","difference","ratio","percent_difference"]];
+ d.rows.forEach((p,i)=>{
+  rows.push([i+1,d.a,d.b,p.x,p.y,p.x-p.y,p.y!==0?p.x/p.y:"",p.y!==0?(p.x-p.y)/Math.abs(p.y)*100:""]);
+ });
+ download("\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\n"),
+ "Gambia_EA_Field_Comparison.csv","text/csv;charset=utf-8");
+};
+
+/* ---------- MASTER RENDER ---------- */
+
+function renderAll(){
+ renderMap();
+ renderProfile();
+ renderKPIs();
+ renderQuality();
+ renderInventory();
+ if(fields.length){
+  drawMain();
+  runComparison();
+ }
+}
+window.addEventListener("resize",()=>{
+ if(fields.length){
+  drawMain();runComparison();renderQuality();
+ }
+ map.invalidateSize();
+});
+map.whenReady(()=>setTimeout(()=>map.invalidateSize(),200));
+
+</script>
+</body>
+</html>
