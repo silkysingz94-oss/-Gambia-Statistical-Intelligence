@@ -4,1163 +4,1428 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SILKYSINGZ GEOAI | Gambia Statistical Intelligence</title>
+<title>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
 <style>
-:root{
- --red:#d62828;--white:#fff;--blue:#123b70;
- --green:#0c6b3d;--green-dark:#06472b;--green-light:#16834e;
- --ink:#10233c;--muted:#617184;--line:#dbe4dc;
- --paper:#f4faf5;--gold:#f4c542;
+:root {
+  --red:#d62828;
+  --white:#ffffff;
+  --blue:#123b70;
+  --green:#0c6b3d;
+  --green-dark:#06472b;
+  --green-light:#16834e;
+  --ink:#10233c;
+  --muted:#617184;
+  --line:#dbe4dc;
+  --paper:#f4faf5;
+  --gold:#f4c542;
 }
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Segoe UI,Arial,sans-serif;color:var(--ink)}
-body{background:linear-gradient(135deg,#075b35,#16834e 52%,#0a623b)}
-header{
- min-height:76px;padding:4px 16px 0;
- background:linear-gradient(90deg,var(--red) 0 25%,var(--white) 25% 50%,var(--blue) 50% 75%,var(--green) 75%);
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(135deg,#eaf6ee,#f4f8ff);
 }
-.head-inner{
- height:72px;background:#092f26ed;color:white;
- display:flex;align-items:center;justify-content:space-between;
- padding:10px 18px;gap:14px
+
+.top-stripe {
+  height:7px;
+  background:linear-gradient(to right,
+    var(--red) 0 25%,
+    var(--white) 25% 50%,
+    var(--blue) 50% 75%,
+    var(--green) 75% 100%);
 }
-.brand h1{font-size:18px;margin:0 0 5px;letter-spacing:.5px}
-.brand p{margin:0;color:#d7f3e3;font-size:11px}
-.status{font-size:11px;padding:8px 11px;border-radius:20px;background:#ffffff1c;border:1px solid #ffffff44;white-space:nowrap}
-main{
- height:calc(100% - 76px);padding:12px;
- display:grid;grid-template-columns:minmax(250px,.92fr) minmax(360px,1.55fr) minmax(300px,1fr);
- gap:12px;min-height:0
+
+header {
+  background:linear-gradient(115deg,#06472b,#0c6b3d,#123b70);
+  color:white;
+  padding:17px 22px;
+  box-shadow:0 4px 15px #0002;
 }
-.panel{background:var(--paper);border:1px solid #ffffffa8;border-radius:13px;min-height:0;overflow:auto;box-shadow:0 8px 25px #00351d44}
-.panel h2{
- font-size:13px;letter-spacing:.8px;text-transform:uppercase;margin:0;
- padding:13px 14px;color:white;background:var(--blue);
- position:sticky;top:0;z-index:5
+
+.head-inner {
+  max-width:1900px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
 }
-.panel-body{padding:13px}
-.section-title{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--green);font-weight:800;margin:15px 0 8px}
-label{display:block;font-size:11px;font-weight:700;color:#42566a;margin:8px 0 5px}
-select,input,button{
- width:100%;border:1px solid #cbd8ce;border-radius:8px;
- padding:9px 10px;background:white;color:var(--ink);font-size:12px
+
+.brand h1 {
+  margin:0;
+  font-size:clamp(17px,2vw,25px);
+  font-weight:800;
+  letter-spacing:.5px;
 }
-button{cursor:pointer;font-weight:800;border:0;background:var(--blue);color:white}
-button:hover{filter:brightness(1.12)}
-button:disabled{opacity:.5;cursor:not-allowed}
-button.red{background:var(--red)}
-button.green{background:var(--green)}
-button.light{background:#e8f2eb;color:var(--green);border:1px solid #c5ddce}
-button.gps{background:#075eab}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
-.actions.three{grid-template-columns:repeat(3,1fr)}
-.note{font-size:10px;line-height:1.5;color:var(--muted);background:#edf5ef;border-left:3px solid var(--green);padding:8px;margin-top:9px;border-radius:5px}
-.error{color:#a10f19;background:#fff0f0;border:1px solid #f2bfc3;padding:8px;border-radius:7px;font-size:11px;white-space:pre-wrap;margin-top:8px}
-#map{height:100%;min-height:400px;width:100%;border-radius:10px}
-.map-panel{display:flex;flex-direction:column;padding:10px;overflow:hidden;gap:8px}
-.map-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.map-toolbar select{width:auto;min-width:140px;flex:1}
-.map-caption{font-size:10px;color:#52675a;display:flex;justify-content:space-between;gap:10px}
-.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.kpi{background:white;border:1px solid var(--line);border-top:4px solid var(--green);border-radius:9px;padding:10px;min-width:0}
-.kpi:nth-child(4n+2){border-top-color:var(--red)}
-.kpi:nth-child(4n+3){border-top-color:var(--blue)}
-.kpi .v{font-size:20px;font-weight:850;color:var(--blue);overflow-wrap:anywhere}
-.kpi .k{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#68796e;margin-top:4px}
-.widget{background:white;border:1px solid var(--line);border-radius:10px;padding:10px;margin:9px 0}
-.widget-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
-.widget-head strong{font-size:11px;color:var(--blue)}
-.tag{font-size:9px;color:white;background:var(--green);padding:4px 7px;border-radius:20px;white-space:nowrap}
-.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.profile-item{background:#f0f7f1;border-radius:7px;padding:8px;min-width:0}
-.profile-item span{display:block;font-size:9px;color:#63766a;text-transform:uppercase;margin-bottom:4px}
-.profile-item b{font-size:13px;overflow-wrap:anywhere;color:#173e2d}
-.chart-controls{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.chart-wrap{height:235px;position:relative}
-.chart-wrap.tall{height:270px}
-.legend-box{background:white;border:1px solid var(--line);border-radius:9px;padding:9px}
-.legend-title{font-weight:800;font-size:11px;color:var(--blue);margin-bottom:7px}
-.legend-row{display:flex;align-items:center;gap:8px;font-size:10px;margin:6px 0}
-.swatch{width:17px;height:13px;border:1px solid #999;border-radius:3px;flex:none}
-.legend-range{margin-left:auto;color:#51675b;font-variant-numeric:tabular-nums}
-.gps-info{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
-table{border-collapse:collapse;width:100%;font-size:10px}
-th,td{padding:7px 6px;border-bottom:1px solid #e2ebe3;text-align:left;white-space:nowrap}
-th{background:#eef5ef;color:#31533d;position:sticky;top:0}
-.table-wrap{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:7px}
-footer{font-size:9px;text-align:center;color:#dff4e6;padding:8px}
-.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
-@media(max-width:1050px){
- main{grid-template-columns:260px 1fr;height:auto;min-height:calc(100% - 76px)}
- .analytics{grid-column:1/-1;max-height:900px}
- .map-panel{min-height:550px}
+
+.brand p {
+  margin:7px 0 0;
+  font-size:12px;
+  opacity:.9;
 }
-@media(max-width:700px){
- main{display:flex;flex-direction:column}
- .panel{max-height:none}
- .map-panel{height:560px;min-height:560px;order:-1}
- .map-panel #map{min-height:0}
- .analytics{max-height:none}
+
+.head-right {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:15px;
+  flex-shrink:0;
+}
+
+.status {
+  background:#ffffff20;
+  border:1px solid #ffffff55;
+  border-radius:20px;
+  padding:8px 13px;
+  font-size:11px;
+  max-width:240px;
+  text-align:center;
+}
+
+.header-photo {
+  display:block;
+  width:76px;
+  height:76px;
+  object-fit:cover;
+  object-position:center;
+  border-radius:50%;
+  border:3px solid #fff;
+  background:#fff;
+  box-shadow:0 3px 12px #0005;
+  flex-shrink:0;
+}
+
+main {
+  max-width:1900px;
+  margin:14px auto;
+  padding:0 12px;
+}
+
+.dashboard {
+  display:grid;
+  grid-template-columns:minmax(250px,.92fr) minmax(360px,1.55fr) minmax(300px,1fr);
+  gap:12px;
+  height:calc(100vh - 150px);
+  min-height:650px;
+}
+
+.panel {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 3px 12px #163d2510;
+  min-height:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.panel-title {
+  background:linear-gradient(90deg,var(--green-dark),var(--green));
+  color:#fff;
+  padding:12px 14px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.5px;
+  flex-shrink:0;
+}
+
+.panel-body {
+  padding:12px;
+  overflow-y:auto;
+  min-height:0;
+  flex:1;
+}
+
+.section {
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:11px;
+  margin-bottom:11px;
+  background:#fff;
+}
+
+.section h3 {
+  font-size:12px;
+  color:var(--green-dark);
+  margin:0 0 10px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+
+label {
+  display:block;
+  font-size:11px;
+  color:#44556a;
+  font-weight:700;
+  margin:9px 0 5px;
+}
+
+input,select,button {
+  font:inherit;
+}
+
+input[type="text"],select,input[type="file"] {
+  width:100%;
+  border:1px solid #ccd8d0;
+  border-radius:7px;
+  padding:9px;
+  font-size:11px;
+  background:#fff;
+  color:var(--ink);
+}
+
+input[type="file"] {
+  padding:7px;
+}
+
+button {
+  border:0;
+  border-radius:7px;
+  padding:9px 11px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:hover {filter:brightness(.94)}
+
+.btn-green {background:var(--green);color:#fff}
+.btn-blue {background:var(--blue);color:#fff}
+.btn-red {background:var(--red);color:#fff}
+.btn-light {background:#eaf3ed;color:var(--green-dark);border:1px solid #cbded0}
+
+.button-row {
+  display:flex;
+  gap:7px;
+  margin-top:9px;
+  flex-wrap:wrap;
+}
+
+.button-row button {flex:1}
+
+.check-row {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:11px;
+  margin:8px 0;
+}
+
+.check-row input {accent-color:var(--green)}
+
+.small-note {
+  font-size:10px;
+  line-height:1.5;
+  color:var(--muted);
+}
+
+#map {
+  width:100%;
+  height:100%;
+  min-height:400px;
+  background:#e7eee9;
+}
+
+.map-panel {position:relative}
+
+.map-toolbar {
+  padding:9px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--line);
+}
+
+.map-toolbar select {flex:1;min-width:130px}
+
+.map-caption {
+  padding:7px 10px;
+  font-size:10px;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+
+.map-area {
+  flex:1;
+  min-height:0;
+  position:relative;
+}
+
+.map-legend {
+  position:absolute;
+  z-index:500;
+  bottom:18px;
+  left:12px;
+  background:#ffffffed;
+  border:1px solid #ccd8d0;
+  border-radius:8px;
+  padding:10px;
+  box-shadow:0 2px 8px #0002;
+  font-size:10px;
+  max-width:190px;
+}
+
+.legend-item {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:5px;
+}
+
+.legend-color {
+  width:13px;
+  height:13px;
+  border-radius:3px;
+  display:inline-block;
+}
+
+.kpi-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-bottom:11px;
+}
+
+.kpi {
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:linear-gradient(140deg,#f6fbf7,#fff);
+}
+
+.kpi .value {
+  font-size:19px;
+  font-weight:800;
+  color:var(--green-dark);
+  overflow-wrap:anywhere;
+}
+
+.kpi .label {
+  font-size:10px;
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.profile-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+.profile-item {
+  background:#f4f8f5;
+  border-radius:6px;
+  padding:8px;
+  min-width:0;
+}
+
+.profile-item small {
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  margin-bottom:4px;
+}
+
+.profile-item strong {
+  font-size:12px;
+  overflow-wrap:anywhere;
+}
+
+.chart-box {
+  height:245px;
+  position:relative;
+  width:100%;
+}
+
+.chart-box.large {height:290px}
+
+.table-wrap {
+  overflow:auto;
+  max-height:380px;
+  border:1px solid var(--line);
+  border-radius:7px;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:10px;
+  white-space:nowrap;
+}
+
+th {
+  position:sticky;
+  top:0;
+  background:var(--green-dark);
+  color:#fff;
+  padding:8px;
+  text-align:left;
+}
+
+td {
+  padding:7px;
+  border-bottom:1px solid #e8eee9;
+}
+
+tr:nth-child(even) {background:#f5faf6}
+
+footer {
+  text-align:center;
+  padding:13px;
+  color:#53677a;
+  font-size:10px;
+  line-height:1.6;
+}
+
+.hidden {display:none!important}
+
+@media(max-width:1050px) {
+  .dashboard {
+    grid-template-columns:1fr 1.5fr;
+    height:auto;
+    min-height:0;
+  }
+  .panel {min-height:520px}
+  .analytics-panel {grid-column:1/-1}
+}
+
+@media(max-width:700px) {
+  .head-inner {align-items:flex-start}
+  .brand h1 {font-size:16px}
+  .brand p {font-size:10px}
+  .head-right {gap:7px;flex-direction:column-reverse}
+  .header-photo {width:52px;height:52px}
+  .status {font-size:9px;padding:6px}
+  .dashboard {grid-template-columns:1fr}
+  .panel {min-height:480px}
+  .analytics-panel {grid-column:auto}
+  .map-area {height:450px;flex:none}
+  #map {height:450px}
 }
 </style>
 </head>
 
 <body>
+<div class="top-stripe"></div>
+
 <header>
- <div class="head-inner">
-  <div class="brand">
-   <h1>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE</h1>
-   <p>Enumeration Area Mapping • Census Indicators • Statistical Exploration • GPS Intelligence</p>
+  <div class="head-inner">
+    <div class="brand">
+      <h1>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE</h1>
+      <p>Enumeration Area Mapping • Census Indicators • Statistical Exploration • GPS Intelligence</p>
+    </div>
+
+    <div class="head-right">
+      <div class="status" id="loadStatus">Connecting to GeoJSON dataset...</div>
+      <img
+        class="header-photo"
+        src="./DOC0051.jpg"
+        alt="GBoS GEOAI profile image"
+        onerror="this.onerror=null;this.src='./DOC0051.JPG';this.style.border='3px solid #f4c542';"
+      >
+    </div>
   </div>
-  <div class="status" id="loadStatus">Connecting to GitHub dataset…</div>
- </div>
 </header>
 
 <main>
+<div class="dashboard">
 
 <!-- LEFT: CONTROLS -->
 <section class="panel">
- <h2>Controls & EA Explorer</h2>
- <div class="panel-body">
+  <div class="panel-title">CONTROLS & EA EXPLORER</div>
+  <div class="panel-body">
 
-  <div class="section-title">Data source</div>
-  <label>GitHub GeoJSON URL</label>
-  <input id="sourceUrl" value="https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json">
+    <div class="section">
+      <h3>GeoJSON data source</h3>
+      <label>GitHub GeoJSON URL</label>
+      <input id="dataUrl" type="text" value="https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json">
+      <div class="button-row">
+        <button class="btn-green" id="loadUrl">Fetch GitHub</button>
+        <button class="btn-light" id="reset">Reset filters</button>
+      </div>
+      <label>Upload local GeoJSON</label>
+      <input id="fileInput" type="file" accept=".json,.geojson,application/geo+json,application/json">
+      <p class="small-note">Load a GeoJSON file containing Gambia Enumeration Area boundaries.</p>
+    </div>
 
-  <div class="actions">
-   <button id="loadUrl" class="green">Fetch GitHub</button>
-   <button id="reset" class="red">Reset filters</button>
+    <div class="section">
+      <h3>Administrative filters</h3>
+      <label>Region / LGA</label>
+      <select id="lga"><option value="">All regions / LGAs</option></select>
+
+      <label>District</label>
+      <select id="district"><option value="">All districts</option></select>
+
+      <label>Ward</label>
+      <select id="ward"><option value="">All wards</option></select>
+
+      <label>Enumeration Area</label>
+      <select id="ea"><option value="">All EAs</option></select>
+
+      <div class="button-row">
+        <button class="btn-green" id="apply">Apply filters</button>
+        <button class="btn-blue" id="zoom">Zoom to selection</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Map configuration</h3>
+      <label>Basemap</label>
+      <select id="basemap">
+        <option value="hybrid">Esri Hybrid</option>
+        <option value="satellite">Esri Satellite</option>
+        <option value="osm">OpenStreetMap</option>
+        <option value="topo">Esri Topographic</option>
+        <option value="terrain">Esri Terrain</option>
+        <option value="light">Carto Light</option>
+        <option value="dark">Carto Dark</option>
+      </select>
+
+      <label>Boundary display</label>
+      <select id="displayMode">
+        <option value="all">All filtered EAs</option>
+        <option value="selected">Selected EA only</option>
+      </select>
+
+      <label>Thematic indicator</label>
+      <select id="indicator">
+        <option value="map_pop">Mapped population</option>
+        <option value="map_hhs">Mapped households</option>
+        <option value="ls_pop">Listing population</option>
+        <option value="ls_hhs">Listing households</option>
+        <option value="enum_pop">Enumerated population</option>
+        <option value="enum_hhs">Enumerated households</option>
+        <option value="comp_map">Mapped compounds</option>
+        <option value="build_map">Mapped buildings</option>
+        <option value="comp_ls">Listed compounds</option>
+        <option value="build_ls">Listed buildings</option>
+      </select>
+
+      <label>Classification method</label>
+      <select id="classification">
+        <option value="quantile">Quantile</option>
+        <option value="equal">Equal interval</option>
+        <option value="natural">Natural approximation</option>
+      </select>
+      <div class="button-row">
+        <button class="btn-green" id="updateMap">Update map</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>GPS intelligence</h3>
+      <button class="btn-blue" id="gps">Capture current GPS location</button>
+      <div class="button-row">
+        <button class="btn-light" id="gpsCsv">Export GPS CSV</button>
+        <button class="btn-red" id="clearGps">Clear GPS</button>
+      </div>
+      <p class="small-note" id="gpsStatus">GPS capture requires browser location permission and HTTPS or localhost.</p>
+    </div>
+
+    <div class="section">
+      <h3>Data exports</h3>
+      <div class="button-row">
+        <button class="btn-green" id="exportCsv">Filtered CSV</button>
+        <button class="btn-blue" id="exportGeo">Filtered GeoJSON</button>
+      </div>
+      <button class="btn-light" id="exportSelected" style="width:100%;margin-top:8px">Selected EA CSV</button>
+      <p class="small-note">Only the 13 approved EA attributes are displayed and included in the CSV exports.</p>
+    </div>
+
   </div>
-
-  <label>Upload GeoJSON / JSON</label>
-  <input type="file" id="fileInput" accept=".json,.geojson,application/json">
-
-  <div class="section-title">Administrative filters</div>
-  <label>Region / LGA</label>
-  <select id="lga"><option value="">All regions / LGAs</option></select>
-
-  <label>District</label>
-  <select id="district"><option value="">All districts</option></select>
-
-  <label>Ward</label>
-  <select id="ward"><option value="">All wards</option></select>
-
-  <label>Enumeration Area</label>
-  <select id="ea"><option value="">All EAs</option></select>
-
-  <div class="section-title">Map display</div>
-  <label>Basemap</label>
-  <select id="basemap">
-   <option value="hybrid">Esri Hybrid</option>
-   <option value="satellite">Esri Satellite</option>
-   <option value="osm">OpenStreetMap</option>
-   <option value="topo">Esri Topographic</option>
-   <option value="terrain">Esri Terrain</option>
-   <option value="light">Carto Light</option>
-   <option value="dark">Carto Dark</option>
-  </select>
-
-  <label>Boundary display</label>
-  <select id="boundaryMode">
-   <option value="filtered">All filtered EAs</option>
-   <option value="selected">Selected EA only</option>
-  </select>
-
-  <label>Map thematic indicator</label>
-  <select id="mapMetric">
-   <option value="none">Uniform EA boundaries</option>
-   <option value="map_pop">Mapped population</option>
-   <option value="map_hhs">Mapped households</option>
-   <option value="ls_pop">Listing population</option>
-   <option value="ls_hhs">Listing households</option>
-   <option value="enum_pop">Enumerated population</option>
-   <option value="enum_hhs">Enumerated households</option>
-   <option value="comp_map">Mapped compounds</option>
-   <option value="build_map">Mapped buildings</option>
-   <option value="comp_ls">Listing compounds</option>
-   <option value="build_ls">Listing buildings</option>
-  </select>
-
-  <label>Legend classification</label>
-  <select id="legendMethod">
-   <option value="quantile">Quantile (3 classes)</option>
-   <option value="equal">Equal interval (3 classes)</option>
-   <option value="natural">Natural breaks approximation</option>
-  </select>
-
-  <div class="actions">
-   <button id="apply" class="green">Apply filters</button>
-   <button id="fit" class="light">Zoom to results</button>
-  </div>
-
-  <div class="section-title">GPS location capture</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>Capture current GPS position</strong>
-    <span class="tag">GPS</span>
-   </div>
-   <button id="gpsButton" class="gps">◎ Capture my GPS location</button>
-   <div id="gpsInfo" class="gps-info note">
-    GPS is not yet captured. Allow location access when your browser requests permission.
-   </div>
-   <div class="actions">
-    <button id="downloadGPS" class="light" disabled>Download GPS CSV</button>
-    <button id="clearGPS" class="red" disabled>Clear GPS</button>
-   </div>
-   <div class="note">
-    GPS requires browser location permission and a secure HTTPS website or localhost.
-    Accuracy depends on the device and its location services.
-   </div>
-  </div>
-
-  <div class="section-title">EA selection widget</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>Selected EA quick profile</strong>
-    <span class="tag">EA WIDGET</span>
-   </div>
-   <div id="eaQuick" class="note">Select an Enumeration Area to view its indicators.</div>
-  </div>
-
-  <div class="section-title">Data downloads</div>
-  <div class="actions">
-   <button id="csv" class="light">Filtered EA CSV</button>
-   <button id="geojson" class="light">Filtered EA GeoJSON</button>
-  </div>
-  <button id="selectedCSV" class="light" style="margin-top:7px">Download selected EA CSV</button>
-
-  <div id="errorBox"></div>
-
-  <div class="note">
-   The dashboard displays only the 13 approved EA fields. Other GeoJSON properties are not included in the EA profile, charts or exported attribute tables.
-  </div>
- </div>
 </section>
 
 <!-- CENTRE: MAP -->
 <section class="panel map-panel">
- <div class="map-toolbar">
-  <select id="mapMetricTop" aria-label="Map indicator">
-   <option value="none">Uniform EA boundaries</option>
-   <option value="map_pop">Mapped population</option>
-   <option value="map_hhs">Mapped households</option>
-   <option value="ls_pop">Listing population</option>
-   <option value="ls_hhs">Listing households</option>
-   <option value="enum_pop">Enumerated population</option>
-   <option value="enum_hhs">Enumerated households</option>
-   <option value="comp_map">Mapped compounds</option>
-   <option value="build_map">Mapped buildings</option>
-   <option value="comp_ls">Listing compounds</option>
-   <option value="build_ls">Listing buildings</option>
-  </select>
-  <button id="mapRefresh" class="green" style="width:auto">Update map</button>
- </div>
-
- <div class="map-caption">
-  <span id="mapCount">Waiting for EA boundaries…</span>
-  <span id="mapProjection">WGS84 GeoJSON</span>
- </div>
-
- <div id="map"></div>
-
- <div class="legend-box">
-  <div class="legend-title" id="legendTitle">Dynamic map legend • Uniform boundaries</div>
-  <div id="dynamicLegend">
-   <div class="legend-row"><span class="swatch" style="background:#16834e"></span>Enumeration Area boundaries</div>
+  <div class="panel-title">INTERACTIVE ENUMERATION AREA MAP</div>
+  <div class="map-toolbar">
+    <select id="mapIndicator">
+      <option value="map_pop">Mapped population</option>
+      <option value="map_hhs">Mapped households</option>
+      <option value="ls_pop">Listing population</option>
+      <option value="ls_hhs">Listing households</option>
+      <option value="enum_pop">Enumerated population</option>
+      <option value="enum_hhs">Enumerated households</option>
+      <option value="comp_map">Mapped compounds</option>
+      <option value="build_map">Mapped buildings</option>
+      <option value="comp_ls">Listed compounds</option>
+      <option value="build_ls">Listed buildings</option>
+    </select>
+    <button class="btn-green" id="mapRefresh">Refresh</button>
   </div>
- </div>
+  <div class="map-area">
+    <div id="map"></div>
+    <div class="map-legend" id="legend">
+      <strong>Map legend</strong>
+      <div class="small-note">Load the EA dataset to calculate classes.</div>
+    </div>
+  </div>
+  <div class="map-caption" id="mapCaption">The Gambia • WGS84 / EPSG:4326 • Enumeration Area boundaries</div>
 </section>
 
 <!-- RIGHT: ANALYTICS -->
-<section class="panel analytics">
- <h2>Analytics & Chart Intelligence</h2>
- <div class="panel-body">
+<section class="panel analytics-panel">
+  <div class="panel-title">ANALYTICS & CHART INTELLIGENCE</div>
+  <div class="panel-body">
 
-  <div class="section-title">Filtered area indicators</div>
-  <div class="kpis">
-   <div class="kpi"><div class="v" id="kpiEAs">—</div><div class="k">Filtered EAs</div></div>
-   <div class="kpi"><div class="v" id="kpiPop">—</div><div class="k">Mapped population</div></div>
-   <div class="kpi"><div class="v" id="kpiHhs">—</div><div class="k">Mapped households</div></div>
-   <div class="kpi"><div class="v" id="kpiListing">—</div><div class="k">Listing households</div></div>
-   <div class="kpi"><div class="v" id="kpiEnum">—</div><div class="k">Enumerated households</div></div>
-   <div class="kpi"><div class="v" id="kpiCoverage">—</div><div class="k">Field completeness</div></div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="value" id="kpiEAs">—</div><div class="label">Filtered EAs</div></div>
+      <div class="kpi"><div class="value" id="kpiPop">—</div><div class="label">Mapped population</div></div>
+      <div class="kpi"><div class="value" id="kpiHhs">—</div><div class="label">Mapped households</div></div>
+      <div class="kpi"><div class="value" id="kpiListing">—</div><div class="label">Listing households</div></div>
+      <div class="kpi"><div class="value" id="kpiEnum">—</div><div class="label">Enumerated households</div></div>
+      <div class="kpi"><div class="value" id="kpiComplete">—</div><div class="label">Field completeness</div></div>
+    </div>
+
+    <div class="section">
+      <h3>Selected EA profile</h3>
+      <div id="profile" class="profile-grid">
+        <p class="small-note">Select an EA on the map or from the selector.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Main indicator chart</h3>
+      <label>Indicator</label>
+      <select id="chartIndicator">
+        <option value="map_pop">Mapped population</option>
+        <option value="map_hhs">Mapped households</option>
+        <option value="ls_pop">Listing population</option>
+        <option value="ls_hhs">Listing households</option>
+        <option value="enum_pop">Enumerated population</option>
+        <option value="enum_hhs">Enumerated households</option>
+        <option value="comp_map">Mapped compounds</option>
+        <option value="build_map">Mapped buildings</option>
+        <option value="comp_ls">Listed compounds</option>
+        <option value="build_ls">Listed buildings</option>
+      </select>
+      <label>Chart type</label>
+      <select id="chartType">
+        <option value="bar">Bar</option>
+        <option value="line">Line</option>
+        <option value="pie">Pie</option>
+        <option value="doughnut">Doughnut</option>
+        <option value="radar">Radar</option>
+        <option value="polarArea">Polar area</option>
+      </select>
+      <div class="chart-box"><canvas id="mainChart"></canvas></div>
+      <div class="button-row">
+        <button class="btn-blue" id="chartPng">Download chart PNG</button>
+        <button class="btn-light" id="chartCsv">Chart data CSV</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Multi-indicator comparison</h3>
+      <label>Comparison category</label>
+      <select id="comparisonCategory">
+        <option value="population">Population</option>
+        <option value="households">Households</option>
+        <option value="compounds">Compounds</option>
+        <option value="buildings">Buildings</option>
+      </select>
+      <label>Comparison chart</label>
+      <select id="comparisonType">
+        <option value="bar">Grouped bar</option>
+        <option value="line">Line</option>
+        <option value="radar">Radar</option>
+      </select>
+      <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
+      <button class="btn-light" id="comparisonCsv" style="width:100%">Download comparison CSV</button>
+    </div>
+
+    <div class="section">
+      <h3>Indicator A vs B</h3>
+      <label>Indicator A</label>
+      <select id="metricA">
+        <option value="map_pop">Mapped population</option>
+        <option value="map_hhs">Mapped households</option>
+        <option value="ls_pop">Listing households</option>
+        <option value="enum_pop">Enumerated population</option>
+        <option value="enum_hhs">Enumerated households</option>
+        <option value="comp_map">Mapped compounds</option>
+        <option value="build_map">Mapped buildings</option>
+      </select>
+      <label>Indicator B</label>
+      <select id="metricB">
+        <option value="enum_pop">Enumerated population</option>
+        <option value="enum_hhs">Enumerated households</option>
+        <option value="map_pop">Mapped population</option>
+        <option value="map_hhs">Mapped households</option>
+        <option value="ls_pop">Listing population</option>
+        <option value="ls_hhs">Listing households</option>
+        <option value="comp_ls">Listed compounds</option>
+        <option value="build_ls">Listed buildings</option>
+      </select>
+      <label>Comparison calculation</label>
+      <select id="comparisonMethod">
+        <option value="actual">Actual values</option>
+        <option value="difference">A minus B</option>
+        <option value="percentage">Percentage difference</option>
+        <option value="ratio">A / B ratio</option>
+      </select>
+      <div class="chart-box"><canvas id="metricChart"></canvas></div>
+      <button class="btn-light" id="metricCsv" style="width:100%">Download A vs B CSV</button>
+    </div>
+
+    <div class="section">
+      <h3>EA data table</h3>
+      <p class="small-note">First 300 filtered records. Only approved fields are shown.</p>
+      <div class="table-wrap">
+        <table>
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
-
-  <div class="section-title">Selected EA indicator cards</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>EA statistical profile</strong>
-    <span class="tag">EA DETAIL</span>
-   </div>
-   <div id="eaProfile" class="profile-grid">
-    <div class="note">Select an EA from the map or left panel.</div>
-   </div>
-  </div>
-
-  <div class="section-title">Individual chart builder</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>EA indicator visualization</strong>
-    <span class="tag">CHART 01</span>
-   </div>
-
-   <div class="chart-controls">
-    <div>
-     <label>Chart type</label>
-     <select id="chartType">
-      <option value="bar">Bar chart</option>
-      <option value="line">Line chart</option>
-      <option value="pie">Pie chart</option>
-      <option value="doughnut">Doughnut chart</option>
-      <option value="radar">Radar chart</option>
-      <option value="polarArea">Polar area</option>
-     </select>
-    </div>
-    <div>
-     <label>Indicator</label>
-     <select id="chartMetric">
-      <option value="map_pop">Mapped population</option>
-      <option value="map_hhs">Mapped households</option>
-      <option value="ls_pop">Listing population</option>
-      <option value="ls_hhs">Listing households</option>
-      <option value="enum_pop">Enumerated population</option>
-      <option value="enum_hhs">Enumerated households</option>
-      <option value="comp_map">Mapped compounds</option>
-      <option value="build_map">Mapped buildings</option>
-      <option value="comp_ls">Listing compounds</option>
-      <option value="build_ls">Listing buildings</option>
-     </select>
-    </div>
-   </div>
-
-   <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
-   <div class="note" id="chartNote">Chart values are calculated from the currently filtered EA features.</div>
-   <div class="actions">
-    <button id="downloadMainPNG" class="light">Download chart PNG</button>
-    <button id="downloadMainCSV" class="light">Download chart data CSV</button>
-   </div>
-  </div>
-
-  <div class="section-title">Multi-indicator comparison</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>Mapped, listing and enumerated</strong>
-    <span class="tag">CHART 02</span>
-   </div>
-   <div class="chart-controls">
-    <div>
-     <label>Comparison measure</label>
-     <select id="comparisonMeasure">
-      <option value="population">Population</option>
-      <option value="households">Households</option>
-      <option value="compounds">Compounds</option>
-      <option value="buildings">Buildings</option>
-     </select>
-    </div>
-    <div>
-     <label>Comparison chart</label>
-     <select id="comparisonType">
-      <option value="bar">Grouped bar</option>
-      <option value="line">Line</option>
-      <option value="radar">Radar</option>
-     </select>
-    </div>
-   </div>
-   <div class="chart-wrap"><canvas id="compareChart"></canvas></div>
-   <div class="note" id="comparisonNote">Comparison uses the filtered EA records. Up to 30 EAs are displayed in the chart.</div>
-   <div class="actions">
-    <button id="downloadComparePNG" class="light">Download comparison PNG</button>
-    <button id="downloadCompareCSV" class="light">Download comparison CSV</button>
-   </div>
-  </div>
-
-  <div class="section-title">Indicator A versus indicator B</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>Direct chart-to-chart comparison</strong>
-    <span class="tag">CHART 03</span>
-   </div>
-   <div class="chart-controls">
-    <div>
-     <label>Indicator A</label>
-     <select id="indicatorA">
-      <option value="map_pop">Mapped population</option>
-      <option value="map_hhs">Mapped households</option>
-      <option value="ls_pop">Listing population</option>
-      <option value="ls_hhs">Listing households</option>
-      <option value="enum_pop">Enumerated population</option>
-      <option value="enum_hhs">Enumerated households</option>
-      <option value="comp_map">Mapped compounds</option>
-      <option value="build_map">Mapped buildings</option>
-      <option value="comp_ls">Listing compounds</option>
-      <option value="build_ls">Listing buildings</option>
-     </select>
-    </div>
-    <div>
-     <label>Indicator B</label>
-     <select id="indicatorB">
-      <option value="ls_pop">Listing population</option>
-      <option value="map_pop">Mapped population</option>
-      <option value="enum_pop">Enumerated population</option>
-      <option value="map_hhs">Mapped households</option>
-      <option value="ls_hhs">Listing households</option>
-      <option value="enum_hhs">Enumerated households</option>
-      <option value="comp_map">Mapped compounds</option>
-      <option value="build_map">Mapped buildings</option>
-      <option value="comp_ls">Listing compounds</option>
-      <option value="build_ls">Listing buildings</option>
-     </select>
-    </div>
-    <div>
-     <label>Comparison visualization</label>
-     <select id="directChartType">
-      <option value="bar">Grouped bar</option>
-      <option value="line">Line</option>
-      <option value="radar">Radar</option>
-     </select>
-    </div>
-    <div>
-     <label>Comparison calculation</label>
-     <select id="comparisonCalculation">
-      <option value="values">Compare actual values</option>
-      <option value="difference">A minus B</option>
-      <option value="percentage">Percentage difference</option>
-      <option value="ratio">A / B ratio</option>
-     </select>
-    </div>
-   </div>
-   <div class="chart-wrap"><canvas id="directChart"></canvas></div>
-   <div id="directSummary" class="note">Select two indicators to compare their filtered EA values.</div>
-   <div class="actions">
-    <button id="downloadDirectPNG" class="light">Download comparison PNG</button>
-    <button id="downloadDirectCSV" class="light">Download comparison CSV</button>
-   </div>
-  </div>
-
-  <div class="section-title">EA attribute table</div>
-  <div class="widget">
-   <div class="widget-head">
-    <strong>Approved EA fields only</strong>
-    <span class="tag">DATA TABLE</span>
-   </div>
-   <div class="table-wrap">
-    <table>
-     <thead id="tableHead"></thead>
-     <tbody id="tableBody"></tbody>
-    </table>
-   </div>
-   <div class="note">The table displays the first 300 filtered EA records. Use CSV export to download the complete filtered dataset.</div>
-  </div>
-
-  <footer>
-   Produced by Ansu Singhateh | GIS Analyst • GIS / Cartography Unit • GBoS<br>
-   GBoS GEOAI • Research and educational use
-  </footer>
- </div>
 </section>
+</div>
 
+<footer>
+  <strong>Produced by Ansu Singhateh | GIS Analyst • GIS-Cartography Unit • Gambia Bureau of Statistics</strong><br>
+  SILKYSINGZ GEOAI • Research and educational use • Enumeration Area Statistical Intelligence
+</footer>
 </main>
 
 <script>
-(function(){
-'use strict';
+"use strict";
 
-const DEFAULT_URL='https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json';
+const DEFAULT_URL =
+"https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json";
 
-const FIELDS=[
- 'lganame','distname','wardname','map_hhs','map_pop','ls_hhs','ls_pop',
- 'enum_hhs','enum_pop','comp_map','build_map','comp_ls','build_ls'
+const FIELDS = [
+"lganame","distname","wardname",
+"map_hhs","map_pop","ls_hhs","ls_pop",
+"enum_hhs","enum_pop","comp_map","build_map",
+"comp_ls","build_ls"
 ];
 
-const LABELS={
- lganame:'Region / LGA',distname:'District',wardname:'Ward',
- map_hhs:'Mapped households',map_pop:'Mapped population',
- ls_hhs:'Listing households',ls_pop:'Listing population',
- enum_hhs:'Enumerated households',enum_pop:'Enumerated population',
- comp_map:'Mapped compounds',build_map:'Mapped buildings',
- comp_ls:'Listing compounds',build_ls:'Listing buildings'
+const LABELS = {
+lganame:"Region / LGA",
+distname:"District",
+wardname:"Ward",
+map_hhs:"Mapped households",
+map_pop:"Mapped population",
+ls_hhs:"Listing households",
+ls_pop:"Listing population",
+enum_hhs:"Enumerated households",
+enum_pop:"Enumerated population",
+comp_map:"Mapped compounds",
+build_map:"Mapped buildings",
+comp_ls:"Listed compounds",
+build_ls:"Listed buildings"
 };
 
-const $=id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-let allFeatures=[];
-let filtered=[];
-let selectedId=null;
-let layer=null;
-let mainChart=null;
-let compareChart=null;
-let directChart=null;
-let baseLayer=null;
-let gpsRecord=null;
-let gpsMarker=null;
-let gpsAccuracy=null;
-let currentMainRows=[];
-let currentCompareRows=[];
-let currentDirectRows=[];
+let allFeatures = [];
+let filtered = [];
+let selectedFeature = null;
+let gpsRecords = [];
+let charts = {};
+let geoLayer = null;
+let gpsLayer = null;
+let baseLayer = null;
+let mapReady = false;
 
-const map=L.map('map',{zoomControl:true,preferCanvas:true}).setView([13.45,-15.5],8);
+const numberFormat = new Intl.NumberFormat("en-US",{
+maximumFractionDigits:1
+});
 
-const basemaps={
- osm:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}),
- satellite:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'}),
- hybrid:L.layerGroup([
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19}),
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19})
- ]),
- topo:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:19}),
- terrain:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:13}),
- light:L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19}),
- dark:L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19})
-};
-
-function setBase(key){
- if(baseLayer)map.removeLayer(baseLayer);
- baseLayer=basemaps[key]||basemaps.hybrid;
- baseLayer.addTo(map);
-}
-setBase('hybrid');
-$('basemap').addEventListener('change',e=>setBase(e.target.value));
-
-function norm(s){
- return String(s??'').trim().toLowerCase().replace(/[\s_-]+/g,'');
-}
-function prop(p,key){
- if(!p)return null;
- const target=norm(key);
- const k=Object.keys(p).find(x=>norm(x)===target);
- return k===undefined?null:p[k];
-}
-function clean(v){
- if(v===null||v===undefined||v==='')return null;
- if(typeof v==='string')v=v.replace(/,/g,'').trim();
+function fmt(v) {
+ if(v===null || v===undefined || v==="") return "—";
  const n=Number(v);
+ return Number.isFinite(n)?numberFormat.format(n):String(v);
+}
+
+function norm(s) {
+ return String(s??"").toLowerCase().replace(/[^a-z0-9]/g,"");
+}
+
+function clean(v) {
+ if(v===null || v===undefined || v==="") return null;
+ const n=Number(String(v).replace(/,/g,""));
  return Number.isFinite(n)?n:null;
 }
-function fmt(v){
- const n=clean(v);
- return n===null?'—':new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(n);
+
+function prop(p,key) {
+ if(!p) return null;
+ if(p[key]!==undefined) return p[key];
+ const wanted=norm(key);
+ const found=Object.keys(p).find(k=>norm(k)===wanted);
+ return found===undefined?null:p[found];
 }
-function text(v){return v===null||v===undefined||v===''?'—':String(v)}
-function get(f,k){return prop(f.properties||{},k)}
-function idOf(f){return f.__dashId}
-function featureName(f,i){return text(get(f,'feacode')??get(f,'eaname')??('EA '+(i+1)))}
-function escapeHTML(s){
- return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function get(f,key) {
+ return prop(f.properties,key);
 }
-function status(s,bad=false){
- $('loadStatus').textContent=s;
- $('loadStatus').style.background=bad?'#8f1520':'#ffffff1c';
+
+function escapeHTML(v) {
+ return String(v??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[c]);
 }
-function error(s){
- $('errorBox').innerHTML=s?'<div class="error">'+escapeHTML(s)+'</div>':'';
+
+function status(message) {
+ $("loadStatus").textContent=message;
 }
-function normalizeUrl(url){
- url=(url||'').trim()||DEFAULT_URL;
- return url.replace('https://github.com/','https://raw.githubusercontent.com/').replace('/blob/','/');
+
+function reportError(err) {
+ console.error(err);
+ status("Dataset loading error");
+ alert("Unable to load the dataset. Check the GeoJSON URL, file format and internet connection.\n\n"+(err.message||err));
 }
-function parseGeojson(data){
- if(Array.isArray(data))return {type:'FeatureCollection',features:data};
- if(data&&data.type==='FeatureCollection'&&Array.isArray(data.features))return data;
- if(data&&data.type==='Feature')return {type:'FeatureCollection',features:[data]};
- if(data&&Array.isArray(data.features))return {type:'FeatureCollection',features:data.features};
- throw new Error('The file does not contain a valid GeoJSON FeatureCollection or Feature array.');
+
+function normalizeFeature(f,index) {
+ const p={};
+ FIELDS.forEach(k=>p[k]=get(f,k));
+ return {
+  type:"Feature",
+  geometry:f.geometry,
+  properties:p,
+  __dashId:String(index)
+ };
 }
-async function fetchJson(url){
- const first=normalizeUrl(url);
- const attempts=[first];
- if(first.includes('/main/'))attempts.push(first.replace('/main/','/master/'));
- let lastError;
- for(const u of attempts){
-  try{
-   const response=await fetch(u,{mode:'cors',cache:'no-store'});
-   if(!response.ok)throw new Error('HTTP '+response.status+' '+response.statusText);
-   return {data:await response.json(),url:u};
-  }catch(e){lastError=new Error(u+' → '+e.message);}
+
+function parseGeoJSON(data) {
+ if(data.type==="FeatureCollection" && Array.isArray(data.features)) {
+  return data.features
+   .filter(f=>f && f.geometry)
+   .map((f,i)=>normalizeFeature(f,i));
  }
- throw lastError||new Error('Unable to fetch the GeoJSON.');
+ if(data.type==="Feature" && data.geometry) {
+  return [normalizeFeature(data,0)];
+ }
+ throw new Error("The file is not a valid GeoJSON FeatureCollection or Feature.");
 }
-function loadData(raw,source){
- const gj=parseGeojson(raw);
- allFeatures=gj.features.filter(f=>f&&f.type==='Feature'&&f.geometry&&f.properties)
-  .map((f,i)=>({...f,__dashId:i}));
- if(!allFeatures.length)throw new Error('No valid features with geometry and properties were found.');
- selectedId=null;
- populateSelectors();
+
+async function fetchJson(url) {
+ const response=await fetch(url,{cache:"no-store"});
+ if(!response.ok) throw new Error("HTTP "+response.status);
+ return response.json();
+}
+
+async function loadFromUrl() {
+ const raw=$("dataUrl").value.trim();
+ if(!raw) return alert("Enter a GeoJSON URL.");
+
+ status("Loading GeoJSON...");
+ try {
+  let data;
+  try {
+   data=await fetchJson(raw);
+  } catch(e) {
+   const fallback=raw.replace("/main/","/master/");
+   if(fallback===raw) throw e;
+   data=await fetchJson(fallback);
+  }
+  loadData(data);
+ } catch(err) {
+  reportError(err);
+ }
+}
+
+function loadData(data) {
+ allFeatures=parseGeoJSON(data);
+ filtered=[...allFeatures];
+ selectedFeature=null;
+ populateFilters();
  applyFilters();
- error('');
- status('Loaded '+allFeatures.length.toLocaleString()+' EAs • '+source);
-}
-async function loadFromUrl(){
- const url=normalizeUrl($('sourceUrl').value);
- $('sourceUrl').value=url;
- status('Fetching GitHub GeoJSON…');
- error('');
- try{
-  const result=await fetchJson(url);
-  loadData(result.data,result.url);
- }catch(e){
-  status('Dataset fetch failed',true);
-  error('Unable to load the GitHub GeoJSON. Check the public repository, branch and filename.\n'+e.message+'\nYou can upload Census_EAs_Geo.json as a fallback.');
- }
+ status(fmt(allFeatures.length)+" EA features loaded");
 }
 
-function uniqueValues(features,key){
+function uniqueValues(features,key) {
  return [...new Set(features.map(f=>get(f,key))
-  .filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='').map(String))]
-  .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+  .filter(v=>v!==null && v!==undefined && String(v).trim()!==""))]
+  .sort((a,b)=>String(a).localeCompare(String(b)));
 }
-function fillSelect(id,values,first){
- const el=$(id),old=el.value;
- el.innerHTML='';
- const op=document.createElement('option');op.value='';op.textContent=first;el.appendChild(op);
- values.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o);});
- if(values.includes(old))el.value=old;
-}
-function subsetByParents(){
- const l=$('lga').value,d=$('district').value,w=$('ward').value;
- return allFeatures.filter(f=>
-  (!l||String(get(f,'lganame'))===l)&&
-  (!d||String(get(f,'distname'))===d)&&
-  (!w||String(get(f,'wardname'))===w));
-}
-function updateDistricts(){fillSelect('district',uniqueValues(subsetByParents(),'distname'),'All districts');}
-function updateWards(){fillSelect('ward',uniqueValues(subsetByParents(),'wardname'),'All wards');}
-function updateEAs(){
- const a=subsetByParents(),el=$('ea'),old=el.value;
- el.innerHTML='<option value="">All EAs ('+a.length+')</option>';
- a.forEach((f,i)=>{
-  const o=document.createElement('option');
-  o.value=String(idOf(f));o.textContent=featureName(f,i);el.appendChild(o);
- });
- if([...el.options].some(o=>o.value===old))el.value=old;
-}
-function populateSelectors(){
- fillSelect('lga',uniqueValues(allFeatures,'lganame'),'All regions / LGAs');
- updateDistricts();updateWards();updateEAs();
-}
-$('lga').addEventListener('change',()=>{
- $('district').value='';$('ward').value='';$('ea').value='';
- updateDistricts();updateWards();updateEAs();
-});
-$('district').addEventListener('change',()=>{
- $('ward').value='';$('ea').value='';
- updateWards();updateEAs();
-});
-$('ward').addEventListener('change',()=>{$('ea').value='';updateEAs();});
 
-function applyFilters(){
- const l=$('lga').value,d=$('district').value,w=$('ward').value,e=$('ea').value;
- filtered=allFeatures.filter(f=>
-  (!l||String(get(f,'lganame'))===l)&&
-  (!d||String(get(f,'distname'))===d)&&
-  (!w||String(get(f,'wardname'))===w)&&
-  (!e||String(idOf(f))===e));
- if(e)selectedId=e;
- else if(selectedId&&!filtered.some(f=>String(idOf(f))===String(selectedId)))selectedId=null;
- renderAll();
+function setOptions(id,values,firstLabel) {
+ const el=$(id);
+ const old=el.value;
+ el.innerHTML="";
+ const first=document.createElement("option");
+ first.value="";
+ first.textContent=firstLabel;
+ el.appendChild(first);
+ values.forEach(v=>{
+  const o=document.createElement("option");
+  o.value=String(v);
+  o.textContent=String(v);
+  el.appendChild(o);
+ });
+ if(values.map(String).includes(old)) el.value=old;
 }
-function numericSum(key){
- return filtered.reduce((s,f)=>s+(clean(get(f,key))??0),0);
+
+function populateFilters() {
+ setOptions("lga",uniqueValues(allFeatures,"lganame"),"All regions / LGAs");
+ updateDistricts();
 }
-function completeness(){
- let total=0,count=0;
- filtered.forEach(f=>FIELDS.forEach(k=>{
-  total++;
-  const v=get(f,k);
-  if(v!==null&&v!==undefined&&v!=='')count++;
+
+function updateDistricts() {
+ const lga=$("lga").value;
+ const base=allFeatures.filter(f=>!lga||String(get(f,"lganame"))===lga);
+ setOptions("district",uniqueValues(base,"distname"),"All districts");
+ updateWards();
+}
+
+function updateWards() {
+ const lga=$("lga").value;
+ const district=$("district").value;
+ const base=allFeatures.filter(f=>
+  (!lga||String(get(f,"lganame"))===lga)&&
+  (!district||String(get(f,"distname"))===district));
+ setOptions("ward",uniqueValues(base,"wardname"),"All wards");
+ updateEAs();
+}
+
+function updateEAs() {
+ const lga=$("lga").value;
+ const district=$("district").value;
+ const ward=$("ward").value;
+ const base=allFeatures.filter(f=>
+  (!lga||String(get(f,"lganame"))===lga)&&
+  (!district||String(get(f,"distname"))===district)&&
+  (!ward||String(get(f,"wardname"))===ward));
+ const names=base.map(f=>f.__dashId);
+ const ea=$("ea");
+ const old=ea.value;
+ ea.innerHTML='<option value="">All EAs</option>';
+ base.forEach(f=>{
+  const o=document.createElement("option");
+  o.value=f.__dashId;
+  o.textContent="EA "+(f.__dashId);
+  ea.appendChild(o);
+ });
+ if(names.includes(old)) ea.value=old;
+}
+
+function currentFilters(f) {
+ return (! $("lga").value || String(get(f,"lganame"))===$("lga").value) &&
+ (! $("district").value || String(get(f,"distname"))===$("district").value) &&
+ (! $("ward").value || String(get(f,"wardname"))===$("ward").value) &&
+ (! $("ea").value || f.__dashId===$("ea").value);
+}
+
+function applyFilters() {
+ filtered=allFeatures.filter(currentFilters);
+ selectedFeature=filtered.find(f=>f.__dashId===$("ea").value)||selectedFeature;
+ if(selectedFeature && !filtered.some(f=>f.__dashId===selectedFeature.__dashId)) selectedFeature=null;
+ updateAll();
+}
+
+function sumField(features,key) {
+ return features.reduce((s,f)=>s+(clean(get(f,key))??0),0);
+}
+
+function completeness(features) {
+ if(!features.length) return 0;
+ let count=0,total=features.length*FIELDS.length;
+ features.forEach(f=>FIELDS.forEach(k=>{
+  if(get(f,k)!==null && get(f,k)!==undefined && get(f,k)!=="") count++;
  }));
  return total?100*count/total:0;
 }
-function updateKpis(){
- $('kpiEAs').textContent=fmt(filtered.length);
- $('kpiPop').textContent=fmt(numericSum('map_pop'));
- $('kpiHhs').textContent=fmt(numericSum('map_hhs'));
- $('kpiListing').textContent=fmt(numericSum('ls_hhs'));
- $('kpiEnum').textContent=fmt(numericSum('enum_hhs'));
- $('kpiCoverage').textContent=fmt(completeness())+'%';
-}
-function selectedFeature(){
- return allFeatures.find(f=>String(idOf(f))===String(selectedId))||null;
-}
-function renderProfile(){
- const f=selectedFeature(),box=$('eaProfile'),quick=$('eaQuick');
- if(!f){
-  box.innerHTML='<div class="note">Select an EA to display its 13 approved fields.</div>';
-  quick.textContent='No EA selected.';return;
- }
- box.innerHTML=FIELDS.map(k=>
-  '<div class="profile-item"><span>'+LABELS[k]+'</span><b>'+escapeHTML(text(get(f,k)))+'</b></div>'
- ).join('');
- quick.innerHTML='<b>'+escapeHTML(featureName(f,0))+'</b><br>'+
-  escapeHTML(text(get(f,'lganame')))+' • '+escapeHTML(text(get(f,'distname')))+' • '+escapeHTML(text(get(f,'wardname')))+
-  '<br>Mapped population: <b>'+fmt(get(f,'map_pop'))+'</b> | Mapped households: <b>'+fmt(get(f,'map_hhs'))+'</b>';
+
+function updateKPIs() {
+ $("kpiEAs").textContent=fmt(filtered.length);
+ $("kpiPop").textContent=fmt(sumField(filtered,"map_pop"));
+ $("kpiHhs").textContent=fmt(sumField(filtered,"map_hhs"));
+ $("kpiListing").textContent=fmt(sumField(filtered,"ls_hhs"));
+ $("kpiEnum").textContent=fmt(sumField(filtered,"enum_hhs"));
+ $("kpiComplete").textContent=fmt(completeness(filtered))+"%";
 }
 
-/* DYNAMIC LEGEND */
-function quantile(sorted,p){
- if(!sorted.length)return null;
- const pos=(sorted.length-1)*p;
- const lo=Math.floor(pos),hi=Math.ceil(pos);
- return sorted[lo]+(sorted[hi]-sorted[lo])*(pos-lo);
+function profileHTML(f) {
+ if(!f) return '<p class="small-note">Select an EA on the map or from the selector.</p>';
+ return FIELDS.map(k=>
+  '<div class="profile-item"><small>'+escapeHTML(LABELS[k])+
+  '</small><strong>'+escapeHTML(k==="lganame"||k==="distname"||k==="wardname"?
+  (get(f,k)??"—"):fmt(get(f,k)))+'</strong></div>'
+ ).join("");
 }
-function naturalApprox(sorted){
- if(!sorted.length)return [];
- const a=quantile(sorted,1/3),b=quantile(sorted,2/3);
- return [a,b];
-}
-function getLegendBreaks(values,method){
- const sorted=values.filter(v=>v!==null).sort((a,b)=>a-b);
- if(!sorted.length)return null;
- if(sorted[0]===sorted[sorted.length-1])return [sorted[0],sorted[0]];
- if(method==='equal'){
-  const min=sorted[0],max=sorted[sorted.length-1],step=(max-min)/3;
-  return [min+step,min+step*2];
- }
- if(method==='natural')return naturalApprox(sorted);
- return [quantile(sorted,1/3),quantile(sorted,2/3)];
-}
-function legendClass(v,br){
- if(v===null)return -1;
- if(br[0]===br[1])return v<=br[0]?0:2;
- return v<=br[0]?0:v<=br[1]?1:2;
-}
-const CLASS_COLORS=['#d62828','#f4c542','#087a45'];
-let currentLegend=null;
 
-function updateLegend(){
- const metric=$('mapMetric').value;
- const box=$('dynamicLegend');
- if(metric==='none'){
-  currentLegend=null;
-  $('legendTitle').textContent='Dynamic map legend • Uniform boundaries';
-  box.innerHTML='<div class="legend-row"><span class="swatch" style="background:#16834e"></span>All displayed EA boundaries</div>'+
-   '<div class="legend-row"><span class="swatch" style="background:#123b70"></span>Selected EA</div>';
-  return;
- }
- const vals=filtered.map(f=>clean(get(f,metric))).filter(v=>v!==null);
- const br=getLegendBreaks(vals,$('legendMethod').value);
- currentLegend=br;
- $('legendTitle').textContent='Dynamic legend • '+LABELS[metric]+' • '+$('legendMethod').selectedOptions[0].text;
- if(!br){
-  box.innerHTML='<div class="legend-row">No numeric values available for this indicator.</div>';
-  return;
- }
- let ranges;
- if(br[0]===br[1]){
-  ranges=[
-   {label:'At or below '+fmt(br[0]),color:CLASS_COLORS[0]},
-   {label:'Above '+fmt(br[0]),color:CLASS_COLORS[2]}
-  ];
- }else{
-  ranges=[
-   {label:'Low: ≤ '+fmt(br[0]),color:CLASS_COLORS[0]},
-   {label:'Medium: '+fmt(br[0])+' – '+fmt(br[1]),color:CLASS_COLORS[1]},
-   {label:'High: > '+fmt(br[1]),color:CLASS_COLORS[2]}
-  ];
- }
- box.innerHTML=ranges.map(r=>
-  '<div class="legend-row"><span class="swatch" style="background:'+r.color+'"></span>'+
-  '<span>'+r.label+'</span></div>'
- ).join('')+
- '<div class="legend-row"><span class="swatch" style="background:#94a3b8"></span>No numeric data</div>'+
- '<div class="legend-row"><span class="swatch" style="background:#123b70"></span>Selected EA outline</div>'+
- '<div class="note">Break values are recalculated from the currently filtered EA records. Classification is relative to the selected area, not a national fixed standard.</div>';
+function updateProfile() {
+ $("profile").innerHTML=profileHTML(selectedFeature);
 }
-function styleFeature(f){
- const metric=$('mapMetric').value;
- const val=metric==='none'?null:clean(get(f,metric));
- const chosen=selectedId!==null&&String(idOf(f))===String(selectedId);
- let fill='#16834e';
- if(metric!=='none'&&currentLegend){
-  const cls=legendClass(val,currentLegend);
-  fill=cls<0?'#94a3b8':CLASS_COLORS[cls];
+
+function colorRamp() {
+ return ["#d73027","#fc8d59","#fee08b","#91cf60","#1a9850"];
+}
+
+function quantile(sorted,p) {
+ if(!sorted.length) return null;
+ const i=(sorted.length-1)*p;
+ const lo=Math.floor(i),hi=Math.ceil(i);
+ return sorted[lo]+(sorted[hi]-sorted[lo])*(i-lo);
+}
+
+function getBreaks(values) {
+ const vals=values.filter(v=>v!==null).sort((a,b)=>a-b);
+ if(!vals.length) return [];
+ const min=vals[0],max=vals[vals.length-1];
+ if(min===max) return [min,min,min,min,min];
+ const method=$("classification").value;
+ if(method==="equal") {
+  return [1,2,3,4].map(i=>min+(max-min)*i/5);
  }
- return {
-  color:chosen?'#123b70':'#ffffff',
-  weight:chosen?3:1,
-  opacity:1,
-  fillColor:fill,
-  fillOpacity:chosen?0.82:0.55
- };
+ if(method==="natural") {
+  return [1,2,3,4].map(i=>quantile(vals,i/5));
+ }
+ return [1,2,3,4].map(i=>quantile(vals,i/5));
 }
-function popupHtml(f){
- const keys=['lganame','distname','wardname','map_pop','map_hhs','ls_pop','ls_hhs','enum_pop','enum_hhs'];
- return '<div style="min-width:190px"><b>'+escapeHTML(featureName(f,0))+'</b><hr>'+
-  keys.map(k=>'<div style="font-size:11px;margin:3px 0"><b>'+LABELS[k]+':</b> '+escapeHTML(text(get(f,k)))+'</div>').join('')+
-  '<button onclick="window.__selectEA('+f.__dashId+')" style="margin-top:7px;padding:7px;background:#123b70;color:white;border:0;border-radius:5px">Select this EA</button></div>';
+
+function classIndex(value,breaks) {
+ if(value===null || !breaks.length) return -1;
+ for(let i=0;i<breaks.length;i++) if(value<=breaks[i]) return i;
+ return 4;
 }
-window.__selectEA=function(id){
- const f=allFeatures.find(x=>x.__dashId===id);
- if(!f)return;
- selectedId=String(id);
- $('lga').value=String(get(f,'lganame')??'');
- updateDistricts();
- $('district').value=String(get(f,'distname')??'');
- updateWards();
- $('ward').value=String(get(f,'wardname')??'');
- updateEAs();
- $('ea').value=selectedId;
- filtered=subsetByParents();
- renderAll();
-};
-function renderMap(){
- if(layer)map.removeLayer(layer);
- updateLegend();
- const mode=$('boundaryMode').value;
+
+function updateLegend(values,breaks) {
+ const colors=colorRamp();
+ const labels=breaks.length?
+  [
+   "≤ "+fmt(breaks[0]),
+   fmt(breaks[0])+" – "+fmt(breaks[1]),
+   fmt(breaks[1])+" – "+fmt(breaks[2]),
+   fmt(breaks[2])+" – "+fmt(breaks[3]),
+   "> "+fmt(breaks[3])
+  ]:["No data"];
+ $("legend").innerHTML="<strong>"+escapeHTML(LABELS[$("indicator").value])+"</strong>"+
+  colors.map((c,i)=>'<div class="legend-item"><span class="legend-color" style="background:'+c+'"></span>'+escapeHTML(labels[i]||"")+'</div>').join("")+
+  '<div class="legend-item"><span class="legend-color" style="background:#9ca3af"></span>No data</div>'+
+  '<div class="small-note">Classification: '+escapeHTML($("classification").value)+'</div>';
+}
+
+function baseTiles() {
+ if(baseLayer) map.removeLayer(baseLayer);
+ const type=$("basemap").value;
+ let url,attr;
+ if(type==="osm") {
+  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  attr="© OpenStreetMap";
+ } else if(type==="topo") {
+  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}";
+  attr="Esri";
+ } else if(type==="terrain") {
+  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}";
+  attr="Esri";
+ } else if(type==="light") {
+  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+  attr="© Carto";
+ } else if(type==="dark") {
+  url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+  attr="© Carto";
+ } else if(type==="hybrid") {
+  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+  attr="Esri World Imagery";
+ } else {
+  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+  attr="Esri World Imagery";
+ }
+ baseLayer=L.tileLayer(url,{maxZoom:19,attribution:attr}).addTo(map);
+ if(type==="hybrid") {
+  L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri labels"}).addTo(map);
+ }
+}
+
+const map=L.map("map",{zoomControl:true}).setView([13.45,-15.5],8);
+mapReady=true;
+baseTiles();
+
+function renderMap() {
+ if(geoLayer) map.removeLayer(geoLayer);
+ if(!allFeatures.length) return;
+
+ const indicator=$("indicator").value;
+ const display=$("displayMode").value;
  let features=filtered;
- if(mode==='selected')features=selectedId===null?[]:filtered.filter(f=>String(idOf(f))===String(selectedId));
- layer=L.geoJSON({type:'FeatureCollection',features},{
-  style:styleFeature,
-  onEachFeature:(f,l)=>{
-   l.bindPopup(popupHtml(f));
-   l.on('click',()=>{
-    selectedId=String(idOf(f));
-    $('ea').value=selectedId;
-    renderAll();
+ if(display==="selected" && selectedFeature) features=[selectedFeature];
+
+ const values=filtered.map(f=>clean(get(f,indicator)));
+ const valid=values.filter(v=>v!==null);
+ const breaks=getBreaks(valid);
+ updateLegend(valid,breaks);
+
+ geoLayer=L.geoJSON(features,{
+  style:f=>{
+   const value=clean(get(f,indicator));
+   const ci=classIndex(value,breaks);
+   const selected=selectedFeature && selectedFeature.__dashId===f.__dashId;
+   return {
+    color:selected?"#075bdb":"#344c42",
+    weight:selected?3:0.7,
+    opacity:1,
+    fillColor:ci<0?"#9ca3af":colorRamp()[ci],
+    fillOpacity:selected?.85:.68
+   };
+  },
+  onEachFeature:(f,layer)=>{
+   const name="EA "+f.__dashId;
+   layer.bindPopup(
+    "<strong>"+escapeHTML(name)+"</strong><br>"+
+    escapeHTML(LABELS[indicator])+": "+fmt(get(f,indicator))+
+    "<br>"+escapeHTML(get(f,"lganame")??"")+
+    "<br><button onclick='window.selectEA(\""+f.__dashId+"\")'>Select EA</button>"
+   );
+   layer.on("click",()=>{
+    selectedFeature=f;
+    $("ea").value=f.__dashId;
+    updateProfile();
+    updateCharts();
+    updateTable();
+    renderMap();
    });
   }
  }).addTo(map);
- $('mapCount').textContent=features.length.toLocaleString()+' EA boundary feature(s) displayed';
- if(features.length&&selectedId){
-  const f=features.find(x=>String(idOf(x))===String(selectedId));
-  if(f){
-   const b=L.geoJSON(f).getBounds();
-   if(b.isValid())map.fitBounds(b,{padding:[25,25],maxZoom:14});
+
+ if(geoLayer.getLayers().length) {
+  const bounds=geoLayer.getBounds();
+  if(bounds.isValid()) {
+   if(!map._hasInitialFit) {
+    map.fitBounds(bounds,{padding:[15,15]});
+    map._hasInitialFit=true;
+   }
   }
- }else if(features.length){
-  const b=layer.getBounds();
-  if(b.isValid())map.fitBounds(b,{padding:[15,15],maxZoom:12});
+ }
+ $("mapCaption").textContent=fmt(filtered.length)+" filtered EAs • "+LABELS[indicator]+" • WGS84 / EPSG:4326";
+}
+
+window.selectEA=id=>{
+ selectedFeature=filtered.find(f=>f.__dashId===id)||null;
+ if(selectedFeature) {
+  $("ea").value=id;
+  updateProfile();
+  updateCharts();
+  updateTable();
+  renderMap();
+ }
+};
+
+function destroyChart(key) {
+ if(charts[key]) {
+  charts[key].destroy();
+  charts[key]=null;
  }
 }
 
-/* CHART ENGINE */
-const chartColors=['#123b70','#d62828','#16834e','#f4c542','#6a4c93','#159a9c','#e76f51'];
-function destroyChart(c){if(c)c.destroy();return null;}
-function createChart(canvas,old,type,data,extraOptions={}){
- old=destroyChart(old);
- const pie=['pie','doughnut','polarArea'].includes(type);
- return new Chart($(canvas),{
+function chartOptions() {
+ return {
+  responsive:true,
+  maintainAspectRatio:false,
+  plugins:{legend:{display:true,position:"bottom"}},
+  scales:{y:{beginAtZero:false,ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}
+ };
+}
+
+function chartDataByEA(key) {
+ return filtered.slice(0,30).map(f=>({
+  label:"EA "+f.__dashId,
+  value:clean(get(f,key))
+ }));
+}
+
+function createChart(canvasId,key,type,title) {
+ const keyId=canvasId;
+ destroyChart(keyId);
+ const rows=chartDataByEA(key).filter(x=>x.value!==null);
+ charts[keyId]=new Chart($(canvasId),{
   type,
-  data,
-  options:{
-   responsive:true,maintainAspectRatio:false,
-   plugins:{
-    legend:{display:pie||type==='radar',position:'bottom'},
-    tooltip:{enabled:true}
-   },
-   scales:pie?{}:{
-    x:{ticks:{font:{size:9},maxRotation:55}},
-    y:{beginAtZero:true,ticks:{font:{size:9}}}
-   },
-   ...extraOptions
-  }
+  data:{
+   labels:rows.map(x=>x.label),
+   datasets:[{
+    label:title,
+    data:rows.map(x=>x.value),
+    backgroundColor:type==="line"?"#16834e":"rgba(22,131,78,.65)",
+    borderColor:"#0c6b3d",
+    borderWidth:1,
+    tension:.25,
+    fill:false
+   }]
+  },
+  options:chartOptions()
  });
 }
-function numericRows(key){
- return filtered.map((f,i)=>({
-  id:idOf(f),label:featureName(f,i),value:clean(get(f,key)),feature:f
- })).filter(x=>x.value!==null);
+
+function comparisonFields() {
+ const cat=$("comparisonCategory").value;
+ if(cat==="population") return ["map_pop","ls_pop","enum_pop"];
+ if(cat==="households") return ["map_hhs","ls_hhs","enum_hhs"];
+ if(cat==="compounds") return ["comp_map","comp_ls"];
+ return ["build_map","build_ls"];
 }
-function renderMainChart(){
- const key=$('chartMetric').value,type=$('chartType').value;
- let rows=numericRows(key).sort((a,b)=>b.value-a.value).slice(0,30);
- currentMainRows=rows;
- const labels=rows.map(x=>x.label),values=rows.map(x=>x.value);
- mainChart=createChart('mainChart',mainChart,type,{
-  labels,
-  datasets:[{
-   label:LABELS[key],data:values,
-   backgroundColor:labels.map((_,i)=>chartColors[i%chartColors.length]),
-   borderColor:'#123b70',borderWidth:1,
-   tension:.25,fill:false
-  }]
- });
- $('chartNote').textContent=rows.length+' EAs with numeric '+LABELS[key]+' values. Showing the highest 30 records.';
-}
-function measureKeys(measure){
- if(measure==='population')return ['map_pop','ls_pop','enum_pop'];
- if(measure==='households')return ['map_hhs','ls_hhs','enum_hhs'];
- if(measure==='compounds')return ['comp_map','comp_ls'];
- return ['build_map','build_ls'];
-}
-function renderCompareChart(){
- const measure=$('comparisonMeasure').value;
- const type=$('comparisonType').value;
- const keys=measureKeys(measure);
+
+function createComparison() {
+ destroyChart("comparisonChart");
+ const fields=comparisonFields();
+ const type=$("comparisonType").value;
  const rows=filtered.slice(0,30);
- currentCompareRows=rows.map((f,i)=>({
-  label:featureName(f,i),
-  values:keys.map(k=>clean(get(f,k)))
- }));
- const labels=rows.map((f,i)=>featureName(f,i));
- const datasets=keys.map((k,i)=>({
-  label:LABELS[k],
-  data:rows.map(f=>clean(get(f,k))),
-  backgroundColor:chartColors[i],
-  borderColor:chartColors[i],
-  borderWidth:2,tension:.25,fill:type==='radar'?false:false
- }));
- compareChart=createChart('compareChart',compareChart,type,{labels,datasets});
- $('comparisonNote').textContent='Comparing '+keys.map(k=>LABELS[k]).join(' and ')+
-  ' across '+rows.length+' displayed EAs. Missing values remain blank.';
-}
-function calculateComparison(a,b,mode){
- if(a===null||b===null)return null;
- if(mode==='difference')return a-b;
- if(mode==='percentage')return b===0?null:((a-b)/Math.abs(b))*100;
- if(mode==='ratio')return b===0?null:a/b;
- return null;
-}
-function renderDirectChart(){
- const aKey=$('indicatorA').value,bKey=$('indicatorB').value;
- const type=$('directChartType').value,mode=$('comparisonCalculation').value;
- const rows=filtered.slice(0,30).map((f,i)=>{
-  const a=clean(get(f,aKey)),b=clean(get(f,bKey));
-  return {label:featureName(f,i),a,b,result:calculateComparison(a,b,mode)};
+ charts.comparisonChart=new Chart($("comparisonChart"),{
+  type,
+  data:{
+   labels:rows.map(f=>"EA "+f.__dashId),
+   datasets:fields.map((key,i)=>({
+    label:LABELS[key],
+    data:rows.map(f=>clean(get(f,key))),
+    backgroundColor:["#123b70","#d62828","#16834e"][i],
+    borderColor:["#123b70","#d62828","#16834e"][i],
+    borderWidth:1,
+    spanGaps:true
+   }))
+  },
+  options:chartOptions()
  });
- currentDirectRows=rows;
+}
+
+function metricValue(f,a,b,method) {
+ const av=clean(get(f,a)),bv=clean(get(f,b));
+ if(av===null || bv===null) return null;
+ if(method==="difference") return av-bv;
+ if(method==="percentage") return bv===0?null:((av-bv)/Math.abs(bv))*100;
+ if(method==="ratio") return bv===0?null:av/bv;
+ return av;
+}
+
+function createMetricChart() {
+ destroyChart("metricChart");
+ const a=$("metricA").value,b=$("metricB").value,method=$("comparisonMethod").value;
+ const rows=filtered.slice(0,30);
  let datasets;
- if(mode==='values'){
-  datasets=[
-   {label:LABELS[aKey],data:rows.map(r=>r.a),backgroundColor:'#123b70',borderColor:'#123b70',borderWidth:2,tension:.25},
-   {label:LABELS[bKey],data:rows.map(r=>r.b),backgroundColor:'#d62828',borderColor:'#d62828',borderWidth:2,tension:.25}
-  ];
- }else{
+ if(method==="actual") {
+  datasets=[a,b].map((key,i)=>({
+   label:LABELS[key],
+   data:rows.map(f=>clean(get(f,key))),
+   backgroundColor:i===0?"#123b70":"#d62828",
+   borderColor:i===0?"#123b70":"#d62828",
+   borderWidth:1
+  }));
+ } else {
   datasets=[{
-   label:mode==='difference'?'A minus B':mode==='percentage'?'Percentage difference':'A / B ratio',
-   data:rows.map(r=>r.result),backgroundColor:'#16834e',borderColor:'#16834e',
-   borderWidth:2,tension:.25
+   label:method==="difference"?"A minus B":method==="percentage"?"Percentage difference":"A / B ratio",
+   data:rows.map(f=>metricValue(f,a,b,method)),
+   backgroundColor:"#16834e",
+   borderColor:"#0c6b3d",
+   borderWidth:1
   }];
  }
- directChart=createChart('directChart',directChart,type,{
-  labels:rows.map(r=>r.label),datasets
+ charts.metricChart=new Chart($("metricChart"),{
+  type:"bar",
+  data:{labels:rows.map(f=>"EA "+f.__dashId),datasets},
+  options:chartOptions()
  });
- const validA=filtered.map(f=>clean(get(f,aKey))).filter(v=>v!==null);
- const validB=filtered.map(f=>clean(get(f,bKey))).filter(v=>v!==null);
- const sumA=validA.reduce((s,v)=>s+v,0);
- const sumB=validB.reduce((s,v)=>s+v,0);
- let summary='Filtered totals — '+LABELS[aKey]+': '+fmt(sumA)+'; '+LABELS[bKey]+': '+fmt(sumB)+'.';
- if(mode==='difference')summary+=' Total A − B: '+fmt(sumA-sumB)+'.';
- if(mode==='percentage')summary+=' Difference relative to B: '+(sumB===0?'Not calculable':fmt(((sumA-sumB)/Math.abs(sumB))*100)+'%')+'.';
- if(mode==='ratio')summary+=' Total ratio A / B: '+(sumB===0?'Not calculable':fmt(sumA/sumB))+'.';
- $('directSummary').textContent=summary;
-}
-function renderTable(){
- $('tableHead').innerHTML='<tr>'+FIELDS.map(k=>'<th>'+LABELS[k]+'</th>').join('')+'</tr>';
- $('tableBody').innerHTML=filtered.slice(0,300).map(f=>
-  '<tr>'+FIELDS.map(k=>'<td>'+escapeHTML(text(get(f,k)))+'</td>').join('')+'</tr>'
- ).join('');
-}
-function renderAll(){
- updateKpis();renderProfile();renderMap();
- renderMainChart();renderCompareChart();renderDirectChart();renderTable();
-}
-function zoomToResults(){
- if(!layer)return;
- const b=layer.getBounds();
- if(b.isValid())map.fitBounds(b,{padding:[20,20]});
 }
 
-/* GPS CAPTURE AND MAP POPUP */
-function captureGPS(){
- if(!navigator.geolocation){
-  $('gpsInfo').textContent='Geolocation is not supported by this browser.';
+function updateCharts() {
+ if(!filtered.length) {
+  ["mainChart","comparisonChart","metricChart"].forEach(destroyChart);
   return;
  }
- $('gpsButton').disabled=true;
- $('gpsButton').textContent='Requesting GPS…';
- navigator.geolocation.getCurrentPosition(position=>{
-  const c=position.coords;
-  gpsRecord={
-   latitude:c.latitude,
-   longitude:c.longitude,
-   accuracy:c.accuracy,
-   altitude:c.altitude,
-   altitudeAccuracy:c.altitudeAccuracy,
-   heading:c.heading,
-   speed:c.speed,
-   timestamp:new Date(position.timestamp).toISOString()
-  };
-  if(gpsMarker)map.removeLayer(gpsMarker);
-  if(gpsAccuracy)map.removeLayer(gpsAccuracy);
-  const latlng=[c.latitude,c.longitude];
-  gpsMarker=L.marker(latlng).addTo(map);
-  gpsAccuracy=L.circle(latlng,{
-   radius:c.accuracy,color:'#075eab',weight:2,fillColor:'#168bd2',fillOpacity:.12
-  }).addTo(map);
-  const popup='<b>GPS location captured</b><br>'+
-   'Latitude: '+c.latitude.toFixed(7)+'<br>'+
-   'Longitude: '+c.longitude.toFixed(7)+'<br>'+
-   'Accuracy: '+fmt(c.accuracy)+' metres<br>'+
-   'Captured: '+escapeHTML(gpsRecord.timestamp);
-  gpsMarker.bindPopup(popup).openPopup();
-  map.setView(latlng,Math.max(map.getZoom(),15));
-  $('gpsInfo').innerHTML='<b>GPS captured successfully</b><br>'+
-   'Latitude: '+c.latitude.toFixed(7)+'<br>'+
-   'Longitude: '+c.longitude.toFixed(7)+'<br>'+
-   'Accuracy: '+fmt(c.accuracy)+' metres<br>'+
-   'Time: '+escapeHTML(gpsRecord.timestamp);
-  $('downloadGPS').disabled=false;
-  $('clearGPS').disabled=false;
-  $('gpsButton').textContent='◎ Capture GPS again';
-  $('gpsButton').disabled=false;
- },err=>{
-  const messages={
-   1:'Location permission was denied. Allow location access in your browser settings.',
-   2:'The device could not determine your location. Check GPS or location services.',
-   3:'The GPS request timed out. Please try again.'
-  };
-  $('gpsInfo').textContent=messages[err.code]||err.message||'GPS capture failed.';
-  $('gpsButton').textContent='◎ Retry GPS capture';
-  $('gpsButton').disabled=false;
- },{enableHighAccuracy:true,timeout:20000,maximumAge:0});
-}
-function clearGPS(){
- if(gpsMarker)map.removeLayer(gpsMarker);
- if(gpsAccuracy)map.removeLayer(gpsAccuracy);
- gpsMarker=null;gpsAccuracy=null;gpsRecord=null;
- $('gpsInfo').textContent='GPS location cleared.';
- $('downloadGPS').disabled=true;
- $('clearGPS').disabled=true;
- $('gpsButton').textContent='◎ Capture my GPS location';
-}
-function downloadGPS(){
- if(!gpsRecord)return;
- const rows=[['latitude','longitude','accuracy_m','altitude_m','altitude_accuracy_m','heading','speed_m_s','timestamp'],
- [gpsRecord.latitude,gpsRecord.longitude,gpsRecord.accuracy,gpsRecord.altitude,gpsRecord.altitudeAccuracy,gpsRecord.heading,gpsRecord.speed,gpsRecord.timestamp]];
- downloadFile('GBoS_GPS_Capture.csv',csvText(rows),'text/csv;charset=utf-8');
+ createChart("mainChart",$("chartIndicator").value,$("chartType").value,LABELS[$("chartIndicator").value]);
+ createComparison();
+ createMetricChart();
 }
 
-/* DOWNLOADS */
-function downloadFile(name,content,type){
- const blob=new Blob([content],{type});
+function updateTable() {
+ $("tableHead").innerHTML="<tr>"+FIELDS.map(k=>"<th>"+escapeHTML(LABELS[k])+"</th>").join("")+"</tr>";
+ $("tableBody").innerHTML=filtered.slice(0,300).map(f=>
+  "<tr>"+FIELDS.map(k=>"<td>"+escapeHTML(
+   ["lganame","distname","wardname"].includes(k)?(get(f,k)??"—"):fmt(get(f,k))
+  )+"</td>").join("")+"</tr>"
+ ).join("");
+}
+
+function updateAll() {
+ updateKPIs();
+ updateProfile();
+ renderMap();
+ updateCharts();
+ updateTable();
+}
+
+function downloadBlob(content,filename,mime) {
+ const blob=new Blob([content],{type:mime});
  const url=URL.createObjectURL(blob);
- const a=document.createElement('a');
- a.href=url;a.download=name;
- document.body.appendChild(a);a.click();a.remove();
- setTimeout(()=>URL.revokeObjectURL(url),1500);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download=filename;
+ a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-function csvText(rows){
- return '\ufeff'+rows.map(r=>r.map(v=>{
-  if(v===null||v===undefined)return '""';
-  return '"'+String(v).replace(/"/g,'""')+'"';
- }).join(',')).join('\r\n');
+
+function csvEscape(v) {
+ const s=String(v??"");
+ return '"'+s.replace(/"/g,'""')+'"';
 }
-function exportCSV(){
- const rows=[FIELDS.map(k=>LABELS[k]),...filtered.map(f=>FIELDS.map(k=>get(f,k)??''))];
- downloadFile('GBoS_filtered_EA_indicators.csv',csvText(rows),'text/csv;charset=utf-8');
+
+function toCSV(rows,fields) {
+ return [fields.map(k=>csvEscape(LABELS[k])).join(","),
+ ...rows.map(f=>fields.map(k=>csvEscape(get(f,k))).join(","))].join("\n");
 }
-function exportSelectedCSV(){
- const f=selectedFeature();
- if(!f){alert('Please select an EA first.');return;}
- const rows=[FIELDS.map(k=>LABELS[k]),FIELDS.map(k=>get(f,k)??'')];
- downloadFile('GBoS_selected_EA_'+featureName(f,0)+'.csv',csvText(rows),'text/csv;charset=utf-8');
+
+function exportCSV() {
+ downloadBlob(toCSV(filtered,FIELDS),"Gambia_Filtered_EA_Statistics.csv","text/csv;charset=utf-8");
 }
-function exportGeoJSON(){
- const out={
-  type:'FeatureCollection',
+
+function exportSelected() {
+ if(!selectedFeature) return alert("Select an EA first.");
+ downloadBlob(toCSV([selectedFeature],FIELDS),"Selected_EA_Statistics.csv","text/csv;charset=utf-8");
+}
+
+function exportGeo() {
+ const output={
+  type:"FeatureCollection",
   features:filtered.map(f=>({
-   type:'Feature',
+   type:"Feature",
    geometry:f.geometry,
    properties:Object.fromEntries(FIELDS.map(k=>[k,get(f,k)]))
   }))
  };
- downloadFile('GBoS_filtered_EA_boundaries.geojson',JSON.stringify(out,null,2),'application/geo+json');
+ downloadBlob(JSON.stringify(output),"Gambia_Filtered_EA_Boundaries.geojson","application/geo+json");
 }
-function downloadChartPNG(chartObj,name){
- if(!chartObj){alert('There is no chart to download yet.');return;}
- const a=document.createElement('a');
- a.href=chartObj.toBase64Image('image/png',1);
- a.download=name+'.png';
+
+function downloadChartPNG(id,name) {
+ const chart=charts[id];
+ if(!chart) return alert("No chart is available.");
+ const a=document.createElement("a");
+ a.href=chart.toBase64Image();
+ a.download=name+".png";
  a.click();
 }
-function downloadMainCSV(){
- const key=$('chartMetric').value;
- const rows=[['EA','Indicator','Value'],...currentMainRows.map(r=>[r.label,LABELS[key],r.value])];
- downloadFile('GBoS_EA_chart_data.csv',csvText(rows),'text/csv;charset=utf-8');
-}
-function downloadCompareCSV(){
- const measure=$('comparisonMeasure').value;
- const keys=measureKeys(measure);
- const rows=[['EA',...keys.map(k=>LABELS[k])],...currentCompareRows.map(r=>[r.label,...r.values])];
- downloadFile('GBoS_multi_indicator_comparison.csv',csvText(rows),'text/csv;charset=utf-8');
-}
-function downloadDirectCSV(){
- const mode=$('comparisonCalculation').value;
- const a=$('indicatorA').value,b=$('indicatorB').value;
- const rows=[['EA',LABELS[a],LABELS[b],mode==='values'?'Comparison result':mode],
- ...currentDirectRows.map(r=>[r.label,r.a,r.b,mode==='values'?'':r.result])];
- downloadFile('GBoS_indicator_A_B_comparison.csv',csvText(rows),'text/csv;charset=utf-8');
+
+function exportChartCSV(id,name) {
+ const chart=charts[id];
+ if(!chart) return alert("No chart is available.");
+ const rows=[["Enumeration Area",...chart.data.datasets.map(d=>d.label)]];
+ chart.data.labels.forEach((label,i)=>{
+  rows.push([label,...chart.data.datasets.map(d=>d.data[i]??"")]);
+ });
+ downloadBlob(rows.map(r=>r.map(csvEscape).join(",")).join("\n"),name+".csv","text/csv");
 }
 
-/* EVENTS */
-$('loadUrl').addEventListener('click',loadFromUrl);
-$('fileInput').addEventListener('change',async e=>{
- const f=e.target.files&&e.target.files[0];if(!f)return;
- try{loadData(JSON.parse(await f.text()),f.name);}
- catch(err){error(err.message);status('File loading failed',true);}
+function exportComparisonCSV() {exportChartCSV("comparisonChart","EA_Multi_Indicator_Comparison");}
+function exportMetricCSV() {exportChartCSV("metricChart","EA_Indicator_A_vs_B");}
+
+function captureGPS() {
+ if(!navigator.geolocation) return alert("Geolocation is not supported by this browser.");
+ $("gpsStatus").textContent="Requesting location permission...";
+ navigator.geolocation.getCurrentPosition(pos=>{
+  const lat=pos.coords.latitude,lon=pos.coords.longitude;
+  const accuracy=pos.coords.accuracy;
+  const record={
+   latitude:lat,longitude:lon,accuracy_m:accuracy,
+   captured_at:new Date().toISOString(),
+   selected_ea:selectedFeature?"EA "+selectedFeature.__dashId:""
+  };
+  gpsRecords.push(record);
+  if(gpsLayer) map.removeLayer(gpsLayer);
+  gpsLayer=L.layerGroup().addTo(map);
+  L.marker([lat,lon]).addTo(gpsLayer).bindPopup(
+   "<strong>GPS location captured</strong><br>"+
+   "Latitude: "+fmt(lat)+"<br>Longitude: "+fmt(lon)+
+   "<br>Accuracy: "+fmt(accuracy)+" m<br>"+
+   "Currently selected EA: "+escapeHTML(record.selected_ea||"None")
+  ).openPopup();
+  L.circle([lat,lon],{radius:accuracy,color:"#123b70",fillOpacity:.12}).addTo(gpsLayer);
+  map.setView([lat,lon],15);
+  $("gpsStatus").textContent="GPS captured • Accuracy: "+fmt(accuracy)+" m";
+ },err=>{
+  $("gpsStatus").textContent="GPS error: "+err.message;
+  alert("GPS capture failed: "+err.message);
+ },{enableHighAccuracy:true,timeout:20000,maximumAge:0});
+}
+
+function exportGPS() {
+ if(!gpsRecords.length) return alert("No GPS records to export.");
+ const fields=["latitude","longitude","accuracy_m","captured_at","selected_ea"];
+ const csv=[fields.join(","),...gpsRecords.map(r=>fields.map(k=>csvEscape(r[k])).join(","))].join("\n");
+ downloadBlob(csv,"Gambia_GPS_Captures.csv","text/csv");
+}
+
+function resetFilters() {
+ ["lga","district","ward","ea"].forEach(id=>$(id).value="");
+ $("displayMode").value="all";
+ selectedFeature=null;
+ updateDistricts();
+ applyFilters();
+}
+
+$("loadUrl").addEventListener("click",loadFromUrl);
+
+$("fileInput").addEventListener("change",async e=>{
+ const file=e.target.files[0];
+ if(!file) return;
+ try {
+  status("Reading local GeoJSON...");
+  loadData(JSON.parse(await file.text()));
+ } catch(err) {reportError(err);}
 });
-$('apply').addEventListener('click',applyFilters);
-$('fit').addEventListener('click',zoomToResults);
-$('reset').addEventListener('click',()=>{
- $('lga').value='';$('district').value='';$('ward').value='';$('ea').value='';
- $('boundaryMode').value='filtered';
- $('mapMetric').value='none';$('mapMetricTop').value='none';
- populateSelectors();applyFilters();
+
+$("lga").addEventListener("change",()=>{updateDistricts();applyFilters();});
+$("district").addEventListener("change",()=>{updateWards();applyFilters();});
+$("ward").addEventListener("change",()=>{updateEAs();applyFilters();});
+$("ea").addEventListener("change",()=>{
+ selectedFeature=filtered.find(f=>f.__dashId===$("ea").value)||null;
+ applyFilters();
 });
-$('ea').addEventListener('change',()=>{
- selectedId=$('ea').value||null;
- renderAll();
+$("apply").addEventListener("click",applyFilters);
+$("reset").addEventListener("click",resetFilters);
+$("zoom").addEventListener("click",()=>{
+ if(selectedFeature && geoLayer) {
+  const layer=geoLayer.getLayers().find(l=>l.feature.__dashId===selectedFeature.__dashId);
+  if(layer) map.fitBounds(layer.getBounds(),{padding:[25,25]});
+ } else if(geoLayer && geoLayer.getBounds().isValid()) {
+  map.fitBounds(geoLayer.getBounds());
+ }
 });
-$('boundaryMode').addEventListener('change',renderMap);
-$('mapMetric').addEventListener('change',()=>{
- $('mapMetricTop').value=$('mapMetric').value;renderMap();
+$("indicator").addEventListener("change",()=>{
+ $("mapIndicator").value=$("indicator").value;
+ renderMap();
 });
-$('mapMetricTop').addEventListener('change',()=>{
- $('mapMetric').value=$('mapMetricTop').value;renderMap();
+$("mapIndicator").addEventListener("change",()=>{
+ $("indicator").value=$("mapIndicator").value;
+ renderMap();
 });
-$('legendMethod').addEventListener('change',renderMap);
-$('mapRefresh').addEventListener('click',renderMap);
+$("updateMap").addEventListener("click",renderMap);
+$("mapRefresh").addEventListener("click",renderMap);
+$("basemap").addEventListener("change",baseTiles);
+$("classification").addEventListener("change",renderMap);
+$("displayMode").addEventListener("change",renderMap);
+$("chartIndicator").addEventListener("change",updateCharts);
+$("chartType").addEventListener("change",updateCharts);
+$("comparisonCategory").addEventListener("change",updateCharts);
+$("comparisonType").addEventListener("change",updateCharts);
+["metricA","metricB","comparisonMethod"].forEach(id=>$(id).addEventListener("change",updateCharts));
 
-$('chartType').addEventListener('change',renderMainChart);
-$('chartMetric').addEventListener('change',renderMainChart);
-$('comparisonMeasure').addEventListener('change',renderCompareChart);
-$('comparisonType').addEventListener('change',renderCompareChart);
-['indicatorA','indicatorB','directChartType','comparisonCalculation'].forEach(id=>
- $(id).addEventListener('change',renderDirectChart)
-);
-
-$('gpsButton').addEventListener('click',captureGPS);
-$('downloadGPS').addEventListener('click',downloadGPS);
-$('clearGPS').addEventListener('click',clearGPS);
-
-$('csv').addEventListener('click',exportCSV);
-$('geojson').addEventListener('click',exportGeoJSON);
-$('selectedCSV').addEventListener('click',exportSelectedCSV);
-
-$('downloadMainPNG').addEventListener('click',()=>downloadChartPNG(mainChart,'GBoS_EA_Indicator_Chart'));
-$('downloadComparePNG').addEventListener('click',()=>downloadChartPNG(compareChart,'GBoS_EA_Multi_Indicator_Comparison'));
-$('downloadDirectPNG').addEventListener('click',()=>downloadChartPNG(directChart,'GBoS_EA_Indicator_A_B_Comparison'));
-
-$('downloadMainCSV').addEventListener('click',downloadMainCSV);
-$('downloadCompareCSV').addEventListener('click',downloadCompareCSV);
-$('downloadDirectCSV').addEventListener('click',downloadDirectCSV);
-
-window.addEventListener('resize',()=>{
- if(mainChart)mainChart.resize();
- if(compareChart)compareChart.resize();
- if(directChart)directChart.resize();
+$("exportCsv").addEventListener("click",exportCSV);
+$("exportGeo").addEventListener("click",exportGeo);
+$("exportSelected").addEventListener("click",exportSelected);
+$("chartPng").addEventListener("click",()=>downloadChartPNG("mainChart","Gambia_EA_Indicator_Chart"));
+$("chartCsv").addEventListener("click",()=>exportChartCSV("mainChart","Gambia_EA_Indicator_Chart_Data"));
+$("comparisonCsv").addEventListener("click",exportComparisonCSV);
+$("metricCsv").addEventListener("click",exportMetricCSV);
+$("gps").addEventListener("click",captureGPS);
+$("gpsCsv").addEventListener("click",exportGPS);
+$("clearGps").addEventListener("click",()=>{
+ gpsRecords=[];
+ if(gpsLayer) map.removeLayer(gpsLayer);
+ gpsLayer=null;
+ $("gpsStatus").textContent="GPS records cleared.";
 });
 
-$('sourceUrl').value=DEFAULT_URL;
 loadFromUrl();
-
-})();
 </script>
 </body>
 </html>
