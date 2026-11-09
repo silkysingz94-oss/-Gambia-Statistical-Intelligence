@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GBoS GEOAI | Gambia EA Statistical Intelligence</title>
+<title>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE-MAPPING AND CENSUS FIGURES</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
@@ -81,7 +81,7 @@ footer{text-align:center;color:#7892a9;font-size:9px;line-height:1.6;padding:12p
  <div class="brand">
   <div class="logo">G</div>
   <div>
-   <h1>GBoS GEOAI | Gambia EA Statistical Intelligence</h1>
+   <h1>SILKYSINGZ GEOAI | GAMBIA STATISTICAL INTELLIGENCE-MAPPING AND CENSUS FIGURES</h1>
    <small>ENUMERATION AREA • DATA QUALITY • COMPARATIVE ANALYSIS</small>
   </div>
  </div>
@@ -433,10 +433,11 @@ $("file").addEventListener("change",async e=>{
 });
 $("loadUrl").onclick=async()=>{
  const u=$("url").value.trim();
- if(!u)return setStatus("Enter a public raw GeoJSON URL.",true);
+ if(!u)return setStatus("https://github.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json",true);
  setStatus("Loading GeoJSON...");
  try{
   const r=await fetch(u);
+
   if(!r.ok)throw Error("HTTP "+r.status);
   loadData(await r.json(),u);
  }catch(err){setStatus("URL error: "+err.message+". Check URL and CORS access.",true);}
