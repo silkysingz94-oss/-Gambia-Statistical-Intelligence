@@ -7,8 +7,8 @@
 <title>SILKYSINGZ GEOAI | Gambia Statistical Intelligence</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
 <style>
 :root{
@@ -20,30 +20,30 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(135deg,#eaf6ee,#f4f8ff)}
 .top-stripe{height:7px;background:linear-gradient(to right,var(--red) 0 25%,var(--white) 25% 50%,var(--blue) 50% 75%,var(--green) 75% 100%)}
-header{background:linear-gradient(115deg,#06472b,#0c6b3d,#123b70);color:#fff;padding:16px 22px;box-shadow:0 4px 15px #0002}
+header{background:linear-gradient(115deg,#06472b,#0c6b3d,#123b70);color:white;padding:16px 22px;box-shadow:0 4px 15px #0002}
 .head-inner{max-width:1900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
 .brand h1{margin:0;font-size:clamp(17px,2vw,25px);font-weight:800;letter-spacing:.5px}
 .brand p{margin:7px 0 0;font-size:12px;opacity:.9}
 .head-right{display:flex;align-items:center;justify-content:flex-end;gap:15px;flex-shrink:0}
-.status{background:#ffffff20;border:1px solid #ffffff55;border-radius:20px;padding:8px 13px;font-size:11px;max-width:240px;text-align:center}
+.status{background:#ffffff20;border:1px solid #ffffff55;border-radius:20px;padding:8px 13px;font-size:11px;max-width:260px;text-align:center}
 .header-photo{display:block;width:76px;height:76px;object-fit:cover;object-position:center;border-radius:50%;border:3px solid white;background:#fff;box-shadow:0 3px 12px #0005;flex-shrink:0}
 main{max-width:1900px;margin:14px auto;padding:0 12px}
 .dashboard{display:grid;grid-template-columns:minmax(250px,.92fr) minmax(360px,1.55fr) minmax(300px,1fr);gap:12px;height:calc(100vh - 150px);min-height:650px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 12px #163d2510;min-height:0;overflow:hidden;display:flex;flex-direction:column}
-.panel-title{background:linear-gradient(90deg,var(--green-dark),var(--green));color:#fff;padding:12px 14px;font-size:13px;font-weight:800;letter-spacing:.5px;flex-shrink:0}
+.panel{background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 12px #163d2510;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.panel-title{background:linear-gradient(90deg,var(--green-dark),var(--green));color:white;padding:12px 14px;font-size:13px;font-weight:800;letter-spacing:.5px;flex-shrink:0}
 .panel-body{padding:12px;overflow-y:auto;min-height:0;flex:1}
-.section{border:1px solid var(--line);border-radius:9px;padding:11px;margin-bottom:11px;background:#fff}
+.section{border:1px solid var(--line);border-radius:9px;padding:11px;margin-bottom:11px;background:white}
 .section h3{font-size:12px;color:var(--green-dark);margin:0 0 10px;text-transform:uppercase;letter-spacing:.4px}
 label{display:block;font-size:11px;color:#44556a;font-weight:700;margin:9px 0 5px}
 input,select,button{font:inherit}
-input[type=text],select,input[type=file]{width:100%;border:1px solid #ccd8d0;border-radius:7px;padding:9px;font-size:11px;background:#fff;color:var(--ink)}
+input[type=text],select,input[type=file]{width:100%;border:1px solid #ccd8d0;border-radius:7px;padding:9px;font-size:11px;background:white;color:var(--ink)}
 input[type=file]{padding:7px}
 button{border:0;border-radius:7px;padding:9px 11px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s}
 button:hover{filter:brightness(.94)}
 button:disabled{opacity:.5;cursor:not-allowed}
-.btn-green{background:var(--green);color:#fff}
-.btn-blue{background:var(--blue);color:#fff}
-.btn-red{background:var(--red);color:#fff}
+.btn-green{background:var(--green);color:white}
+.btn-blue{background:var(--blue);color:white}
+.btn-red{background:var(--red);color:white}
 .btn-light{background:#eaf3ed;color:var(--green-dark);border:1px solid #cbded0}
 .button-row{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
 .button-row button{flex:1}
@@ -68,16 +68,16 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .chart-box{height:245px;position:relative;width:100%}
 .table-wrap{overflow:auto;max-height:380px;border:1px solid var(--line);border-radius:7px}
 table{width:100%;border-collapse:collapse;font-size:10px;white-space:nowrap}
-th{position:sticky;top:0;background:var(--green-dark);color:#fff;padding:8px;text-align:left}
+th{position:sticky;top:0;background:var(--green-dark);color:white;padding:8px;text-align:left}
 td{padding:7px;border-bottom:1px solid #e8eee9}
 tr:nth-child(even){background:#f5faf6}
 footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1.6}
 .loading-screen{position:absolute;inset:0;z-index:800;background:#ffffffeb;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
 .loader{width:40px;height:40px;border:4px solid #dbe9df;border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.progress-track{height:6px;width:min(280px,80vw);background:#dce8df;border-radius:20px;overflow:hidden}
-.progress-bar{height:100%;width:0;background:var(--green);transition:width .2s}
-.loading-text{font-size:12px;font-weight:700;color:var(--green-dark)}
+.progress-track{height:7px;width:min(300px,80vw);background:#dce8df;border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:var(--green);transition:width .15s}
+.loading-text{font-size:12px;font-weight:700;color:var(--green-dark);text-align:center}
 .hidden{display:none!important}
 @media(max-width:1050px){
 .dashboard{grid-template-columns:1fr 1.5fr;height:auto;min-height:0}
@@ -102,6 +102,7 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 
 <body>
 <div class="top-stripe"></div>
+
 <header>
 <div class="head-inner">
 <div class="brand">
@@ -118,6 +119,7 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <main>
 <div class="dashboard">
 
+<!-- LEFT PANEL -->
 <section class="panel">
 <div class="panel-title">CONTROLS & EA EXPLORER</div>
 <div class="panel-body">
@@ -149,7 +151,7 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <button class="btn-green" id="apply">Apply filters & zoom</button>
 <button class="btn-blue" id="zoom">Zoom to selection</button>
 </div>
-<p class="small-note">Administrative selection automatically zooms to the corresponding filtered EA boundaries.</p>
+<p class="small-note">Administrative selection automatically zooms to the filtered EA boundaries. Select an individual EA to zoom to its boundary.</p>
 </div>
 
 <div class="section">
@@ -165,7 +167,10 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <option value="dark">Carto Dark</option>
 </select>
 <label>Boundary display</label>
-<select id="displayMode"><option value="all">All filtered EAs</option><option value="selected">Selected EA only</option></select>
+<select id="displayMode">
+<option value="all">All filtered EAs</option>
+<option value="selected">Selected EA only</option>
+</select>
 <label>Thematic indicator</label>
 <select id="indicator">
 <option value="map_pop">Mapped population</option>
@@ -180,7 +185,11 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <option value="build_ls">Listed buildings</option>
 </select>
 <label>Classification method</label>
-<select id="classification"><option value="quantile">Quantile</option><option value="equal">Equal interval</option><option value="natural">Natural approximation</option></select>
+<select id="classification">
+<option value="quantile">Quantile</option>
+<option value="equal">Equal interval</option>
+<option value="natural">Natural approximation</option>
+</select>
 <button class="btn-green" id="updateMap" style="width:100%;margin-top:9px">Update map</button>
 </div>
 
@@ -203,9 +212,11 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <button class="btn-light" id="exportSelected" style="width:100%;margin-top:8px">Selected EA CSV</button>
 <p class="small-note">Only the 13 approved EA attributes are displayed in profiles, charts, tables and CSV exports.</p>
 </div>
+
 </div>
 </section>
 
+<!-- MAP PANEL -->
 <section class="panel map-panel">
 <div class="panel-title">INTERACTIVE ENUMERATION AREA MAP</div>
 <div class="map-toolbar">
@@ -223,18 +234,24 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 </select>
 <button class="btn-green" id="mapRefresh">Refresh</button>
 </div>
+
 <div class="map-area">
 <div id="map"></div>
-<div class="map-legend" id="legend"><strong>Map legend</strong><div class="small-note">Waiting for dataset.</div></div>
+<div class="map-legend" id="legend">
+<strong>Map legend</strong>
+<div class="small-note">Waiting for dataset.</div>
+</div>
 <div class="loading-screen" id="loadingScreen">
 <div class="loader"></div>
 <div class="loading-text" id="loadingText">Loading Gambia EA dataset...</div>
 <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
 </div>
 </div>
+
 <div class="map-caption" id="mapCaption">The Gambia • WGS84 / EPSG:4326 • Enumeration Area boundaries</div>
 </section>
 
+<!-- ANALYTICS PANEL -->
 <section class="panel analytics-panel">
 <div class="panel-title">ANALYTICS & CHART INTELLIGENCE</div>
 <div class="panel-body">
@@ -250,37 +267,57 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 
 <div class="section">
 <h3>Selected EA profile</h3>
-<div id="profile" class="profile-grid"><p class="small-note">Select an EA on the map or from the selector.</p></div>
+<div id="profile" class="profile-grid">
+<p class="small-note">Select an EA on the map or from the selector.</p>
+</div>
 </div>
 
 <div class="section">
 <h3>Main indicator chart</h3>
 <label>Indicator</label>
 <select id="chartIndicator">
-<option value="map_pop">Mapped population</option><option value="map_hhs">Mapped households</option>
-<option value="ls_pop">Listing population</option><option value="ls_hhs">Listing households</option>
-<option value="enum_pop">Enumerated population</option><option value="enum_hhs">Enumerated households</option>
-<option value="comp_map">Mapped compounds</option><option value="build_map">Mapped buildings</option>
-<option value="comp_ls">Listed compounds</option><option value="build_ls">Listed buildings</option>
+<option value="map_pop">Mapped population</option>
+<option value="map_hhs">Mapped households</option>
+<option value="ls_pop">Listing population</option>
+<option value="ls_hhs">Listing households</option>
+<option value="enum_pop">Enumerated population</option>
+<option value="enum_hhs">Enumerated households</option>
+<option value="comp_map">Mapped compounds</option>
+<option value="build_map">Mapped buildings</option>
+<option value="comp_ls">Listed compounds</option>
+<option value="build_ls">Listed buildings</option>
 </select>
 <label>Chart type</label>
 <select id="chartType">
-<option value="bar">Bar</option><option value="line">Line</option><option value="pie">Pie</option>
-<option value="doughnut">Doughnut</option><option value="radar">Radar</option><option value="polarArea">Polar area</option>
+<option value="bar">Bar</option>
+<option value="line">Line</option>
+<option value="pie">Pie</option>
+<option value="doughnut">Doughnut</option>
+<option value="radar">Radar</option>
+<option value="polarArea">Polar area</option>
 </select>
 <div class="chart-box"><canvas id="mainChart"></canvas></div>
-<div class="button-row"><button class="btn-blue" id="chartPng">Download chart PNG</button><button class="btn-light" id="chartCsv">Chart data CSV</button></div>
+<div class="button-row">
+<button class="btn-blue" id="chartPng">Download chart PNG</button>
+<button class="btn-light" id="chartCsv">Chart data CSV</button>
+</div>
 </div>
 
 <div class="section">
 <h3>Multi-indicator comparison</h3>
 <label>Comparison category</label>
 <select id="comparisonCategory">
-<option value="population">Population</option><option value="households">Households</option>
-<option value="compounds">Compounds</option><option value="buildings">Buildings</option>
+<option value="population">Population</option>
+<option value="households">Households</option>
+<option value="compounds">Compounds</option>
+<option value="buildings">Buildings</option>
 </select>
 <label>Comparison chart</label>
-<select id="comparisonType"><option value="bar">Grouped bar</option><option value="line">Line</option><option value="radar">Radar</option></select>
+<select id="comparisonType">
+<option value="bar">Grouped bar</option>
+<option value="line">Line</option>
+<option value="radar">Radar</option>
+</select>
 <div class="chart-box"><canvas id="comparisonChart"></canvas></div>
 <button class="btn-light" id="comparisonCsv" style="width:100%">Download comparison CSV</button>
 </div>
@@ -289,22 +326,31 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <h3>Indicator A vs B</h3>
 <label>Indicator A</label>
 <select id="metricA">
-<option value="map_pop">Mapped population</option><option value="map_hhs">Mapped households</option>
-<option value="ls_pop">Listing households</option><option value="enum_pop">Enumerated population</option>
-<option value="enum_hhs">Enumerated households</option><option value="comp_map">Mapped compounds</option>
+<option value="map_pop">Mapped population</option>
+<option value="map_hhs">Mapped households</option>
+<option value="ls_pop">Listing households</option>
+<option value="enum_pop">Enumerated population</option>
+<option value="enum_hhs">Enumerated households</option>
+<option value="comp_map">Mapped compounds</option>
 <option value="build_map">Mapped buildings</option>
 </select>
 <label>Indicator B</label>
 <select id="metricB">
-<option value="enum_pop">Enumerated population</option><option value="enum_hhs">Enumerated households</option>
-<option value="map_pop">Mapped population</option><option value="map_hhs">Mapped households</option>
-<option value="ls_pop">Listing population</option><option value="ls_hhs">Listing households</option>
-<option value="comp_ls">Listed compounds</option><option value="build_ls">Listed buildings</option>
+<option value="enum_pop">Enumerated population</option>
+<option value="enum_hhs">Enumerated households</option>
+<option value="map_pop">Mapped population</option>
+<option value="map_hhs">Mapped households</option>
+<option value="ls_pop">Listing population</option>
+<option value="ls_hhs">Listing households</option>
+<option value="comp_ls">Listed compounds</option>
+<option value="build_ls">Listed buildings</option>
 </select>
 <label>Comparison calculation</label>
 <select id="comparisonMethod">
-<option value="actual">Actual values</option><option value="difference">A minus B</option>
-<option value="percentage">Percentage difference</option><option value="ratio">A / B ratio</option>
+<option value="actual">Actual values</option>
+<option value="difference">A minus B</option>
+<option value="percentage">Percentage difference</option>
+<option value="ratio">A / B ratio</option>
 </select>
 <div class="chart-box"><canvas id="metricChart"></canvas></div>
 <button class="btn-light" id="metricCsv" style="width:100%">Download A vs B CSV</button>
@@ -313,10 +359,17 @@ footer{text-align:center;padding:13px;color:#53677a;font-size:10px;line-height:1
 <div class="section">
 <h3>EA data table</h3>
 <p class="small-note">First 300 filtered records. Only approved fields are shown.</p>
-<div class="table-wrap"><table><thead id="tableHead"></thead><tbody id="tableBody"></tbody></table></div>
+<div class="table-wrap">
+<table>
+<thead id="tableHead"></thead>
+<tbody id="tableBody"></tbody>
+</table>
 </div>
+</div>
+
 </div>
 </section>
+
 </div>
 
 <footer>
@@ -328,573 +381,2046 @@ GBoS GEOAI • Research and educational use • Enumeration Area Statistical Int
 <script>
 "use strict";
 
-const DEFAULT_URL="https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json";
-const FIELDS=["lganame","distname","wardname","map_hhs","map_pop","ls_hhs","ls_pop","enum_hhs","enum_pop","comp_map","build_map","comp_ls","build_ls"];
-const LABELS={
-lganame:"Region / LGA",distname:"District",wardname:"Ward",
-map_hhs:"Mapped households",map_pop:"Mapped population",
-ls_hhs:"Listing households",ls_pop:"Listing population",
-enum_hhs:"Enumerated households",enum_pop:"Enumerated population",
-comp_map:"Mapped compounds",build_map:"Mapped buildings",
-comp_ls:"Listed compounds",build_ls:"Listed buildings"
-};
-const $=id=>document.getElementById(id);
-const numberFormat=new Intl.NumberFormat("en-US",{maximumFractionDigits:1});
+/* =====================================================
+   CONFIGURATION
+===================================================== */
 
-let allFeatures=[],filtered=[],selectedFeature=null,gpsRecords=[];
-let charts={},geoLayer=null,gpsLayer=null,baseLayer=null;
-let suppressFilterEvents=false,filterTimer=null;
-let statsCache=new Map();
-let chartDirty=true;
-let mapInitialized=false;
+const DEFAULT_URL =
+"https://raw.githubusercontent.com/silkysingz94-oss/-Gambia-Statistical-Intelligence/main/Census_EAs_Geo.json";
+
+const FIELDS = [
+"lganame","distname","wardname",
+"map_hhs","map_pop",
+"ls_hhs","ls_pop",
+"enum_hhs","enum_pop",
+"comp_map","build_map",
+"comp_ls","build_ls"
+];
+
+const LABELS = {
+lganame:"Region / LGA",
+distname:"District",
+wardname:"Ward",
+map_hhs:"Mapped households",
+map_pop:"Mapped population",
+ls_hhs:"Listing households",
+ls_pop:"Listing population",
+enum_hhs:"Enumerated households",
+enum_pop:"Enumerated population",
+comp_map:"Mapped compounds",
+build_map:"Mapped buildings",
+comp_ls:"Listed compounds",
+build_ls:"Listed buildings"
+};
+
+const $ = id => document.getElementById(id);
+
+const numberFormat = new Intl.NumberFormat("en-US",{
+maximumFractionDigits:1
+});
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let allFeatures = [];
+let filtered = [];
+let selectedFeature = null;
+let gpsRecords = [];
+
+let charts = {};
+let geoLayer = null;
+let gpsLayer = null;
+let baseLayer = null;
+let labelLayer = null;
+
+let suppressFilterEvents = false;
+let filterTimer = null;
+let mapRenderToken = 0;
+let chartDirty = true;
+let pendingZoom = true;
+let currentRequest = 0;
+
+const RENDER_BATCH_SIZE = 100;
+
+const canvasRenderer = L.canvas({
+padding:0.5
+});
+
+/* =====================================================
+   GENERAL UTILITIES
+===================================================== */
 
 function fmt(v){
- if(v===null||v===undefined||v==="")return "—";
- const n=Number(v);return Number.isFinite(n)?numberFormat.format(n):String(v);
+if(v===null || v===undefined || v==="") return "—";
+const n=Number(v);
+return Number.isFinite(n) ? numberFormat.format(n) : String(v);
 }
-function norm(s){return String(s??"").toLowerCase().replace(/[^a-z0-9]/g,"");}
+
+function norm(s){
+return String(s??"")
+.toLowerCase()
+.replace(/[^a-z0-9]/g,"");
+}
+
 function clean(v){
- if(v===null||v===undefined||v==="")return null;
- const n=Number(String(v).replace(/,/g,""));
- return Number.isFinite(n)?n:null;
+if(v===null || v===undefined || v==="") return null;
+const n=Number(String(v).replace(/,/g,""));
+return Number.isFinite(n)?n:null;
 }
+
 function prop(p,key){
- if(!p)return null;
- if(p[key]!==undefined)return p[key];
- const wanted=norm(key),found=Object.keys(p).find(k=>norm(k)===wanted);
- return found===undefined?null:p[found];
+if(!p) return null;
+
+if(p[key]!==undefined) return p[key];
+
+const wanted=norm(key);
+const found=Object.keys(p).find(k=>norm(k)===wanted);
+
+return found===undefined?null:p[found];
 }
-function get(f,key){return prop(f.properties,key);}
+
+function get(f,key){
+return prop(f.properties,key);
+}
+
 function escapeHTML(v){
- return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+return String(v??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c]));
 }
-function status(message){$("loadStatus").textContent=message;}
+
+function status(message){
+$("loadStatus").textContent=message;
+}
+
 function progress(percent,message){
- $("progressBar").style.width=Math.max(0,Math.min(100,percent))+"%";
- $("loadingText").textContent=message;
+$("progressBar").style.width=
+Math.max(0,Math.min(100,percent))+"%";
+
+$("loadingText").textContent=message;
 }
-function hideLoading(){$("loadingScreen").classList.add("hidden");}
-function showLoading(){$("loadingScreen").classList.remove("hidden");}
+
+function hideLoading(){
+$("loadingScreen").classList.add("hidden");
+}
+
+function showLoading(){
+$("loadingScreen").classList.remove("hidden");
+}
+
 function reportError(err){
- console.error(err);status("Dataset loading error");
- progress(100,"Unable to load dataset");
- alert("Unable to load the dataset. Check the GeoJSON URL or upload a local GeoJSON file.\n\n"+(err.message||err));
+console.error(err);
+
+status("Dataset loading error");
+
+progress(100,"Unable to load dataset");
+
+alert(
+"Unable to load the dataset.\n\n"+
+"Check the GitHub GeoJSON URL or upload a local GeoJSON file.\n\n"+
+(err.message||err)
+);
 }
+
+/* =====================================================
+   GEOJSON PROCESSING
+===================================================== */
 
 function normalizeFeature(f,index){
- const p={};
- FIELDS.forEach(k=>p[k]=get(f,k));
- return {type:"Feature",geometry:f.geometry,properties:p,__dashId:String(index)};
+
+const p={};
+
+FIELDS.forEach(k=>{
+p[k]=get(f,k);
+});
+
+return {
+type:"Feature",
+geometry:f.geometry,
+properties:p,
+__dashId:String(index)
+};
 }
+
 function parseGeoJSON(data){
- if(data.type==="FeatureCollection"&&Array.isArray(data.features))
-  return data.features.filter(f=>f&&f.geometry).map((f,i)=>normalizeFeature(f,i));
- if(data.type==="Feature"&&data.geometry)return [normalizeFeature(data,0)];
- throw new Error("Invalid GeoJSON FeatureCollection or Feature.");
+
+if(
+data.type==="FeatureCollection" &&
+Array.isArray(data.features)
+){
+
+return data.features
+.filter(f=>f && f.geometry)
+.map((f,i)=>normalizeFeature(f,i));
+
 }
-async function fetchJson(url){
- const response=await fetch(url,{cache:"force-cache"});
- if(!response.ok)throw new Error("HTTP "+response.status);
- return response.json();
+
+if(data.type==="Feature" && data.geometry){
+
+return [normalizeFeature(data,0)];
+
 }
+
+throw new Error(
+"Invalid GeoJSON FeatureCollection or Feature."
+);
+}
+
+async function fetchJson(url,signal){
+
+const response=await fetch(url,{
+cache:"default",
+signal
+});
+
+if(!response.ok){
+throw new Error("HTTP "+response.status);
+}
+
+return response.json();
+}
+
+/* =====================================================
+   DATA LOADING
+===================================================== */
+
 async function loadFromUrl(){
- const raw=$("dataUrl").value.trim();
- if(!raw)return alert("Enter a GeoJSON URL.");
- showLoading();progress(10,"Downloading EA boundaries...");
- status("Downloading dataset...");
- try{
-  let data;
-  try{data=await fetchJson(raw);}
-  catch(e){
-   const fallback=raw.replace("/main/","/master/");
-   if(fallback===raw)throw e;
-   data=await fetchJson(fallback);
-  }
-  progress(60,"Preparing EA features...");
-  await new Promise(resolve=>requestAnimationFrame(resolve));
-  loadData(data);
- }catch(err){reportError(err);}
+
+const raw=$("dataUrl").value.trim();
+
+if(!raw){
+alert("Enter a GeoJSON URL.");
+return;
 }
-function loadData(data){
- progress(70,"Processing EA attributes...");
- allFeatures=parseGeoJSON(data);
- filtered=allFeatures;
- statsCache.clear();
- progress(80,"Building administrative filters...");
- populateFilters();
- progress(90,"Rendering map and summary...");
- applyFilters({zoom:true});
- progress(100,"Dashboard ready");
- status(fmt(allFeatures.length)+" EA features loaded");
- setTimeout(hideLoading,350);
+
+const requestId=++currentRequest;
+const controller=new AbortController();
+
+if(window.activeDataController){
+window.activeDataController.abort();
 }
+
+window.activeDataController=controller;
+
+showLoading();
+progress(5,"Connecting to GeoJSON source...");
+status("Connecting to GitHub...");
+
+try{
+
+let data;
+
+try{
+
+data=await fetchJson(raw,controller.signal);
+
+}catch(e){
+
+if(e.name==="AbortError") return;
+
+const fallback=raw.replace("/main/","/master/");
+
+if(fallback===raw) throw e;
+
+data=await fetchJson(fallback,controller.signal);
+
+}
+
+if(requestId!==currentRequest) return;
+
+progress(40,"GeoJSON downloaded successfully...");
+
+await new Promise(resolve=>setTimeout(resolve,20));
+
+loadData(data,requestId);
+
+}catch(err){
+
+if(err.name==="AbortError") return;
+
+reportError(err);
+
+}
+}
+
+function loadData(data,requestId=currentRequest){
+
+showLoading();
+
+progress(45,"Preparing GeoJSON features...");
+
+setTimeout(()=>{
+
+if(requestId!==currentRequest) return;
+
+try{
+
+const start=performance.now();
+
+allFeatures=parseGeoJSON(data);
+
+filtered=allFeatures;
+
+statsCacheClear();
+
+progress(60,"Building administrative selectors...");
+
+populateFilters();
+
+selectedFeature=null;
+
+progress(72,"Calculating statistical indicators...");
+
+renderKPIs();
+renderProfile();
+
+progress(80,"Preparing EA data table...");
+
+updateTable();
+
+pendingZoom=true;
+
+progress(85,"Preparing interactive map...");
+
+renderMap();
+
+chartDirty=true;
+
+status(
+fmt(allFeatures.length)+" EA features processed"
+);
+
+console.info(
+"EA processing time:",
+Math.round(performance.now()-start)+" ms"
+);
+
+}catch(err){
+
+reportError(err);
+
+}
+
+},30);
+}
+
+function statsCacheClear(){
+/* Reserved for future cached statistical calculations. */
+}
+
+/* =====================================================
+   ADMINISTRATIVE FILTERS
+===================================================== */
 
 function uniqueValues(features,key){
- return [...new Set(features.map(f=>get(f,key)).filter(v=>v!==null&&v!==undefined&&String(v).trim()!==""))]
- .sort((a,b)=>String(a).localeCompare(String(b)));
+
+return [...new Set(
+
+features
+.map(f=>get(f,key))
+.filter(v=>
+v!==null &&
+v!==undefined &&
+String(v).trim()!==""
+)
+
+)].sort((a,b)=>String(a).localeCompare(String(b)));
+
 }
+
 function setOptions(id,values,label){
- const el=$(id),old=el.value;
- el.innerHTML="";
- const first=document.createElement("option");first.value="";first.textContent=label;el.appendChild(first);
- values.forEach(v=>{
-  const o=document.createElement("option");o.value=String(v);o.textContent=String(v);el.appendChild(o);
- });
- if(values.map(String).includes(old))el.value=old;
+
+const el=$(id);
+const old=el.value;
+
+el.innerHTML="";
+
+const first=document.createElement("option");
+first.value="";
+first.textContent=label;
+
+el.appendChild(first);
+
+values.forEach(v=>{
+
+const o=document.createElement("option");
+
+o.value=String(v);
+o.textContent=String(v);
+
+el.appendChild(o);
+
+});
+
+if(values.map(String).includes(old)){
+el.value=old;
 }
+
+}
+
 function populateFilters(){
- setOptions("lga",uniqueValues(allFeatures,"lganame"),"All regions / LGAs");
- updateDistricts();
+
+setOptions(
+"lga",
+uniqueValues(allFeatures,"lganame"),
+"All regions / LGAs"
+);
+
+updateDistricts();
+
 }
+
 function updateDistricts(){
- const lga=$("lga").value;
- setOptions("district",uniqueValues(allFeatures.filter(f=>!lga||String(get(f,"lganame"))===lga),"distname"),"All districts");
- updateWards();
+
+const lga=$("lga").value;
+
+const base=allFeatures.filter(f=>
+!lga || String(get(f,"lganame"))===lga
+);
+
+setOptions(
+"district",
+uniqueValues(base,"distname"),
+"All districts"
+);
+
+updateWards();
+
 }
+
 function updateWards(){
- const lga=$("lga").value,d=$("district").value;
- const base=allFeatures.filter(f=>(!lga||String(get(f,"lganame"))===lga)&&(!d||String(get(f,"distname"))===d));
- setOptions("ward",uniqueValues(base,"wardname"),"All wards");
- updateEAs();
+
+const lga=$("lga").value;
+const d=$("district").value;
+
+const base=allFeatures.filter(f=>
+(!lga || String(get(f,"lganame"))===lga) &&
+(!d || String(get(f,"distname"))===d)
+);
+
+setOptions(
+"ward",
+uniqueValues(base,"wardname"),
+"All wards"
+);
+
+updateEAs();
+
 }
+
 function updateEAs(){
- const lga=$("lga").value,d=$("district").value,w=$("ward").value;
- const base=allFeatures.filter(f=>(!lga||String(get(f,"lganame"))===lga)&&(!d||String(get(f,"distname"))===d)&&(!w||String(get(f,"wardname"))===w));
- const old=$("ea").value;
- $("ea").innerHTML='<option value="">All EAs</option>';
- base.forEach(f=>{
-  const o=document.createElement("option");o.value=f.__dashId;o.textContent="EA "+f.__dashId;$("ea").appendChild(o);
- });
- if(base.some(f=>f.__dashId===old))$("ea").value=old;
+
+const lga=$("lga").value;
+const d=$("district").value;
+const w=$("ward").value;
+
+const base=allFeatures.filter(f=>
+(!lga || String(get(f,"lganame"))===lga) &&
+(!d || String(get(f,"distname"))===d) &&
+(!w || String(get(f,"wardname"))===w)
+);
+
+const old=$("ea").value;
+
+$("ea").innerHTML='<option value="">All EAs</option>';
+
+base.forEach(f=>{
+
+const o=document.createElement("option");
+
+o.value=f.__dashId;
+o.textContent="EA "+f.__dashId;
+
+$("ea").appendChild(o);
+
+});
+
+if(base.some(f=>f.__dashId===old)){
+$("ea").value=old;
 }
+
+}
+
 function currentFilters(f){
- return (!$("lga").value||String(get(f,"lganame"))===$("lga").value)&&
- (!$("district").value||String(get(f,"distname"))===$("district").value)&&
- (!$("ward").value||String(get(f,"wardname"))===$("ward").value)&&
- (!$("ea").value||f.__dashId===$("ea").value);
+
+return (
+
+(!$("lga").value ||
+String(get(f,"lganame"))===$("lga").value) &&
+
+(!$("district").value ||
+String(get(f,"distname"))===$("district").value) &&
+
+(!$("ward").value ||
+String(get(f,"wardname"))===$("ward").value) &&
+
+(!$("ea").value ||
+f.__dashId===$("ea").value)
+
+);
+
 }
-function zoomToSelection(){
- if(!geoLayer||!filtered.length)return;
- const target=geoLayer;
- const bounds=target.getBounds();
- if(bounds.isValid()){
-  const single=Boolean($("ea").value);
-  map.fitBounds(bounds,{
-   padding:single?[45,45]:[25,25],
-   maxZoom:single?17:12,
-   animate:true,
-   duration:.6
-  });
-  if(single){
-   const layer=geoLayer.getLayers()[0];
-   if(layer&&layer.openPopup)layer.openPopup();
-  }
- }
-}
+
 function scheduleFilters(){
- clearTimeout(filterTimer);
- filterTimer=setTimeout(()=>applyFilters({zoom:true}),120);
+
+clearTimeout(filterTimer);
+
+filterTimer=setTimeout(()=>{
+applyFilters({zoom:true});
+},150);
+
 }
+
+/* =====================================================
+   FILTER APPLICATION
+===================================================== */
+
 function applyFilters(options={}){
- filtered=allFeatures.filter(currentFilters);
- selectedFeature=$("ea").value?filtered.find(f=>f.__dashId===$("ea").value)||null:null;
- statsCache.clear();
- renderKPIs();
- renderProfile();
- renderMap();
- updateTable();
- chartDirty=true;
- if(options.zoom!==false)zoomToSelection();
+
+filtered=allFeatures.filter(currentFilters);
+
+selectedFeature=$("ea").value
+?filtered.find(f=>f.__dashId===$("ea").value)||null
+:null;
+
+renderKPIs();
+renderProfile();
+updateTable();
+
+chartDirty=true;
+
+if(options.zoom!==false){
+pendingZoom=true;
 }
+
+renderMap();
+
+if(chartDirty){
+
+requestAnimationFrame(()=>{
+updateCharts();
+});
+
+}
+
+}
+
+/* =====================================================
+   STATISTICS AND KPIs
+===================================================== */
 
 function sumField(features,key){
- return features.reduce((s,f)=>s+(clean(get(f,key))??0),0);
+
+return features.reduce(
+(s,f)=>s+(clean(get(f,key))??0),
+0
+);
+
 }
+
 function completeness(features){
- if(!features.length)return 0;
- let count=0,total=features.length*FIELDS.length;
- features.forEach(f=>FIELDS.forEach(k=>{
-  if(get(f,k)!==null&&get(f,k)!==undefined&&get(f,k)!=="")count++;
- }));
- return total?100*count/total:0;
+
+if(!features.length) return 0;
+
+let count=0;
+const total=features.length*FIELDS.length;
+
+features.forEach(f=>{
+
+FIELDS.forEach(k=>{
+
+const value=get(f,k);
+
+if(
+value!==null &&
+value!==undefined &&
+value!==""
+){
+count++;
 }
+
+});
+
+});
+
+return total?100*count/total:0;
+
+}
+
 function renderKPIs(){
- $("kpiEAs").textContent=fmt(filtered.length);
- $("kpiPop").textContent=fmt(sumField(filtered,"map_pop"));
- $("kpiHhs").textContent=fmt(sumField(filtered,"map_hhs"));
- $("kpiListing").textContent=fmt(sumField(filtered,"ls_hhs"));
- $("kpiEnum").textContent=fmt(sumField(filtered,"enum_hhs"));
- $("kpiComplete").textContent=fmt(completeness(filtered))+"%";
+
+$("kpiEAs").textContent=fmt(filtered.length);
+
+$("kpiPop").textContent=fmt(
+sumField(filtered,"map_pop")
+);
+
+$("kpiHhs").textContent=fmt(
+sumField(filtered,"map_hhs")
+);
+
+$("kpiListing").textContent=fmt(
+sumField(filtered,"ls_hhs")
+);
+
+$("kpiEnum").textContent=fmt(
+sumField(filtered,"enum_hhs")
+);
+
+$("kpiComplete").textContent=
+fmt(completeness(filtered))+"%";
+
 }
+
+/* =====================================================
+   SELECTED EA PROFILE
+===================================================== */
+
 function renderProfile(){
- if(!selectedFeature){
-  $("profile").innerHTML='<p class="small-note">Select an EA on the map or from the selector.</p>';
-  return;
- }
- $("profile").innerHTML=FIELDS.map(k=>
-  '<div class="profile-item"><small>'+escapeHTML(LABELS[k])+'</small><strong>'+
-  escapeHTML(["lganame","distname","wardname"].includes(k)?(get(selectedFeature,k)??"—"):fmt(get(selectedFeature,k)))+
-  '</strong></div>'
- ).join("");
+
+if(!selectedFeature){
+
+$("profile").innerHTML=
+'<p class="small-note">Select an EA on the map or from the selector.</p>';
+
+return;
+
 }
 
-function colorRamp(){return ["#d73027","#fc8d59","#fee08b","#91cf60","#1a9850"];}
+$("profile").innerHTML=FIELDS.map(k=>
+
+'<div class="profile-item">'+
+'<small>'+escapeHTML(LABELS[k])+'</small>'+
+'<strong>'+
+escapeHTML(
+["lganame","distname","wardname"].includes(k)
+?(get(selectedFeature,k)??"—")
+:fmt(get(selectedFeature,k))
+)+
+'</strong>'+
+'</div>'
+
+).join("");
+
+}
+
+/* =====================================================
+   THEMATIC CLASSIFICATION
+===================================================== */
+
+function colorRamp(){
+
+return [
+"#d73027",
+"#fc8d59",
+"#fee08b",
+"#91cf60",
+"#1a9850"
+];
+
+}
+
 function quantile(sorted,p){
- if(!sorted.length)return null;
- const i=(sorted.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);
- return sorted[lo]+(sorted[hi]-sorted[lo])*(i-lo);
-}
-function getBreaks(values){
- const vals=values.filter(v=>v!==null).sort((a,b)=>a-b);
- if(!vals.length)return [];
- const min=vals[0],max=vals[vals.length-1];
- if(min===max)return [min,min,min,min,min];
- if($("classification").value==="equal")return [1,2,3,4].map(i=>min+(max-min)*i/5);
- return [1,2,3,4].map(i=>quantile(vals,i/5));
-}
-function classIndex(value,breaks){
- if(value===null||!breaks.length)return -1;
- for(let i=0;i<breaks.length;i++)if(value<=breaks[i])return i;
- return 4;
-}
-function updateLegend(breaks){
- const labels=breaks.length?[
- "≤ "+fmt(breaks[0]),fmt(breaks[0])+" – "+fmt(breaks[1]),
- fmt(breaks[1])+" – "+fmt(breaks[2]),fmt(breaks[2])+" – "+fmt(breaks[3]),"> "+fmt(breaks[3])
- ]:[];
- $("legend").innerHTML="<strong>"+escapeHTML(LABELS[$("indicator").value])+"</strong>"+
- colorRamp().map((c,i)=>'<div class="legend-item"><span class="legend-color" style="background:'+c+'"></span>'+escapeHTML(labels[i]||"")+'</div>').join("")+
- '<div class="legend-item"><span class="legend-color" style="background:#9ca3af"></span>No data</div>'+
- '<div class="legend-item"><span class="legend-color" style="background:#075bdb"></span>Selected EA</div>'+
- '<div class="small-note">Classification: '+escapeHTML($("classification").value)+'</div>';
+
+if(!sorted.length) return null;
+
+const i=(sorted.length-1)*p;
+
+const lo=Math.floor(i);
+const hi=Math.ceil(i);
+
+return sorted[lo]+
+(sorted[hi]-sorted[lo])*(i-lo);
+
 }
 
-const map=L.map("map",{zoomControl:true}).setView([13.45,-15.5],8);
-function baseTiles(){
- if(baseLayer)map.removeLayer(baseLayer);
- const type=$("basemap").value;
- let url,attr;
- if(type==="osm"){url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";attr="© OpenStreetMap";}
- else if(type==="topo"){url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}";attr="Esri";}
- else if(type==="terrain"){url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}";attr="Esri";}
- else if(type==="light"){url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";attr="© Carto";}
- else if(type==="dark"){url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";attr="© Carto";}
- else{url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";attr="Esri World Imagery";}
- baseLayer=L.tileLayer(url,{maxZoom:19,attribution:attr}).addTo(map);
- if(type==="hybrid"){
-  L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Esri labels"}).addTo(map);
- }
+function getBreaks(values){
+
+const vals=values
+.filter(v=>v!==null)
+.sort((a,b)=>a-b);
+
+if(!vals.length) return [];
+
+const min=vals[0];
+const max=vals[vals.length-1];
+
+if(min===max){
+
+return [min,min,min,min,min];
+
 }
+
+if($("classification").value==="equal"){
+
+return [1,2,3,4].map(i=>
+min+(max-min)*i/5
+);
+
+}
+
+/* Quantile and natural approximation */
+
+return [1,2,3,4].map(i=>
+quantile(vals,i/5)
+);
+
+}
+
+function classIndex(value,breaks){
+
+if(value===null || !breaks.length) return -1;
+
+for(let i=0;i<4;i++){
+
+if(value<=breaks[i]) return i;
+
+}
+
+return 4;
+
+}
+
+function updateLegend(breaks){
+
+const labels=breaks.length?[
+
+"≤ "+fmt(breaks[0]),
+
+fmt(breaks[0])+" – "+fmt(breaks[1]),
+
+fmt(breaks[1])+" – "+fmt(breaks[2]),
+
+fmt(breaks[2])+" – "+fmt(breaks[3]),
+
+"> "+fmt(breaks[3])
+
+]:[];
+
+$("legend").innerHTML=
+
+"<strong>"+escapeHTML(LABELS[$("indicator").value])+"</strong>"+
+
+colorRamp().map((c,i)=>
+
+'<div class="legend-item">'+
+'<span class="legend-color" style="background:'+c+'"></span>'+
+escapeHTML(labels[i]||"")+
+'</div>'
+
+).join("")+
+
+'<div class="legend-item">'+
+'<span class="legend-color" style="background:#9ca3af"></span>'+
+'No data</div>'+
+
+'<div class="legend-item">'+
+'<span class="legend-color" style="background:#075bdb"></span>'+
+'Selected EA</div>'+
+
+'<div class="small-note">Classification: '+
+escapeHTML($("classification").value)+
+'</div>';
+
+}
+
+/* =====================================================
+   LEAFLET MAP
+===================================================== */
+
+const map=L.map("map",{
+zoomControl:true,
+preferCanvas:true,
+fadeAnimation:false,
+markerZoomAnimation:false,
+updateWhenIdle:true,
+updateWhenZooming:false
+}).setView([13.45,-15.5],8);
+
+/* =====================================================
+   BASEMAPS
+===================================================== */
+
+function baseTiles(){
+
+if(baseLayer){
+map.removeLayer(baseLayer);
+baseLayer=null;
+}
+
+if(labelLayer){
+map.removeLayer(labelLayer);
+labelLayer=null;
+}
+
+const type=$("basemap").value;
+
+let url,attr;
+
+if(type==="osm"){
+
+url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+attr="© OpenStreetMap";
+
+}
+
+else if(type==="topo"){
+
+url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}";
+attr="Esri";
+
+}
+
+else if(type==="terrain"){
+
+url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}";
+attr="Esri";
+
+}
+
+else if(type==="light"){
+
+url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+attr="© Carto";
+
+}
+
+else if(type==="dark"){
+
+url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+attr="© Carto";
+
+}
+
+else{
+
+url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+attr="Esri World Imagery";
+
+}
+
+baseLayer=L.tileLayer(url,{
+maxZoom:19,
+attribution:attr
+}).addTo(map);
+
+if(type==="hybrid"){
+
+labelLayer=L.tileLayer(
+"https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+{
+maxZoom:19,
+attribution:"Esri labels"
+}
+).addTo(map);
+
+}
+
+}
+
+/* =====================================================
+   MAP ZOOM
+===================================================== */
+
+function zoomToSelection(){
+
+if(!geoLayer) return;
+
+let targetBounds=null;
+
+if(selectedFeature){
+
+const selectedLayer=geoLayer.getLayers().find(layer=>
+layer.feature &&
+layer.feature.__dashId===selectedFeature.__dashId
+);
+
+if(selectedLayer){
+targetBounds=selectedLayer.getBounds();
+}
+
+}
+
+if(!targetBounds || !targetBounds.isValid()){
+
+targetBounds=geoLayer.getBounds();
+
+}
+
+if(targetBounds && targetBounds.isValid()){
+
+map.fitBounds(targetBounds,{
+padding:[30,30],
+maxZoom:selectedFeature?17:12,
+animate:true,
+duration:.6
+});
+
+}
+
+}
+
+/* =====================================================
+   PROGRESSIVE MAP RENDERING
+===================================================== */
 
 function renderMap(){
- if(geoLayer){map.removeLayer(geoLayer);geoLayer=null;}
- if(!allFeatures.length)return;
 
- const indicator=$("indicator").value;
- let features=filtered;
- if($("displayMode").value==="selected"&&selectedFeature)features=[selectedFeature];
+const token=++mapRenderToken;
 
- const values=filtered.map(f=>clean(get(f,indicator)));
- const breaks=getBreaks(values);
- updateLegend(breaks);
+if(geoLayer){
 
- geoLayer=L.geoJSON(features,{
-  style:f=>{
-   const value=clean(get(f,indicator));
-   const ci=classIndex(value,breaks);
-   const selected=selectedFeature&&selectedFeature.__dashId===f.__dashId;
-   return {
-    color:selected?"#075bdb":"#344c42",
-    weight:selected?4:.7,
-    fillColor:ci<0?"#9ca3af":colorRamp()[ci],
-    fillOpacity:selected?.85:.68
-   };
-  },
-  onEachFeature:(f,layer)=>{
-   const rows=FIELDS.map(k=>"<br>"+escapeHTML(LABELS[k])+": "+
-    escapeHTML(["lganame","distname","wardname"].includes(k)?(get(f,k)??"—"):fmt(get(f,k)))).join("");
-   layer.bindPopup("<strong>Enumeration Area "+escapeHTML(f.__dashId)+"</strong>"+rows+
-    '<br><button class="btn-blue" onclick="window.selectEA(\''+f.__dashId+'\')">Select and zoom to this EA</button>');
-   layer.on("click",()=>{
-    window.selectEA(f.__dashId);
-   });
-  }
- }).addTo(map);
+map.removeLayer(geoLayer);
+geoLayer=null;
 
- $("mapCaption").textContent=fmt(filtered.length)+" filtered EAs • "+LABELS[indicator]+" • WGS84 / EPSG:4326";
 }
 
-window.selectEA=id=>{
- const f=allFeatures.find(x=>x.__dashId===String(id));
- if(!f)return;
- suppressFilterEvents=true;
- $("lga").value=get(f,"lganame")??"";
- updateDistricts();
- $("district").value=get(f,"distname")??"";
- updateWards();
- $("ward").value=get(f,"wardname")??"";
- updateEAs();
- $("ea").value=f.__dashId;
- suppressFilterEvents=false;
- filtered=allFeatures.filter(currentFilters);
- selectedFeature=f;
- statsCache.clear();
- renderKPIs();renderProfile();renderMap();updateTable();
- chartDirty=true;
- zoomToSelection();
+if(!allFeatures.length){
+
+hideLoading();
+return;
+
+}
+
+const indicator=$("indicator").value;
+
+let features=filtered;
+
+if(
+$("displayMode").value==="selected" &&
+selectedFeature
+){
+
+features=[selectedFeature];
+
+}
+
+const values=filtered.map(f=>
+clean(get(f,indicator))
+);
+
+const breaks=getBreaks(values);
+
+updateLegend(breaks);
+
+geoLayer=L.geoJSON([],{
+
+renderer:canvasRenderer,
+
+smoothFactor:1,
+
+style:f=>{
+
+const value=clean(get(f,indicator));
+
+const ci=classIndex(value,breaks);
+
+const selected=
+selectedFeature &&
+selectedFeature.__dashId===f.__dashId;
+
+return {
+
+color:selected?"#075bdb":"#344c42",
+
+weight:selected?3:0.6,
+
+fillColor:ci<0
+?"#9ca3af"
+:colorRamp()[ci],
+
+fillOpacity:selected?0.85:0.68
+
 };
 
+},
+
+onEachFeature:(f,layer)=>{
+
+const rows=FIELDS.map(k=>
+
+"<br>"+escapeHTML(LABELS[k])+": "+
+escapeHTML(
+["lganame","distname","wardname"].includes(k)
+?(get(f,k)??"—")
+:fmt(get(f,k))
+)
+
+).join("");
+
+layer.bindPopup(
+
+"<strong>Enumeration Area "+
+escapeHTML(f.__dashId)+
+"</strong>"+rows+
+
+'<br><button class="btn-blue" onclick="window.selectEA(\''+
+f.__dashId+
+'\')">Select and zoom to this EA</button>'
+
+);
+
+layer.on("click",()=>{
+
+window.selectEA(f.__dashId);
+
+});
+
+}
+
+}).addTo(map);
+
+let index=0;
+
+function renderBatch(){
+
+if(token!==mapRenderToken) return;
+
+const end=Math.min(
+index+RENDER_BATCH_SIZE,
+features.length
+);
+
+const batch=features.slice(index,end);
+
+if(batch.length){
+
+geoLayer.addData(batch);
+
+}
+
+index=end;
+
+const percentage=features.length
+?Math.round(index/features.length*100)
+:100;
+
+progress(
+85+percentage*.15,
+"Drawing EA boundaries: "+
+index.toLocaleString()+" / "+
+features.length.toLocaleString()
+);
+
+if(index<features.length){
+
+requestAnimationFrame(renderBatch);
+
+}else{
+
+$("mapCaption").textContent=
+fmt(filtered.length)+
+" filtered EAs • "+
+LABELS[indicator]+
+" • WGS84 / EPSG:4326";
+
+map.invalidateSize();
+
+hideLoading();
+
+if(pendingZoom){
+
+zoomToSelection();
+pendingZoom=false;
+
+}
+
+status(
+fmt(allFeatures.length)+
+" EA features loaded • Map ready"
+);
+
+}
+
+}
+
+requestAnimationFrame(renderBatch);
+
+}
+
+/* =====================================================
+   SELECT EA FROM MAP
+===================================================== */
+
+window.selectEA=id=>{
+
+const f=allFeatures.find(x=>
+x.__dashId===String(id)
+);
+
+if(!f) return;
+
+suppressFilterEvents=true;
+
+$("lga").value=get(f,"lganame")??"";
+
+updateDistricts();
+
+$("district").value=get(f,"distname")??"";
+
+updateWards();
+
+$("ward").value=get(f,"wardname")??"";
+
+updateEAs();
+
+$("ea").value=f.__dashId;
+
+suppressFilterEvents=false;
+
+filtered=allFeatures.filter(currentFilters);
+
+selectedFeature=f;
+
+renderKPIs();
+renderProfile();
+updateTable();
+
+chartDirty=true;
+pendingZoom=true;
+
+renderMap();
+
+requestAnimationFrame(()=>{
+updateCharts();
+});
+
+};
+
+/* =====================================================
+   CHART UTILITIES
+===================================================== */
+
 function destroyChart(id){
- if(charts[id]){charts[id].destroy();charts[id]=null;}
+
+if(charts[id]){
+
+charts[id].destroy();
+charts[id]=null;
+
 }
+
+}
+
 function chartOptions(){
- return {
-  responsive:true,maintainAspectRatio:false,
-  plugins:{legend:{display:true,position:"bottom"}},
-  scales:{y:{beginAtZero:false,ticks:{font:{size:9}}},x:{ticks:{font:{size:9}}}}
- };
+
+return {
+
+responsive:true,
+maintainAspectRatio:false,
+
+animation:false,
+
+plugins:{
+
+legend:{
+display:true,
+position:"bottom"
 }
+
+},
+
+scales:{
+
+y:{
+beginAtZero:true,
+ticks:{font:{size:9}}
+},
+
+x:{
+ticks:{font:{size:9}}
+}
+
+}
+
+};
+
+}
+
 function chartDataByEA(key){
- return filtered.slice(0,30).map(f=>({label:"EA "+f.__dashId,value:clean(get(f,key))}));
+
+return filtered.slice(0,30).map(f=>({
+
+label:"EA "+f.__dashId,
+
+value:clean(get(f,key))
+
+}));
+
 }
+
 function createChart(canvasId,key,type,title){
- destroyChart(canvasId);
- const rows=chartDataByEA(key).filter(x=>x.value!==null);
- charts[canvasId]=new Chart($(canvasId),{
-  type,
-  data:{labels:rows.map(x=>x.label),datasets:[{
-   label:title,data:rows.map(x=>x.value),
-   backgroundColor:type==="line"?"#16834e":"rgba(22,131,78,.65)",
-   borderColor:"#0c6b3d",borderWidth:1,tension:.25,fill:false
-  }]},
-  options:chartOptions()
- });
+
+destroyChart(canvasId);
+
+const rows=chartDataByEA(key)
+.filter(x=>x.value!==null);
+
+charts[canvasId]=new Chart($(canvasId),{
+
+type,
+
+data:{
+
+labels:rows.map(x=>x.label),
+
+datasets:[{
+
+label:title,
+
+data:rows.map(x=>x.value),
+
+backgroundColor:
+type==="line"
+?"#16834e"
+:"rgba(22,131,78,.65)",
+
+borderColor:"#0c6b3d",
+
+borderWidth:1,
+
+tension:.25,
+
+fill:false
+
+}]
+
+},
+
+options:chartOptions()
+
+});
+
 }
+
+/* =====================================================
+   MULTI-INDICATOR COMPARISON
+===================================================== */
+
 function comparisonFields(){
- const c=$("comparisonCategory").value;
- if(c==="population")return ["map_pop","ls_pop","enum_pop"];
- if(c==="households")return ["map_hhs","ls_hhs","enum_hhs"];
- if(c==="compounds")return ["comp_map","comp_ls"];
- return ["build_map","build_ls"];
+
+const c=$("comparisonCategory").value;
+
+if(c==="population")
+return ["map_pop","ls_pop","enum_pop"];
+
+if(c==="households")
+return ["map_hhs","ls_hhs","enum_hhs"];
+
+if(c==="compounds")
+return ["comp_map","comp_ls"];
+
+return ["build_map","build_ls"];
+
 }
+
 function createComparison(){
- destroyChart("comparisonChart");
- const fields=comparisonFields(),type=$("comparisonType").value,rows=filtered.slice(0,30);
- charts.comparisonChart=new Chart($("comparisonChart"),{
-  type,
-  data:{
-   labels:rows.map(f=>"EA "+f.__dashId),
-   datasets:fields.map((key,i)=>({
-    label:LABELS[key],data:rows.map(f=>clean(get(f,key))),
-    backgroundColor:["#123b70","#d62828","#16834e"][i],
-    borderColor:["#123b70","#d62828","#16834e"][i],
-    borderWidth:1,spanGaps:true
-   }))
-  },
-  options:chartOptions()
- });
+
+destroyChart("comparisonChart");
+
+const fields=comparisonFields();
+
+const type=$("comparisonType").value;
+
+const rows=filtered.slice(0,30);
+
+charts.comparisonChart=new Chart(
+$("comparisonChart"),
+{
+
+type,
+
+data:{
+
+labels:rows.map(f=>"EA "+f.__dashId),
+
+datasets:fields.map((key,i)=>({
+
+label:LABELS[key],
+
+data:rows.map(f=>clean(get(f,key))),
+
+backgroundColor:[
+"#123b70",
+"#d62828",
+"#16834e"
+][i],
+
+borderColor:[
+"#123b70",
+"#d62828",
+"#16834e"
+][i],
+
+borderWidth:1,
+
+spanGaps:true
+
+}))
+
+},
+
+options:chartOptions()
+
+});
+
 }
+
+/* =====================================================
+   INDICATOR A VS B
+===================================================== */
+
 function metricValue(f,a,b,method){
- const av=clean(get(f,a)),bv=clean(get(f,b));
- if(av===null||bv===null)return null;
- if(method==="difference")return av-bv;
- if(method==="percentage")return bv===0?null:(av-bv)/Math.abs(bv)*100;
- if(method==="ratio")return bv===0?null:av/bv;
- return av;
+
+const av=clean(get(f,a));
+const bv=clean(get(f,b));
+
+if(av===null || bv===null) return null;
+
+if(method==="difference") return av-bv;
+
+if(method==="percentage"){
+
+return bv===0
+?null
+:(av-bv)/Math.abs(bv)*100;
+
 }
+
+if(method==="ratio"){
+
+return bv===0?null:av/bv;
+
+}
+
+return av;
+
+}
+
 function createMetricChart(){
- destroyChart("metricChart");
- const a=$("metricA").value,b=$("metricB").value,method=$("comparisonMethod").value,rows=filtered.slice(0,30);
- let datasets;
- if(method==="actual"){
-  datasets=[a,b].map((key,i)=>({
-   label:LABELS[key],data:rows.map(f=>clean(get(f,key))),
-   backgroundColor:i===0?"#123b70":"#d62828",
-   borderColor:i===0?"#123b70":"#d62828",borderWidth:1
-  }));
- }else{
-  datasets=[{
-   label:method==="difference"?"A minus B":method==="percentage"?"Percentage difference":"A / B ratio",
-   data:rows.map(f=>metricValue(f,a,b,method)),
-   backgroundColor:"#16834e",borderColor:"#0c6b3d",borderWidth:1
-  }];
- }
- charts.metricChart=new Chart($("metricChart"),{
-  type:"bar",data:{labels:rows.map(f=>"EA "+f.__dashId),datasets},
-  options:chartOptions()
- });
+
+destroyChart("metricChart");
+
+const a=$("metricA").value;
+const b=$("metricB").value;
+const method=$("comparisonMethod").value;
+
+const rows=filtered.slice(0,30);
+
+let datasets;
+
+if(method==="actual"){
+
+datasets=[a,b].map((key,i)=>({
+
+label:LABELS[key],
+
+data:rows.map(f=>clean(get(f,key))),
+
+backgroundColor:i===0?"#123b70":"#d62828",
+
+borderColor:i===0?"#123b70":"#d62828",
+
+borderWidth:1
+
+}));
+
+}else{
+
+datasets=[{
+
+label:
+method==="difference"
+?"A minus B"
+:method==="percentage"
+?"Percentage difference"
+:"A / B ratio",
+
+data:rows.map(f=>
+metricValue(f,a,b,method)
+),
+
+backgroundColor:"#16834e",
+
+borderColor:"#0c6b3d",
+
+borderWidth:1
+
+}];
+
 }
+
+charts.metricChart=new Chart(
+$("metricChart"),
+{
+
+type:"bar",
+
+data:{
+
+labels:rows.map(f=>"EA "+f.__dashId),
+
+datasets
+
+},
+
+options:chartOptions()
+
+});
+
+}
+
+/* =====================================================
+   UPDATE ALL CHARTS
+===================================================== */
+
 function updateCharts(){
- if(!filtered.length){
-  ["mainChart","comparisonChart","metricChart"].forEach(destroyChart);
-  chartDirty=false;return;
- }
- createChart("mainChart",$("chartIndicator").value,$("chartType").value,LABELS[$("chartIndicator").value]);
- createComparison();createMetricChart();
- chartDirty=false;
+
+if(!filtered.length){
+
+[
+"mainChart",
+"comparisonChart",
+"metricChart"
+].forEach(destroyChart);
+
+chartDirty=false;
+
+return;
+
 }
+
+createChart(
+"mainChart",
+$("chartIndicator").value,
+$("chartType").value,
+LABELS[$("chartIndicator").value]
+);
+
+createComparison();
+createMetricChart();
+
+chartDirty=false;
+
+}
+
+/* =====================================================
+   EA TABLE
+===================================================== */
+
 function updateTable(){
- $("tableHead").innerHTML="<tr>"+FIELDS.map(k=>"<th>"+escapeHTML(LABELS[k])+"</th>").join("")+"</tr>";
- $("tableBody").innerHTML=filtered.slice(0,300).map(f=>
-  "<tr>"+FIELDS.map(k=>"<td>"+escapeHTML(
-   ["lganame","distname","wardname"].includes(k)?(get(f,k)??"—"):fmt(get(f,k))
-  )+"</td>").join("")+"</tr>"
- ).join("");
+
+$("tableHead").innerHTML=
+"<tr>"+
+FIELDS.map(k=>
+"<th>"+escapeHTML(LABELS[k])+"</th>"
+).join("")+
+"</tr>";
+
+const rows=filtered.slice(0,300);
+
+$("tableBody").innerHTML=rows.map(f=>
+
+"<tr>"+
+
+FIELDS.map(k=>
+
+"<td>"+
+escapeHTML(
+
+["lganame","distname","wardname"].includes(k)
+?(get(f,k)??"—")
+:fmt(get(f,k))
+
+)+
+"</td>"
+
+).join("")+
+
+"</tr>"
+
+).join("");
+
 }
 
-/* Download helpers */
+/* =====================================================
+   DOWNLOAD HELPERS
+===================================================== */
+
 function downloadBlob(content,filename,mime){
- const blob=new Blob([content],{type:mime}),url=URL.createObjectURL(blob);
- const a=document.createElement("a");a.href=url;a.download=filename;a.click();
- setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+const blob=new Blob([content],{type:mime});
+
+const url=URL.createObjectURL(blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+a.download=filename;
+
+document.body.appendChild(a);
+a.click();
+a.remove();
+
+setTimeout(()=>{
+URL.revokeObjectURL(url);
+},1500);
+
 }
-function csvEscape(v){return '"'+String(v??"").replace(/"/g,'""')+'"';}
+
+function csvEscape(v){
+
+return '"'+
+String(v??"").replace(/"/g,'""')+
+'"';
+
+}
+
 function toCSV(rows,fields){
- return [fields.map(k=>csvEscape(LABELS[k])).join(","),
- ...rows.map(f=>fields.map(k=>csvEscape(get(f,k))).join(","))].join("\n");
+
+return [
+
+fields.map(k=>csvEscape(LABELS[k])).join(","),
+
+...rows.map(f=>
+fields.map(k=>csvEscape(get(f,k))).join(",")
+)
+
+].join("\n");
+
 }
-function exportCSV(){downloadBlob(toCSV(filtered,FIELDS),"Gambia_Filtered_EA_Statistics.csv","text/csv;charset=utf-8");}
+
+function exportCSV(){
+
+downloadBlob(
+toCSV(filtered,FIELDS),
+"Gambia_Filtered_EA_Statistics.csv",
+"text/csv;charset=utf-8"
+);
+
+}
+
 function exportSelected(){
- if(!selectedFeature)return alert("Select an EA first.");
- downloadBlob(toCSV([selectedFeature],FIELDS),"Selected_EA_Statistics.csv","text/csv;charset=utf-8");
+
+if(!selectedFeature){
+
+alert("Select an EA first.");
+return;
+
 }
+
+downloadBlob(
+toCSV([selectedFeature],FIELDS),
+"Selected_EA_Statistics.csv",
+"text/csv;charset=utf-8"
+);
+
+}
+
 function exportGeo(){
- const output={
-  type:"FeatureCollection",
-  features:filtered.map(f=>({
-   type:"Feature",geometry:f.geometry,
-   properties:Object.fromEntries(FIELDS.map(k=>[k,get(f,k)]))
-  }))
- };
- downloadBlob(JSON.stringify(output),"Gambia_Filtered_EA_Boundaries.geojson","application/geo+json");
+
+const output={
+
+type:"FeatureCollection",
+
+features:filtered.map(f=>({
+
+type:"Feature",
+
+geometry:f.geometry,
+
+properties:Object.fromEntries(
+FIELDS.map(k=>[k,get(f,k)])
+)
+
+}))
+
+};
+
+downloadBlob(
+JSON.stringify(output),
+"Gambia_Filtered_EA_Boundaries.geojson",
+"application/geo+json"
+);
+
 }
+
 function downloadChartPNG(id,name){
- if(chartDirty)updateCharts();
- const chart=charts[id];if(!chart)return alert("No chart is available.");
- const a=document.createElement("a");a.href=chart.toBase64Image();a.download=name+".png";a.click();
+
+if(chartDirty) updateCharts();
+
+const chart=charts[id];
+
+if(!chart){
+
+alert("No chart is available.");
+return;
+
 }
+
+const a=document.createElement("a");
+
+a.href=chart.toBase64Image();
+a.download=name+".png";
+a.click();
+
+}
+
 function exportChartCSV(id,name){
- if(chartDirty)updateCharts();
- const chart=charts[id];if(!chart)return alert("No chart is available.");
- const rows=[["Enumeration Area",...chart.data.datasets.map(d=>d.label)]];
- chart.data.labels.forEach((label,i)=>rows.push([label,...chart.data.datasets.map(d=>d.data[i]??"")]));
- downloadBlob(rows.map(r=>r.map(csvEscape).join(",")).join("\n"),name+".csv","text/csv");
+
+if(chartDirty) updateCharts();
+
+const chart=charts[id];
+
+if(!chart){
+
+alert("No chart is available.");
+return;
+
 }
 
-/* GPS */
+const rows=[[
+"Enumeration Area",
+...chart.data.datasets.map(d=>d.label)
+]];
+
+chart.data.labels.forEach((label,i)=>{
+
+rows.push([
+label,
+...chart.data.datasets.map(d=>d.data[i]??"")
+]);
+
+});
+
+downloadBlob(
+rows.map(r=>r.map(csvEscape).join(",")).join("\n"),
+name+".csv",
+"text/csv"
+);
+
+}
+
+/* =====================================================
+   GPS INTELLIGENCE
+===================================================== */
+
 function captureGPS(){
- if(!navigator.geolocation)return alert("Geolocation is not supported by this browser.");
- $("gpsStatus").textContent="Requesting location permission...";
- navigator.geolocation.getCurrentPosition(pos=>{
-  const lat=pos.coords.latitude,lon=pos.coords.longitude,accuracy=pos.coords.accuracy;
-  const record={
-   latitude:lat,longitude:lon,accuracy_m:accuracy,
-   captured_at:new Date().toISOString(),
-   selected_ea:selectedFeature?"EA "+selectedFeature.__dashId:""
-  };
-  gpsRecords.push(record);
-  if(gpsLayer)map.removeLayer(gpsLayer);
-  gpsLayer=L.layerGroup().addTo(map);
-  L.marker([lat,lon]).addTo(gpsLayer).bindPopup(
-   "<strong>GPS location captured</strong><br>Latitude: "+fmt(lat)+
-   "<br>Longitude: "+fmt(lon)+"<br>Accuracy: "+fmt(accuracy)+
-   " m<br>Currently selected EA: "+escapeHTML(record.selected_ea||"None")
-  ).openPopup();
-  L.circle([lat,lon],{radius:accuracy,color:"#123b70",fillOpacity:.12}).addTo(gpsLayer);
-  map.setView([lat,lon],15);
-  $("gpsStatus").textContent="GPS captured • Accuracy: "+fmt(accuracy)+" m";
- },err=>{
-  $("gpsStatus").textContent="GPS error: "+err.message;
-  alert("GPS capture failed: "+err.message);
- },{enableHighAccuracy:true,timeout:20000,maximumAge:0});
-}
-function exportGPS(){
- if(!gpsRecords.length)return alert("No GPS records to export.");
- const fields=["latitude","longitude","accuracy_m","captured_at","selected_ea"];
- const csv=[fields.join(","),...gpsRecords.map(r=>fields.map(k=>csvEscape(r[k])).join(","))].join("\n");
- downloadBlob(csv,"Gambia_GPS_Captures.csv","text/csv");
+
+if(!navigator.geolocation){
+
+alert("Geolocation is not supported by this browser.");
+return;
+
 }
 
-/* Events */
-$("loadUrl").addEventListener("click",loadFromUrl);
-$("fileInput").addEventListener("change",async e=>{
- const file=e.target.files[0];if(!file)return;
- showLoading();progress(20,"Reading local GeoJSON...");
- try{loadData(JSON.parse(await file.text()));}
- catch(err){reportError(err);}
+$("gpsStatus").textContent=
+"Requesting location permission...";
+
+navigator.geolocation.getCurrentPosition(pos=>{
+
+const lat=pos.coords.latitude;
+const lon=pos.coords.longitude;
+const accuracy=pos.coords.accuracy;
+
+const record={
+
+latitude:lat,
+longitude:lon,
+accuracy_m:accuracy,
+
+captured_at:new Date().toISOString(),
+
+selected_ea:selectedFeature
+?"EA "+selectedFeature.__dashId
+:""
+
+};
+
+gpsRecords.push(record);
+
+if(gpsLayer){
+
+map.removeLayer(gpsLayer);
+
+}
+
+gpsLayer=L.layerGroup().addTo(map);
+
+L.marker([lat,lon])
+.addTo(gpsLayer)
+.bindPopup(
+
+"<strong>GPS location captured</strong><br>"+
+"Latitude: "+fmt(lat)+
+"<br>Longitude: "+fmt(lon)+
+"<br>Accuracy: "+fmt(accuracy)+
+" m<br>Currently selected EA: "+
+escapeHTML(record.selected_ea||"None")
+
+).openPopup();
+
+L.circle([lat,lon],{
+
+radius:accuracy,
+color:"#123b70",
+fillOpacity:.12
+
+}).addTo(gpsLayer);
+
+map.setView([lat,lon],15);
+
+$("gpsStatus").textContent=
+"GPS captured • Accuracy: "+
+fmt(accuracy)+" m";
+
+},err=>{
+
+$("gpsStatus").textContent=
+"GPS error: "+err.message;
+
+alert("GPS capture failed: "+err.message);
+
+},{
+
+enableHighAccuracy:true,
+timeout:20000,
+maximumAge:0
+
+});
+
+}
+
+function exportGPS(){
+
+if(!gpsRecords.length){
+
+alert("No GPS records to export.");
+return;
+
+}
+
+const fields=[
+"latitude",
+"longitude",
+"accuracy_m",
+"captured_at",
+"selected_ea"
+];
+
+const csv=[
+
+fields.join(","),
+
+...gpsRecords.map(r=>
+fields.map(k=>csvEscape(r[k])).join(",")
+)
+
+].join("\n");
+
+downloadBlob(
+csv,
+"Gambia_GPS_Captures.csv",
+"text/csv"
+);
+
+}
+
+/* =====================================================
+   EVENT LISTENERS
+===================================================== */
+
+$("loadUrl").addEventListener(
+"click",
+loadFromUrl
+);
+
+$("fileInput").addEventListener(
+"change",
+async e=>{
+
+const file=e.target.files[0];
+
+if(!file) return;
+
+const requestId=++currentRequest;
+
+if(window.activeDataController){
+window.activeDataController.abort();
+}
+
+showLoading();
+
+progress(10,"Reading local GeoJSON...");
+
+status("Reading local file...");
+
+try{
+
+const text=await file.text();
+
+if(requestId!==currentRequest) return;
+
+progress(35,"Parsing local GeoJSON...");
+
+loadData(JSON.parse(text),requestId);
+
+}catch(err){
+
+reportError(err);
+
+}
+
 });
 
 $("lga").addEventListener("change",()=>{
- if(suppressFilterEvents)return;
- updateDistricts();scheduleFilters();
+
+if(suppressFilterEvents) return;
+
+updateDistricts();
+scheduleFilters();
+
 });
+
 $("district").addEventListener("change",()=>{
- if(suppressFilterEvents)return;
- updateWards();scheduleFilters();
+
+if(suppressFilterEvents) return;
+
+updateWards();
+scheduleFilters();
+
 });
+
 $("ward").addEventListener("change",()=>{
- if(suppressFilterEvents)return;
- updateEAs();scheduleFilters();
+
+if(suppressFilterEvents) return;
+
+updateEAs();
+scheduleFilters();
+
 });
+
 $("ea").addEventListener("change",()=>{
- if(suppressFilterEvents)return;
- scheduleFilters();
+
+if(suppressFilterEvents) return;
+
+scheduleFilters();
+
 });
-$("apply").addEventListener("click",()=>applyFilters({zoom:true}));
+
+$("apply").addEventListener(
+"click",
+()=>applyFilters({zoom:true})
+);
+
 $("reset").addEventListener("click",()=>{
- suppressFilterEvents=true;
- ["lga","district","ward","ea"].forEach(id=>$(id).value="");
- $("displayMode").value="all";selectedFeature=null;
- updateDistricts();suppressFilterEvents=false;
- applyFilters({zoom:true});
+
+suppressFilterEvents=true;
+
+["lga","district","ward","ea"].forEach(id=>{
+$(id).value="";
 });
-$("zoom").addEventListener("click",zoomToSelection);
+
+$("displayMode").value="all";
+
+selectedFeature=null;
+
+updateDistricts();
+
+suppressFilterEvents=false;
+
+applyFilters({zoom:true});
+
+});
+
+$("zoom").addEventListener(
+"click",
+zoomToSelection
+);
+
+/* Thematic indicators */
 
 $("indicator").addEventListener("change",()=>{
- $("mapIndicator").value=$("indicator").value;renderMap();
+
+$("mapIndicator").value=$("indicator").value;
+
+pendingZoom=false;
+
+renderMap();
+
 });
+
 $("mapIndicator").addEventListener("change",()=>{
- $("indicator").value=$("mapIndicator").value;renderMap();
+
+$("indicator").value=$("mapIndicator").value;
+
+pendingZoom=false;
+
+renderMap();
+
 });
-$("updateMap").addEventListener("click",renderMap);
-$("mapRefresh").addEventListener("click",renderMap);
+
+$("updateMap").addEventListener("click",()=>{
+
+pendingZoom=false;
+renderMap();
+
+});
+
+$("mapRefresh").addEventListener("click",()=>{
+
+pendingZoom=false;
+renderMap();
+
+});
+
 $("basemap").addEventListener("change",baseTiles);
-$("classification").addEventListener("change",renderMap);
+
+$("classification").addEventListener("change",()=>{
+
+pendingZoom=false;
+renderMap();
+
+});
+
 $("displayMode").addEventListener("change",()=>{
- renderMap();
- if(selectedFeature)zoomToSelection();
+
+pendingZoom=Boolean(selectedFeature);
+renderMap();
+
 });
 
-["chartIndicator","chartType","comparisonCategory","comparisonType","metricA","metricB","comparisonMethod"].forEach(id=>{
- $(id).addEventListener("change",()=>{chartDirty=true;updateCharts();});
+/* Chart controls */
+
+[
+"chartIndicator",
+"chartType",
+"comparisonCategory",
+"comparisonType",
+"metricA",
+"metricB",
+"comparisonMethod"
+].forEach(id=>{
+
+$(id).addEventListener("change",()=>{
+
+chartDirty=true;
+updateCharts();
+
 });
 
-$("exportCsv").addEventListener("click",exportCSV);
-$("exportGeo").addEventListener("click",exportGeo);
-$("exportSelected").addEventListener("click",exportSelected);
-$("chartPng").addEventListener("click",()=>downloadChartPNG("mainChart","Gambia_EA_Indicator_Chart"));
-$("chartCsv").addEventListener("click",()=>exportChartCSV("mainChart","Gambia_EA_Indicator_Chart_Data"));
-$("comparisonCsv").addEventListener("click",()=>exportChartCSV("comparisonChart","EA_Multi_Indicator_Comparison"));
-$("metricCsv").addEventListener("click",()=>exportChartCSV("metricChart","EA_Indicator_A_vs_B"));
-$("gps").addEventListener("click",captureGPS);
-$("gpsCsv").addEventListener("click",exportGPS);
+});
+
+/* Exports */
+
+$("exportCsv").addEventListener(
+"click",exportCSV
+);
+
+$("exportGeo").addEventListener(
+"click",exportGeo
+);
+
+$("exportSelected").addEventListener(
+"click",exportSelected
+);
+
+$("chartPng").addEventListener("click",()=>{
+
+downloadChartPNG(
+"mainChart",
+"Gambia_EA_Indicator_Chart"
+);
+
+});
+
+$("chartCsv").addEventListener("click",()=>{
+
+exportChartCSV(
+"mainChart",
+"Gambia_EA_Indicator_Chart_Data"
+);
+
+});
+
+$("comparisonCsv").addEventListener("click",()=>{
+
+exportChartCSV(
+"comparisonChart",
+"EA_Multi_Indicator_Comparison"
+);
+
+});
+
+$("metricCsv").addEventListener("click",()=>{
+
+exportChartCSV(
+"metricChart",
+"EA_Indicator_A_vs_B"
+);
+
+});
+
+/* GPS */
+
+$("gps").addEventListener(
+"click",captureGPS
+);
+
+$("gpsCsv").addEventListener(
+"click",exportGPS
+);
+
 $("clearGps").addEventListener("click",()=>{
- gpsRecords=[];if(gpsLayer)map.removeLayer(gpsLayer);gpsLayer=null;
- $("gpsStatus").textContent="GPS records cleared.";
+
+gpsRecords=[];
+
+if(gpsLayer){
+map.removeLayer(gpsLayer);
+}
+
+gpsLayer=null;
+
+$("gpsStatus").textContent=
+"GPS records cleared.";
+
 });
 
-/* Initialize map first, then fetch dataset */
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
 baseTiles();
+
 map.whenReady(()=>{
- mapInitialized=true;
- loadFromUrl();
+
+map.invalidateSize();
+
+loadFromUrl();
+
 });
 
-/* Keep Leaflet dimensions correct after responsive layout changes */
+/* =====================================================
+   RESPONSIVE MAP
+===================================================== */
+
 window.addEventListener("resize",()=>{
- clearTimeout(window.__mapResizeTimer);
- window.__mapResizeTimer=setTimeout(()=>map.invalidateSize(),180);
+
+clearTimeout(window.__mapResizeTimer);
+
+window.__mapResizeTimer=setTimeout(()=>{
+
+map.invalidateSize();
+
+},180);
+
 });
+
 </script>
 </body>
 </html>
